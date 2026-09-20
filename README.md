@@ -1,36 +1,76 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Trilha MD
 
-## Getting Started
+Software desenvolvido para o projeto de extensão [Meninas Digitais UTFPR-CP](https://www.instagram.com/meninasdigitaisutfprcp/), para a disciplina de Certificadora de Competência 3.
 
-First, run the development server:
+Projeto disponível no [Vercel](https://vercel.com/new),
+
+## Sobre
+
+O programa acompanha mentoradas ao longo de um ciclo: elas se matriculam, participam de atividades, refletem sobre a experiência e evoluem até a certificação final.
+
+![Ciclo do App](/.github/images/app_cicle.png)
+
+O software agiliza o processo com uma aplicação única, cobrindo toda a jornada da mentorada.
+
+## Instalação
+
+### Pré-requisitos
+
+- Node.js 18+
+- Conta no [Supabase](https://supabase.com)
+
+### 1. Clonar e instalar dependências
+
+```bash
+git clone https://github.com/mateusmcamargo/trilha-md.git
+cd trilha-md
+npm install
+```
+
+### 2. Configurar o Supabase
+
+Crie um projeto no [dashboard do Supabase](https://supabase.com/dashboard) e vincule ao repositório local:
+
+```bash
+supabase login
+supabase link --project-ref <seu-project-ref>
+```
+
+Aplique o schema inicial (tabelas, RLS policies e bucket de avatars):
+
+```bash
+supabase db push
+```
+
+### 3. Variáveis de ambiente
+
+Crie um arquivo `.env.local` na raiz do projeto:
+
+```bash
+NEXT_PUBLIC_SUPABASE_URL=https://<seu-projeto>.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=<sua-anon-key>
+```
+
+As chaves ficam em **Settings > API** no dashboard do Supabase.
+
+### 4. Rodar o projeto
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Abra [http://localhost:3000](http://localhost:3000) no navegador.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Stack
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **Frontend:** Next.js, React, TypeScript, SCSS Modules;
+- **Backend/dados:** Supabase (Auth, PostgreSQL, Row Level Security).
 
-## Learn More
+## Modelo de dados
 
-To learn more about Next.js, take a look at the following resources:
+![Ciclo do App](/.github/images/app_cicle.png)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Equipe
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Mateus de Melo Camargo: Full-Stack Developer
+- Gabriel Almeida Oliveira: QA e Product Owner

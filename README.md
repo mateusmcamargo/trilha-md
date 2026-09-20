@@ -1,4 +1,4 @@
-# Trilha MD
+# Trilha Meninas Digitais
 
 Software desenvolvido para o projeto de extensão [Meninas Digitais UTFPR-CP](https://www.instagram.com/meninasdigitaisutfprcp/), para a disciplina de Certificadora de Competência 3.
 
@@ -68,7 +68,7 @@ Abra [http://localhost:3000](http://localhost:3000) no navegador.
 
 ## Modelo de dados
 
-![Ciclo do App](/.github/images/app_cicle.png)
+![Ciclo do App](/.github/images/initial_schema.png)
 
 ## Equipe
 

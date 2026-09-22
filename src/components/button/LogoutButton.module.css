@@ -1,0 +1,11 @@
+.button {
+  padding: 0.5rem 1rem;
+  border: 1px solid #ccc;
+  border-radius: 0.5rem;
+  background: transparent;
+  cursor: pointer;
+  font-size: 0.875rem;
+}
+.button:hover {
+  background: #f4f4f4;
+}/*# sourceMappingURL=LogoutButton.module.css.map */

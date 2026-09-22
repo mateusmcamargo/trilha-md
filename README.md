@@ -1,3 +1,5 @@
+![Ciclo do App](/.github/images/banner.png)
+
 # Trilha Meninas Digitais
 
 Software desenvolvido para o projeto de extensão [Meninas Digitais UTFPR-CP](https://www.instagram.com/meninasdigitaisutfprcp/), para a disciplina de Certificadora de Competência 3.

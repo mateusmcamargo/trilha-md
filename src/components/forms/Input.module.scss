@@ -1,0 +1,108 @@
+.inputWrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: .6rem;
+
+    label {
+        font-size: 1.6rem;
+        font-weight: 500;
+        color: var(--color-label);
+        user-select: none;
+
+        span.required {
+            font-size: 1.8rem;
+            padding-left: 4px;
+            font-weight: 500;
+            color: var(--color-salmon-500);
+        }
+    }
+
+    .inputContainer {
+        position: relative;
+        width: 100%;
+
+        .input {
+            height: 3.6rem;
+            padding: 0 1rem;
+            width: 100%;
+            border: 2px solid var(--color-input-border);
+            background-color: white;
+            color: var(--color-input);
+            border-radius: 1rem;
+            font-size: 1.4rem;
+            transition: .2s ease;
+
+            &:disabled {
+                border: 2px dashed var(--color-input-border);
+                cursor: not-allowed;
+            }
+
+            &::placeholder {
+                color: var(--color-input-placeholder);
+            }
+
+            &.withIconLeft  { padding-left:  3.2rem; }
+            &.withIconRight { padding-right: 3.2rem; }
+
+            &::-ms-reveal,
+            &::-ms-clear {
+                display: none;
+            }
+        }
+
+        &:hover {
+            .input:not(:disabled) {
+                border-color: var(--color-salmon-300);
+            }
+            .iconLeft {
+                color: var(--color-input-border-hover);
+            }
+        }
+
+        &:focus-within {
+            .input {
+                border-color: var(--color-input-border-focus);
+            }
+            .iconLeft {
+                color: var(--color-input-border-focus);
+            }
+        }
+
+        .iconLeft {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--color-input-placeholder);
+            display: flex;
+            align-items: center;
+            pointer-events: none;
+            transition: .2s ease;
+        }
+
+        .iconRight {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--color-input-password-icon);
+            display: flex;
+            align-items: center;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            z-index: 1;
+
+            &:hover:not(:disabled) {
+                color: var(--color-input-password-icon-hover);
+            }
+
+            &:disabled {
+                cursor: not-allowed;
+                opacity: 0.6;
+            }
+        }
+    }
+}

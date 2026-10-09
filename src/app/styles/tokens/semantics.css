@@ -1,0 +1,18 @@
+:root {
+    --color-danger:             #E63946;
+
+    --color-label:              #1E2225;
+
+    --color-input: var(--color-label);
+    --color-input-background:   #F9FAFC;
+    --color-input-border:       #F1F2F5;
+    --color-input-placeholder:  #959ca6;
+    
+    --color-input-border-hover:         var(--color-salmon-100);
+    --color-input-border-focus:         var(--color-salmon-300);
+    --color-input-password-icon:        var(--color-salmon-300);
+    --color-input-password-icon-hover:  var(--color-salmon-500);
+    
+    --input-height:         3rem;
+    --input-border-radius:  1rem;
+}

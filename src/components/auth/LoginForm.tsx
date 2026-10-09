@@ -4,6 +4,8 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { createClient } from '@/utils/supabase/client'
 import styles from './LoginForm.module.scss'
+import { Input } from '../forms/Input'
+import { Key, Mail } from 'lucide-react'
 
 export function LoginForm() {
     const router = useRouter()
@@ -42,29 +44,27 @@ export function LoginForm() {
         <form className={styles.form} onSubmit={handleSubmit} noValidate>
             <h1 className={styles.title}>Entrar</h1>
 
-            <div className={styles.field}>
-                <label htmlFor='email'>E-mail</label>
-                <input
-                    id='email'
-                    type='email'
-                    autoComplete='email'
-                    required
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                />
-            </div>
+            <Input
+                label='E-mail'
+                icon={Mail}
+                type='email'
+                autoComplete='email'
+                placeholder='seuemail@dominio.com'
+                required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+            />
 
-            <div className={styles.field}>
-                <label htmlFor='password'>Senha</label>
-                <input
-                    id='password'
-                    type='password'
-                    autoComplete='current-password'
-                    required
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                />
-            </div>
+            <Input
+                label='Senha'
+                icon={Key}
+                type='password'
+                placeholder='●●●●●●'
+                autoComplete='current-password'
+                required
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+            />
 
             {error && (
                 <p className={styles.error} role='alert'>

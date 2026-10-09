@@ -1,0 +1,98 @@
+.inputWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.6rem;
+}
+.inputWrapper label {
+  font-size: 1.6rem;
+  font-weight: 500;
+  color: var(--color-label);
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+}
+.inputWrapper label span.required {
+  font-size: 1.8rem;
+  padding-left: 4px;
+  font-weight: 500;
+  color: var(--color-salmon-500);
+}
+.inputWrapper .inputContainer {
+  position: relative;
+  width: 100%;
+}
+.inputWrapper .inputContainer .input {
+  height: 3.6rem;
+  padding: 0 1rem;
+  width: 100%;
+  border: 2px solid var(--color-input-border);
+  background-color: white;
+  color: var(--color-input);
+  border-radius: 1rem;
+  font-size: 1.4rem;
+  transition: 0.2s ease;
+}
+.inputWrapper .inputContainer .input:disabled {
+  border: 2px dashed var(--color-input-border);
+  cursor: not-allowed;
+}
+.inputWrapper .inputContainer .input::-moz-placeholder {
+  color: var(--color-input-placeholder);
+}
+.inputWrapper .inputContainer .input::placeholder {
+  color: var(--color-input-placeholder);
+}
+.inputWrapper .inputContainer .input.withIconLeft {
+  padding-left: 3.2rem;
+}
+.inputWrapper .inputContainer .input.withIconRight {
+  padding-right: 3.2rem;
+}
+.inputWrapper .inputContainer .input::-ms-reveal, .inputWrapper .inputContainer .input::-ms-clear {
+  display: none;
+}
+.inputWrapper .inputContainer:hover .input:not(:disabled) {
+  border-color: var(--color-salmon-300);
+}
+.inputWrapper .inputContainer:hover .iconLeft {
+  color: var(--color-input-border-hover);
+}
+.inputWrapper .inputContainer:focus-within .input {
+  border-color: var(--color-input-border-focus);
+}
+.inputWrapper .inputContainer:focus-within .iconLeft {
+  color: var(--color-input-border-focus);
+}
+.inputWrapper .inputContainer .iconLeft {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--color-input-placeholder);
+  display: flex;
+  align-items: center;
+  pointer-events: none;
+  transition: 0.2s ease;
+}
+.inputWrapper .inputContainer .iconRight {
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--color-input-password-icon);
+  display: flex;
+  align-items: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 1;
+}
+.inputWrapper .inputContainer .iconRight:hover:not(:disabled) {
+  color: var(--color-input-password-icon-hover);
+}
+.inputWrapper .inputContainer .iconRight:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}/*# sourceMappingURL=Input.module.css.map */

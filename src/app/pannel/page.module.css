@@ -1,0 +1,96 @@
+.page {
+  min-height: 100vh;
+  background-color: #f8fafc;
+}
+
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  padding: 16px 24px;
+  background-color: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.headerContent {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  max-width: 896px;
+  margin: 0 auto;
+}
+
+.heading {
+  min-width: 0;
+}
+
+.headingTitle {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.3;
+  color: #111827;
+}
+
+.headingDescription {
+  margin: 4px 0 0;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #6b7280;
+}
+
+.progress {
+  flex-shrink: 0;
+  text-align: right;
+}
+
+.progressLabel {
+  font-size: 14px;
+  font-weight: 600;
+  color: #111827;
+}
+
+.progressTrack {
+  width: 128px;
+  height: 8px;
+  margin-top: 4px;
+  overflow: hidden;
+  border-radius: 999px;
+  background-color: #e5e7eb;
+}
+
+.progressFill {
+  height: 100%;
+  border-radius: inherit;
+  background-color: #3b82f6;
+  transition: width 0.3s ease;
+}
+
+.trailSection {
+  padding: 48px 24px;
+  overflow-x: auto;
+}
+
+@media (max-width: 480px) {
+  .header {
+    padding: 16px;
+  }
+  .headerContent {
+    gap: 12px;
+  }
+  .headingTitle {
+    font-size: 20px;
+  }
+  .headingDescription {
+    max-width: 190px;
+    font-size: 12px;
+  }
+  .progressTrack {
+    width: 88px;
+  }
+  .trailSection {
+    padding: 40px 16px;
+  }
+}/*# sourceMappingURL=page.module.css.map */

@@ -1,0 +1,78 @@
+.node {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.node::after {
+  content: "";
+  position: absolute;
+  width: 70px;
+  height: 57px;
+  bottom: -8px;
+  border-radius: 50%;
+  z-index: 0;
+  transition: background-color 0.2s ease;
+}
+.node.available::after {
+  background-color: #400d88;
+}
+.node.completed::after {
+  background-color: #e6a000;
+}
+.node.locked::after {
+  background-color: #a6a6a6;
+}
+
+.trailNode {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 70px;
+  height: 57px;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+  transition: transform 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
+}
+.trailNode:focus-visible {
+  outline: 3px solid #93c5fd;
+  outline-offset: 4px;
+}
+.trailNode.available:hover, .trailNode.completed:hover {
+  top: 1px;
+}
+.trailNode.available:active, .trailNode.completed:active {
+  top: 8px;
+}
+.trailNode.available {
+  background-color: #8140dc;
+  color: #ffffff;
+}
+.trailNode.completed {
+  background-color: #ffe700;
+  color: #e6a000;
+}
+.trailNode.completed .icon svg {
+  stroke-width: 4;
+  fill: none;
+}
+.trailNode.locked {
+  background-color: #d9d9d9;
+  color: #a6a6a6;
+  cursor: not-allowed;
+}
+.trailNode.locked .icon svg {
+  fill: none;
+}
+.trailNode .icon svg {
+  stroke-width: 3;
+  width: 28px;
+  height: 28px;
+  fill: white;
+}/*# sourceMappingURL=TrailNode.module.css.map */

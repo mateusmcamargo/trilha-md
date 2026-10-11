@@ -1,8 +1,6 @@
 'use client';
 
-import TrailNode, {
-    TrailNodeStatus,
-} from '#/components/TrailNode/TrailNode';
+import TrailNode, { TrailNodeStatus } from './TrailNode';
 
 import styles from './Trail.module.scss';
 
@@ -10,6 +8,7 @@ interface TrailItem {
     id: string;
     title: string;
     status: TrailNodeStatus;
+    progress: number;
 }
 
 interface TrailProps {
@@ -111,6 +110,7 @@ export default function Trail({ items }: TrailProps) {
                         <TrailNode
                             id={item.id}
                             status={item.status}
+                            progress={item.progress}
                             onClick={() => {
                                 console.log(
                                     `Atividade selecionada: ${item.id}`

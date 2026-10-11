@@ -1,0 +1,42 @@
+div.container {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+div.container svg.svg {
+  display: block;
+  transform: rotate(-90deg);
+}
+div.container circle.track, div.container circle.progress, div.container ellipse.track, div.container ellipse.progress {
+  fill: none;
+}
+div.container circle.progress {
+  stroke-linecap: round;
+  transition: stroke-dashoffset 0.4s ease;
+}
+div.container span.label {
+  position: absolute;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1;
+  color: #111827;
+}
+
+div.available {
+  position: absolute;
+  top: -17;
+}
+div.available circle.track, div.available ellipse.track {
+  stroke: var(--color-node-border-available);
+}
+div.available circle.progress, div.available ellipse.progress {
+  stroke: var(--color-purple-700);
+}
+div.available span.label {
+  position: absolute;
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--color-purple-700);
+}/*# sourceMappingURL=CircularProgressBar.module.css.map */

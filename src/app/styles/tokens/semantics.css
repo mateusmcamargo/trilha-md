@@ -13,6 +13,10 @@
     --color-input-password-icon:        var(--color-salmon-300);
     --color-input-password-icon-hover:  var(--color-salmon-500);
     
+    --color-node-fill-available:  var(--color-purple-500):
+    --color-node-border-available: #400d88:
+    --color-node-label-available: #6e1de1:
+
     --input-height:         3rem;
     --input-border-radius:  1rem;
 }

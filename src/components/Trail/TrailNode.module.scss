@@ -1,0 +1,106 @@
+
+.node {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    // A borda fica fixa em relação ao contêiner
+    &::after {
+        content: "";
+        position: absolute;
+
+        width: 70px;
+        height: 57px;
+        bottom: -8px;
+
+        border-radius: 50%;
+        z-index: 0;
+
+        transition: background-color 0.2s ease;
+    }
+
+    &.available::after {
+        background-color: #400d88;
+    }
+
+    &.completed::after {
+        background-color: #e6a000;
+    }
+
+    &.locked::after {
+        background-color: #a6a6a6;
+    }
+}
+
+.trailNode {
+    position: relative;
+    z-index: 1;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 70px;
+    height: 57px;
+
+    border: none;
+    border-radius: 50%;
+
+    cursor: pointer;
+    user-select: none;
+
+    transition:
+        transform 0.2s ease,
+        background-color 0.2s ease,
+        border-color 0.2s ease;
+
+    &:focus-visible {
+        outline: 3px solid #93c5fd;
+        outline-offset: 4px;
+    }
+
+    &.available, &.completed {
+
+        &:hover {
+            top: 1px;
+        }
+
+        &:active {
+            top: 8px;
+        }
+    }
+
+    &.available {
+        background-color: #8140dc;
+        color: #ffffff;
+    }
+
+    &.completed {
+        background-color: #ffe700;
+        color: #e6a000;
+
+        .icon svg {
+            stroke-width: 4;
+            fill: none;
+        }
+    }
+
+    &.locked {
+        background-color: #d9d9d9;
+        color: #a6a6a6;
+        cursor: not-allowed;
+
+        .icon svg {
+            fill: none;
+        }
+    }
+
+    .icon svg {
+        stroke-width: 3;
+        width: 28px;
+        height: 28px;
+        fill: white;
+    }
+}

@@ -85,6 +85,9 @@ div.page main.trail section.trailCard div.trailProgress div.progressFill {
   background-color: var(--color-purple-300);
   transition: width 0.2s ease;
 }
+div.page main.terminal {
+  height: 80vh;
+}
 div.page main.profile {
   gap: 5vw;
 }

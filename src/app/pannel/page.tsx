@@ -6,6 +6,7 @@ import { Dumbbell, FileText, Flame, Flower, Heart, Icon, Pencil, Route, Sparkles
 import styles from './page.module.scss';
 import { useState } from 'react';
 import PressableBase from '#/components/PressableBase/PressableBase';
+import CodeSandbox from '#/components/CodeSandbox/CodeSandbox';
 
 type Page = 'trail' | 'terminal' | 'practice' | 'files' | 'progress' | 'profile';
 
@@ -143,7 +144,7 @@ const trailItems = [
 
 export default function page() {
 
-    const [activePage, setActivePage] = useState<string>('profile');
+    const [activePage, setActivePage] = useState<string>('terminal');
 
     const completed = trailItems.filter(
         (item) => item.status === 'completed'
@@ -267,8 +268,17 @@ export default function page() {
                         <p className={styles.paths}>Nenhuma trilha concluída ainda :(</p>
                     </div>
                 </main>
+            ) : activePage === 'terminal' ? (
+                <main
+                    className={styles.terminal}
+                    aria-label='Terminal de código'
+                >
+                    <CodeSandbox/>
+                </main>
             ) : (
-                <></>
+                <main className={styles.notFound}>
+                    <h1>Ops! Não há nada aqui :(</h1>
+                </main>
             )}
 
             <footer className={styles.footer}>

@@ -18,10 +18,13 @@
   background-color: #400d88;
 }
 .node.completed::after {
+  background-color: #46A302;
+}
+.node.mastered::after {
   background-color: #e6a000;
 }
 .node.locked::after {
-  background-color: #a6a6a6;
+  background-color: var(--color-node-border-locked);
 }
 
 .trailNode {
@@ -52,19 +55,30 @@
 }
 .trailNode.available {
   background-color: #8140dc;
-  color: #ffffff;
+  color: var(--color-purple-50);
+}
+.trailNode.available .icon svg {
+  fill: var(--color-purple-50);
 }
 .trailNode.completed {
-  background-color: #ffe700;
-  color: #e6a000;
+  background-color: #58CC02;
+  color: #e4ffcf;
 }
 .trailNode.completed .icon svg {
   stroke-width: 4;
   fill: none;
 }
+.trailNode.mastered {
+  background-color: #ffe700;
+  color: #e6a000;
+}
+.trailNode.mastered .icon svg {
+  stroke-width: 4;
+  fill: none;
+}
 .trailNode.locked {
-  background-color: #d9d9d9;
-  color: #a6a6a6;
+  background-color: var(--color-node-fill-locked);
+  color: var(--color-node-border-locked);
   cursor: not-allowed;
 }
 .trailNode.locked .icon svg {
@@ -74,5 +88,4 @@
   stroke-width: 3;
   width: 28px;
   height: 28px;
-  fill: white;
 }/*# sourceMappingURL=TrailNode.module.css.map */

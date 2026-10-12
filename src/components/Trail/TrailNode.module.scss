@@ -26,11 +26,15 @@
     }
 
     &.completed::after {
-        background-color: #e6a000;
+        background-color: #46A302;
     }
 
+    &.mastered::after {
+        background-color: #e6a000;
+    }
+    
     &.locked::after {
-        background-color: #a6a6a6;
+        background-color: var(--color-node-border-locked);
     }
 }
 
@@ -74,10 +78,24 @@
 
     &.available {
         background-color: #8140dc;
-        color: #ffffff;
+        color: var(--color-purple-50);
+
+        .icon svg {
+            fill: var(--color-purple-50);
+        }
     }
 
     &.completed {
+        background-color: #58CC02;
+        color: #e4ffcf;
+
+        .icon svg {
+            stroke-width: 4;
+            fill: none;
+        }
+    }
+
+    &.mastered {
         background-color: #ffe700;
         color: #e6a000;
 
@@ -88,8 +106,8 @@
     }
 
     &.locked {
-        background-color: #d9d9d9;
-        color: #a6a6a6;
+        background-color: var(--color-node-fill-locked);
+        color: var(--color-node-border-locked);
         cursor: not-allowed;
 
         .icon svg {
@@ -101,6 +119,5 @@
         stroke-width: 3;
         width: 28px;
         height: 28px;
-        fill: white;
     }
 }

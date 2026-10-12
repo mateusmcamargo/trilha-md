@@ -21,51 +21,17 @@ interface Position {
 }
 
 export default function Trail({ items }: TrailProps) {
+
     const NODE_SIZE = 80;
-    const VERTICAL_DISTANCE = 80;
-    const HORIZONTAL_DISTANCE = 50;
+    const VERTICAL_DISTANCE = 90;
+    const AMPLITUDE = 64;      // max displacement per wave
+    const NODES_PER_WAVE = 6;  // how many nodes form a wave
 
     const positions: Position[] = items.map((_, index) => {
-        const pattern = index % 4;
-
-        let x = 0;
-
-        switch (pattern) {
-            case 0:
-                x = 0;
-            break;
-
-            case 1:
-                x = HORIZONTAL_DISTANCE;
-            break;
-
-            case 2:
-                x = (HORIZONTAL_DISTANCE * 2);
-            break;
-
-            case 3:
-                x = HORIZONTAL_DISTANCE;
-            break;
-
-            case 4:
-                x = 0;
-            break;
-
-            case 5:
-                x = -HORIZONTAL_DISTANCE;
-            break;
-
-            case 6:
-                x = (-HORIZONTAL_DISTANCE * 2);
-            break;
-
-            case 7:
-                x = -HORIZONTAL_DISTANCE;
-            break;
-        }
+        const angle = (index / NODES_PER_WAVE) * Math.PI * 2;
 
         return {
-            x,
+            x: Math.round(Math.sin(angle) * AMPLITUDE),
             y: index * VERTICAL_DISTANCE,
         };
     });
@@ -83,8 +49,6 @@ export default function Trail({ items }: TrailProps) {
     const height = positions.length
         ? positions[positions.length - 1].y + NODE_SIZE + 150
         : 0;
-
-    const centerX = width / 2;
 
     return (
         <div

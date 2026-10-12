@@ -8,10 +8,10 @@ div.container svg.svg {
   display: block;
   transform: rotate(-90deg);
 }
-div.container circle.track, div.container circle.progress, div.container ellipse.track, div.container ellipse.progress {
+div.container ellipse.track, div.container ellipse.progress {
   fill: none;
 }
-div.container circle.progress {
+div.container ellipse.progress {
   stroke-linecap: round;
   transition: stroke-dashoffset 0.4s ease;
 }
@@ -25,13 +25,13 @@ div.container span.label {
 
 div.available {
   position: absolute;
-  top: -17;
+  top: -17px;
 }
-div.available circle.track, div.available ellipse.track {
-  stroke: var(--color-node-border-available);
+div.available ellipse.track {
+  stroke: var(--color-node-fill-locked);
 }
-div.available circle.progress, div.available ellipse.progress {
-  stroke: var(--color-purple-700);
+div.available ellipse.progress {
+  stroke: var(--color-node-fill-available);
 }
 div.available span.label {
   position: absolute;

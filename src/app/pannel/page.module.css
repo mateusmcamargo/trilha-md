@@ -1,96 +1,119 @@
-.page {
-  min-height: 100vh;
-  background-color: #f8fafc;
-}
-
-.header {
-  position: sticky;
+div.page header.header {
+  position: fixed;
   top: 0;
   z-index: 50;
-  padding: 16px 24px;
-  background-color: #ffffff;
-  border-bottom: 1px solid #e5e7eb;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
-}
-
-.headerContent {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 24px;
-  max-width: 896px;
-  margin: 0 auto;
+  height: 10vh;
+  width: 100vw;
+  padding: 0 5vw;
+  background-color: white;
+  border-bottom: 4px solid var(--color-header-border);
 }
-
-.heading {
-  min-width: 0;
+div.page header.header div.progressInfo {
+  display: flex;
+  gap: 2rem;
 }
-
-.headingTitle {
-  margin: 0;
-  font-size: 24px;
-  font-weight: 700;
-  line-height: 1.3;
-  color: #111827;
+div.page main.trail {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: calc(5vw + 6px);
+  padding: 5vw 0;
+  margin-top: 10vh;
 }
-
-.headingDescription {
-  margin: 4px 0 0;
-  font-size: 14px;
-  line-height: 1.5;
-  color: #6b7280;
+div.page main.trail section.trailCard {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 90vw;
+  padding: 2rem;
+  border-radius: 1rem;
+  background-color: var(--color-purple-500);
+  box-shadow: 0 6px 0 0 var(--color-purple-900);
+  z-index: 40;
 }
-
-.progress {
+div.page main.trail section.trailCard div.trailInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+div.page main.trail section.trailCard div.trailInfo div.trailTitle {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+div.page main.trail section.trailCard div.trailInfo div.trailTitle svg {
+  color: var(--color-purple-300);
+}
+div.page main.trail section.trailCard div.trailInfo div.trailTitle h1 {
+  text-transform: uppercase;
+  font-weight: 800;
+  color: var(--color-purple-300);
+  font-size: 2rem;
+}
+div.page main.trail section.trailCard div.trailInfo h2 {
+  font-weight: 800;
+  color: var(--color-purple-900);
+  font-size: 1.8rem;
+}
+div.page main.trail section.trailCard div.trailProgress {
   flex-shrink: 0;
   text-align: right;
 }
-
-.progressLabel {
+div.page main.trail section.trailCard div.trailProgress span.progressLabel {
   font-size: 14px;
   font-weight: 600;
-  color: #111827;
+  color: var(--color-purple-50);
 }
-
-.progressTrack {
-  width: 128px;
-  height: 8px;
-  margin-top: 4px;
+div.page main.trail section.trailCard div.trailProgress div.progressTrack {
+  width: 100%;
+  height: 1.6rem;
+  border-radius: 50rem;
   overflow: hidden;
-  border-radius: 999px;
-  background-color: #e5e7eb;
+  background-color: var(--color-header-border);
 }
-
-.progressFill {
+div.page main.trail section.trailCard div.trailProgress div.progressFill {
   height: 100%;
   border-radius: inherit;
-  background-color: #3b82f6;
-  transition: width 0.3s ease;
+  background-color: var(--color-purple-300);
+  transition: width 0.2s ease;
 }
-
-.trailSection {
-  padding: 48px 24px;
-  overflow-x: auto;
+div.page footer.footer {
+  position: fixed;
+  bottom: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 10vh;
+  width: 100vw;
+  padding: 0 2rem;
+  background-color: white;
+  border-top: 4px solid var(--color-header-border);
 }
-
-@media (max-width: 480px) {
-  .header {
-    padding: 16px;
-  }
-  .headerContent {
-    gap: 12px;
-  }
-  .headingTitle {
-    font-size: 20px;
-  }
-  .headingDescription {
-    max-width: 190px;
-    font-size: 12px;
-  }
-  .progressTrack {
-    width: 88px;
-  }
-  .trailSection {
-    padding: 40px 16px;
-  }
+div.page footer.footer div.userInfo {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+div.page footer.footer div.userInfo div.avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.6rem;
+  height: 3.6rem;
+  border-radius: 50%;
+  background-color: var(--color-purple-500);
+}
+div.page footer.footer div.userInfo div.avatar span {
+  font-weight: 800;
+  font-size: 1.4rem;
+  color: var(--color-purple-50);
+}
+div.page footer.footer div.userInfo span {
+  font-size: 1.6rem;
+  font-weight: 600;
 }/*# sourceMappingURL=page.module.css.map */

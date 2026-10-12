@@ -1,28 +1,27 @@
 'use client';
 
-import { LogoutButton } from '#/components/button/LogoutButton';
+import { Badge } from '#/components/Badge/Badge';
 import Trail from '#/components/Trail/Trail';
+import { Dumbbell, FileText, Flame, Flower, Heart, Route, Sparkles, Terminal, TerminalSquare, TerminalSquareIcon, TrendingUp, Venus } from 'lucide-react';
 import styles from './page.module.scss';
-
-
 
 const trailItems = [
     {
         id: '1',
         title: 'Boas-vindas',
-        status: 'completed' as const,
+        status: 'mastered' as const,
         progress: 100,
     },
     {
         id: '2',
         title: 'Tecnologia',
-        status: 'completed' as const,
+        status: 'mastered' as const,
         progress: 100,
     },
     {
         id: '3',
         title: 'Programação',
-        status: 'completed' as const,
+        status: 'mastered' as const,
         progress: 100,
     },
     {
@@ -70,8 +69,8 @@ const trailItems = [
     {
         id: '11',
         title: 'JavaScript',
-        status: 'available' as const,
-        progress: 10,
+        status: 'locked' as const,
+        progress: 0,
     },
     {
         id: '12',
@@ -139,27 +138,57 @@ export default function TutorandaPage() {
         (completed / trailItems.length) * 100
     );
 
+    const spark_count = 4;
+    const life = 5;
+    const xp = 240;
+
     return (
-        <main className={styles.page}>
-            {/* Cabeçalho */}
+        <div className={styles.page}>
             <header className={styles.header}>
-                <div className={styles.headerContent}>
-                    <div className={styles.heading}>
-                        <h1 className={styles.headingTitle}>
-                            Minha trilha
-                        </h1>
 
-                        <p className={styles.headingDescription}>
-                            Continue sua jornada na tecnologia
-                        </p>
+                <div className={styles.trailInfo}>
+                    <Badge
+                        icon={Flower}
+                        variant='trail'
+                        label={`${progress.toString()} %`}
+                    />
+                </div>
 
-                        <LogoutButton/>
+                <div className={styles.progressInfo}>
+                    <Badge
+                        icon={Sparkles}
+                        variant='xp'
+                        label={xp.toString()}
+                    />
+                    <Badge
+                        icon={Flame}
+                        variant='spark'
+                        label={spark_count.toString()}
+                    />
+                    <Badge
+                        icon={Heart}
+                        variant='life'
+                        label={life.toString()}
+                    />
+                </div>
+            </header>
+
+            <main
+                className={styles.trail}
+                aria-label="Atividades da minha trilha"
+            >
+
+                <section className={styles.trailCard}>
+
+                    <div className={styles.trailInfo}>
+                        <div className={styles.trailTitle}>
+                            <Flower/>
+                            <h1>Trilha Dente-de-Leão</h1>
+                        </div>
+                        <h2>Como a internet funciona</h2>
                     </div>
 
-                    <div className={styles.progress}>
-                        <span className={styles.progressLabel}>
-                            {progress}%
-                        </span>
+                    <div className={styles.trailProgress}>
 
                         <div
                             className={styles.progressTrack}
@@ -177,16 +206,41 @@ export default function TutorandaPage() {
                             />
                         </div>
                     </div>
-                </div>
-            </header>
+                </section>
 
-            {/* Área da trilha */}
-            <section
-                className={styles.trailSection}
-                aria-label="Atividades da minha trilha"
-            >
-                <Trail items={trailItems} />
-            </section>
-        </main>
+                <section className={styles.trailPath}>
+                    <Trail items={trailItems}/>
+                </section>
+            </main>
+
+            <footer className={styles.footer}>
+                <Badge
+                    icon={Route}
+                    variant='page'
+                    isActive={true}
+                />
+                <Badge
+                    icon={TerminalSquare}
+                    variant='page'
+                />
+                <Badge
+                    icon={Dumbbell}
+                    variant='page'
+                />
+                <Badge
+                    icon={FileText}
+                    variant='page'
+                />
+                <Badge
+                    icon={TrendingUp}
+                    variant='page'
+                />
+                <div className={styles.userInfo}>
+                    <div className={styles.avatar}>
+                        <span>AF</span>
+                    </div>
+                </div>
+            </footer>
+        </div>
     );
 }

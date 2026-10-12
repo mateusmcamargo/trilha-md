@@ -10,11 +10,11 @@ div.container {
         transform: rotate(-90deg);
     }
 
-    circle.track, circle.progress, ellipse.track, ellipse.progress {
+    ellipse.track, ellipse.progress {
         fill: none;
     }
 
-    circle.progress {
+    ellipse.progress {
         stroke-linecap: round;
         transition: stroke-dashoffset 0.4s ease;
     }
@@ -30,15 +30,15 @@ div.container {
 
 div.available {
     position: absolute;
-    top: -17;
+    top: -17px;
 
 
-    circle.track, ellipse.track {
-        stroke: var(--color-node-border-available);
+    ellipse.track {
+        stroke: var(--color-node-fill-locked);
     }
 
-    circle.progress, ellipse.progress {
-        stroke: var(--color-purple-700);
+    ellipse.progress {
+        stroke: var(--color-node-fill-available);
     }
 
     span.label {

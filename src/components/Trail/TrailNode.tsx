@@ -5,7 +5,7 @@ import { Check, Star, Lock } from 'lucide-react';
 import styles from './TrailNode.module.scss';
 import { CircularProgressBar } from './CircularProgressBar';
 
-export type TrailNodeStatus = 'locked' | 'available' | 'completed';
+export type TrailNodeStatus = 'locked' | 'available' | 'completed' | 'mastered';
 
 interface TrailNodeProps {
     id: string;
@@ -20,14 +20,17 @@ export default function TrailNode({
     progress,
     onClick,
 }: TrailNodeProps) {
-    const isLocked = status === 'locked';
+    const isLocked    = status === 'locked';
     const isCompleted = status === 'completed';
+    const isMastered  = status === 'mastered';
 
     const statusClass =
         status === 'completed'
             ? styles.completed
             : status === 'available'
             ? styles.available
+            : status === 'mastered'
+            ? styles.mastered
             : styles.locked;
 
     return (
@@ -38,7 +41,7 @@ export default function TrailNode({
                     width={90}
                     height={98}
                     progress={progress}
-                    className="available"
+                    className='available'
                     showLabel={false}
                 />
             )}
@@ -50,10 +53,10 @@ export default function TrailNode({
                 className={`${styles.trailNode} ${statusClass}`}
             >
                 <span className={styles.icon}>
-                    {isCompleted
-                        ? <Check />
+                    {isCompleted || isMastered
+                        ? <Check/>
                         : isLocked
-                        ? <Lock />
+                        ? <Lock/>
                         : <Star />
                     }
                 </span>

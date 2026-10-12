@@ -8,7 +8,7 @@
     --color-purple-50:  #F5EEFC;
     --color-purple-100: #E8D9F8;
     --color-purple-300: #B98CEA;
-    --color-purple-500: #8140DC;
+    --color-purple-500: #6e1de1;
     --color-purple-700: #5A299B;
     --color-purple-900: #301557;
 
@@ -18,4 +18,10 @@
     --color-salmon-500: #FF467A;
     --color-salmon-700: #B82D54;
     --color-salmon-900: #661730;
+
+    --color-yellow-100: #FDF0D5;
+    --color-yellow-300: #FFEA88;
+    --color-yellow-500: #FFD51E;
+    --color-yellow-700: #FFC349;
+    --color-yellow-900: #D99B21;
 }

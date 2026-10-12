@@ -2,8 +2,19 @@
 
 import { Badge } from '#/components/Badge/Badge';
 import Trail from '#/components/Trail/Trail';
-import { Dumbbell, FileText, Flame, Flower, Heart, Route, Sparkles, Terminal, TerminalSquare, TerminalSquareIcon, TrendingUp, Venus } from 'lucide-react';
+import { Dumbbell, FileText, Flame, Flower, Heart, Icon, Pencil, Route, Sparkles, Terminal, TerminalSquare, TerminalSquareIcon, TrendingUp, Venus } from 'lucide-react';
 import styles from './page.module.scss';
+import { useState } from 'react';
+
+type Page = 'trail' | 'terminal' | 'practice' | 'files' | 'progress' | 'profile';
+
+const navItems = [
+    { page: 'trail',    icon: Route,          label: 'Trilha'    },
+    { page: 'terminal', icon: TerminalSquare, label: 'Terminal'  },
+    { page: 'practice', icon: Dumbbell,       label: 'Praticar'  },
+    { page: 'files',    icon: FileText,       label: 'Materiais' },
+    { page: 'progress', icon: TrendingUp,     label: 'Progresso' },
+] as const;
 
 const trailItems = [
     {
@@ -129,7 +140,10 @@ const trailItems = [
 ];
 
 
-export default function TutorandaPage() {
+export default function page() {
+
+    const [activePage, setActivePage] = useState<string>('trail');
+
     const completed = trailItems.filter(
         (item) => item.status === 'completed'
     ).length;
@@ -173,73 +187,106 @@ export default function TutorandaPage() {
                 </div>
             </header>
 
-            <main
-                className={styles.trail}
-                aria-label="Atividades da minha trilha"
-            >
+            {activePage === 'trail' ? (
+                <main
+                    className={styles.trail}
+                    aria-label='Atividades da minha trilha'
+                >
 
-                <section className={styles.trailCard}>
+                    <section className={styles.trailCard}>
 
-                    <div className={styles.trailInfo}>
-                        <div className={styles.trailTitle}>
-                            <Flower/>
-                            <h1>Trilha Dente-de-Leão</h1>
+                        <div className={styles.trailInfo}>
+                            <div className={styles.trailTitle}>
+                                <Flower/>
+                                <h1>Trilha Dente-de-Leão</h1>
+                            </div>
+                            <h2>Como a internet funciona</h2>
                         </div>
-                        <h2>Como a internet funciona</h2>
-                    </div>
 
-                    <div className={styles.trailProgress}>
+                        <div className={styles.trailProgress}>
 
-                        <div
-                            className={styles.progressTrack}
-                            role="progressbar"
-                            aria-label="Progresso da trilha"
-                            aria-valuenow={progress}
-                            aria-valuemin={0}
-                            aria-valuemax={100}
-                        >
                             <div
-                                className={styles.progressFill}
-                                style={{
-                                    width: `${progress}%`,
-                                }}
-                            />
+                                className={styles.progressTrack}
+                                role='progressbar'
+                                aria-label='Progresso da trilha'
+                                aria-valuenow={progress}
+                                aria-valuemin={0}
+                                aria-valuemax={100}
+                            >
+                                <div
+                                    className={styles.progressFill}
+                                    style={{
+                                        width: `${progress}%`,
+                                    }}
+                                />
+                            </div>
+                        </div>
+                    </section>
+
+                    <section className={styles.trailPath}>
+                        <Trail items={trailItems}/>
+                    </section>
+                </main>
+            ) : activePage === 'profile' ? (
+                <main
+                    className={styles.profile}
+                    aria-label='Meu Perfil'
+                >
+                    <div className={styles.calling}>
+                        <h2>Oi, Anne! 👋</h2>
+                        <div className={styles.action}>
+                            <span>Bora codar no </span>
+                                <button
+                                    className={styles.actionButton}
+                                    onClick={() => setActivePage('terminal')}
+                                >
+                                    <TerminalSquare/>
+                                    <span>Terminal</span>
+                                </button>
+                            <span>?</span>
                         </div>
                     </div>
-                </section>
 
-                <section className={styles.trailPath}>
-                    <Trail items={trailItems}/>
-                </section>
-            </main>
+                    <div className={styles.avatarBig}>
+                        <Badge
+                            icon={Pencil}
+                            variant='edit'
+                        />
+                    </div>
+
+                    <div className={styles.userInfo}>
+                        <h3 className={styles.fullName}>Anne Franco</h3>
+                        <p className={styles.username}>anne.franco26</p>
+                        <p className={styles.journey}>Começou sua trilha em outrubro de 2026</p>
+                        <p className={styles.paths}>Nenhuma trilha concluída ainda :(</p>
+                    </div>
+                </main>
+            ) : (
+                <></>
+            )}
 
             <footer className={styles.footer}>
-                <Badge
-                    icon={Route}
-                    variant='page'
-                    isActive={true}
-                />
-                <Badge
-                    icon={TerminalSquare}
-                    variant='page'
-                />
-                <Badge
-                    icon={Dumbbell}
-                    variant='page'
-                />
-                <Badge
-                    icon={FileText}
-                    variant='page'
-                />
-                <Badge
-                    icon={TrendingUp}
-                    variant='page'
-                />
-                <div className={styles.userInfo}>
-                    <div className={styles.avatar}>
-                        <span>AF</span>
-                    </div>
-                </div>
+                {navItems.map(({ page, icon: Icon, label }) => (
+                    <button
+                        key={page}
+                        type='button'
+                        className={`${styles.navButton} ${activePage === page ? styles.active : ''}`}
+                        onClick={() => setActivePage(page)}
+                        aria-label={label}
+                        aria-current={activePage === page ? 'page' : undefined}
+                    >
+                        <Icon/>
+                    </button>
+                ))}
+                <button
+                    type='button'
+                    className={`${styles.avatar} ${activePage === 'profile' ? styles.active : ''}`}
+                    onClick={() => setActivePage('profile')}
+                    aria-label='Meu perfil'
+                    aria-current={activePage === 'profile' ? 'page' : undefined}
+                >
+                    <span>AF</span>
+                </button>
             </footer>
         </div>
     );

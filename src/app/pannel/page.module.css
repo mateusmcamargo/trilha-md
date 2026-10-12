@@ -18,14 +18,16 @@ div.page header.header div.progressInfo {
   display: flex;
   gap: 2rem;
 }
-div.page main.trail {
+div.page main {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  gap: calc(5vw + 6px);
   padding: 5vw 0;
   margin-top: 10vh;
+}
+div.page main.trail {
+  gap: calc(5vw + 6px);
 }
 div.page main.trail section.trailCard {
   display: flex;
@@ -84,6 +86,80 @@ div.page main.trail section.trailCard div.trailProgress div.progressFill {
   background-color: var(--color-purple-300);
   transition: width 0.2s ease;
 }
+div.page main.profile div.calling {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+}
+div.page main.profile div.calling h2 {
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--color-purple-700);
+}
+div.page main.profile div.calling div.action {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+div.page main.profile div.calling div.action span {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: var(--color-purple-500);
+}
+div.page main.profile div.calling div.action button.actionButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 0.4rem 1rem;
+  cursor: pointer;
+  background-color: var(--color-node-fill-available);
+}
+div.page main.profile div.calling div.action button.actionButton span {
+  color: var(--color-purple-50);
+}
+div.page main.profile div.calling div.action button.actionButton svg {
+  width: 2.4rem;
+  height: 2.4rem;
+  stroke-width: 2.4;
+  color: var(--color-purple-50);
+}
+div.page main.profile div.avatarBig {
+  display: flex;
+  justify-content: flex-end;
+  width: 90vw;
+  height: 60vw;
+  border-radius: 1rem;
+  padding: 1rem;
+  background-color: var(--color-purple-100);
+}
+div.page main.profile div.userInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  width: 90vw;
+}
+div.page main.profile div.userInfo h3 {
+  font-size: 2.4rem;
+  font-weight: 800;
+  color: #333;
+}
+div.page main.profile div.userInfo p {
+  font-size: 1.4rem;
+  font-weight: 600;
+}
+div.page main.profile div.userInfo p.username {
+  color: #838383;
+}
+div.page main.profile div.userInfo p.journey {
+  color: #333;
+}
+div.page main.profile div.userInfo p.paths {
+  font-weight: 900;
+  color: var(--color-purple-500);
+}
 div.page footer.footer {
   position: fixed;
   bottom: 0;
@@ -96,27 +172,45 @@ div.page footer.footer {
   padding: 0 2rem;
   background-color: white;
   border-top: 4px solid var(--color-header-border);
+  transition: 0.1s ease;
 }
-div.page footer.footer div.userInfo {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
-div.page footer.footer div.userInfo div.avatar {
+div.page footer.footer button {
   display: flex;
   align-items: center;
   justify-content: center;
   width: 3.6rem;
   height: 3.6rem;
   border-radius: 50%;
-  background-color: var(--color-purple-500);
+  border: none;
+  cursor: pointer;
+  transition: 0.15s ease;
 }
-div.page footer.footer div.userInfo div.avatar span {
+div.page footer.footer button.navButton {
+  background: none;
+}
+div.page footer.footer button.navButton svg {
+  color: var(--color-purple-300);
+  width: 2.4rem;
+  height: 2.4rem;
+  stroke-width: 3;
+}
+div.page footer.footer button.navButton.active svg {
+  color: var(--color-purple-500);
+}
+div.page footer.footer button.navButton.active {
+  outline: 4px solid var(--color-purple-500);
+  outline-offset: 2px;
+}
+div.page footer.footer button.avatar {
+  background-color: var(--color-purple-300);
+}
+div.page footer.footer button.avatar.active {
+  background-color: var(--color-purple-500);
+  outline: 4px solid var(--color-purple-500);
+  outline-offset: 2px;
+}
+div.page footer.footer button.avatar span {
   font-weight: 800;
   font-size: 1.4rem;
   color: var(--color-purple-50);
-}
-div.page footer.footer div.userInfo span {
-  font-size: 1.6rem;
-  font-weight: 600;
 }/*# sourceMappingURL=page.module.css.map */

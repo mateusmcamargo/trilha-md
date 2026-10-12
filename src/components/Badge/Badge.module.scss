@@ -43,22 +43,6 @@ span.trail {
     }
 }
 
-span.edit {
-    color: var(--color-badge-background-trail);
-    border: solid 4px var(--color-badge-background-trail);
-
-    width: 3.8rem;
-    height: 3.8rem;
-    font-size: 1.8rem;
-    font-weight: 700;
-
-    svg {
-        width: 2rem;
-        height: 2rem;
-        stroke-width: 3;
-    }
-}
-
 span.xp {
     border: none;
     color: var(--color-badge-label-xp);

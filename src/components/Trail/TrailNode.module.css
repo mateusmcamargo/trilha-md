@@ -1,35 +1,10 @@
-.node {
+div.node {
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
 }
-.node::after {
-  content: "";
-  position: absolute;
-  width: 70px;
-  height: 57px;
-  bottom: -8px;
-  border-radius: 50%;
-  z-index: 0;
-  transition: background-color 0.2s ease;
-}
-.node.available::after {
-  background-color: #400d88;
-}
-.node.completed::after {
-  background-color: #347c01;
-}
-.node.mastered::after {
-  background-color: #e6a000;
-}
-.node.locked::after {
-  background-color: var(--color-node-border-locked);
-}
-
-button.trailNode {
-  position: relative;
-  z-index: 1;
+div.node button.trailNode {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -41,9 +16,9 @@ button.trailNode {
   -webkit-user-select: none;
      -moz-user-select: none;
           user-select: none;
-  transition: transform 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
+  transition: transform 0.1s ease, background-color 0.2s ease;
 }
-button.trailNode .shine {
+div.node button.trailNode .shine {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -51,59 +26,45 @@ button.trailNode .shine {
   color: #fff;
   pointer-events: none;
 }
-button.trailNode.mastered .shine {
-  opacity: 0.65;
-}
-button.trailNode.completed .shine {
-  opacity: 0.35;
-}
-button.trailNode .icon {
+div.node button.trailNode .icon {
   z-index: 1;
 }
-button.trailNode:focus-visible {
+div.node button.trailNode:focus-visible {
   outline: 3px solid #93c5fd;
   outline-offset: 4px;
 }
-button.trailNode.available:hover, button.trailNode.completed:hover {
-  top: 1px;
-}
-button.trailNode.available:active, button.trailNode.completed:active {
-  top: 8px;
-}
-button.trailNode.available {
+div.node button.trailNode.available {
   background-color: #8140dc;
   color: var(--color-purple-50);
 }
-button.trailNode.available .icon svg {
+div.node button.trailNode.available .icon svg {
   fill: var(--color-purple-50);
 }
-button.trailNode.completed {
+div.node button.trailNode.completed .icon svg, div.node button.trailNode.mastered .icon svg {
+  stroke-width: 4;
+}
+div.node button.trailNode.completed {
   background-color: #58CC02;
   border: 6px solid #47a400;
   color: #e4ffcf;
 }
-button.trailNode.completed .icon svg {
-  stroke-width: 4;
-  fill: none;
+div.node button.trailNode.completed .shine {
+  opacity: 0.35;
 }
-button.trailNode.mastered {
+div.node button.trailNode.mastered {
   background-color: #ffe700;
   border: 6px solid #FFC700;
   color: #e6a000;
 }
-button.trailNode.mastered .icon svg {
-  stroke-width: 4;
-  fill: none;
+div.node button.trailNode.mastered .shine {
+  opacity: 0.65;
 }
-button.trailNode.locked {
+div.node button.trailNode.locked {
   background-color: var(--color-node-fill-locked);
   color: var(--color-node-border-locked);
   cursor: not-allowed;
 }
-button.trailNode.locked .icon svg {
-  fill: none;
-}
-button.trailNode .icon svg {
+div.node button.trailNode .icon svg {
   stroke-width: 3;
   width: 28px;
   height: 28px;

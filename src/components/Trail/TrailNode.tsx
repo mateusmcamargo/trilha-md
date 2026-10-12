@@ -1,10 +1,10 @@
-
 'use client';
 
 import { Check, Star, Lock } from 'lucide-react';
 import styles from './TrailNode.module.scss';
 import { CircularProgressBar } from './CircularProgressBar';
 import TrailNodeShine from './TrailNodeShine';
+import PressableBase from '#/components/PressableBase/PressableBase';
 
 export type TrailNodeStatus = 'locked' | 'available' | 'completed' | 'mastered';
 
@@ -15,55 +15,52 @@ interface TrailNodeProps {
     onClick?: () => void;
 }
 
+const pressableBaseColors: Record<TrailNodeStatus, string> = {
+    available: '#400d88',
+    completed: '#347c01',
+    mastered:  '#e6a000',
+    locked:    'var(--color-node-border-locked)',
+};
+
 export default function TrailNode({
     id,
     status,
     progress,
     onClick,
 }: TrailNodeProps) {
-    const isLocked    = status === 'locked';
-    const isCompleted = status === 'completed';
-    const isMastered  = status === 'mastered';
-
-    const statusClass =
-        status === 'completed'
-            ? styles.completed
-            : status === 'available'
-            ? styles.available
-            : status === 'mastered'
-            ? styles.mastered
-            : styles.locked;
+    const isLocked = status === 'locked';
+    const isDone   = status === 'completed' || status === 'mastered';
 
     return (
-        <div className={`${styles.node} ${statusClass}`}>
+        <div className={styles.node}>
 
             {status === 'available' && (
                 <CircularProgressBar
                     width={90}
                     height={98}
                     progress={progress}
-                    className='available'
                     showLabel={false}
                 />
             )}
 
-            <button
-                id={id}
-                onClick={onClick}
-                disabled={isLocked}
-                className={`${styles.trailNode} ${statusClass}`}
-            >
-                {isCompleted && <TrailNodeShine className={styles.shine}/>}
-                {isMastered  && <TrailNodeShine className={styles.shine}/>}
-                <span className={styles.icon}>
-                    {isCompleted || isMastered
-                        ? <Check/>
-                        : isLocked
-                        ? <Lock/>
-                        : <Star />
-                    }
-                </span>
-            </button>
+            <PressableBase color={pressableBaseColors[status]} radius='50%'>
+                <button
+                    id={id}
+                    onClick={onClick}
+                    disabled={isLocked}
+                    className={`${styles.trailNode} ${styles[status]}`}
+                >
+                    {isDone && <TrailNodeShine className={styles.shine}/>}
+                    <span className={styles.icon}>
+                        {isDone
+                            ? <Check/>
+                            : isLocked
+                            ? <Lock/>
+                            : <Star />
+                        }
+                    </span>
+                </button>
+            </PressableBase>
         </div>
     );
 }

@@ -5,6 +5,7 @@ import Trail from '#/components/Trail/Trail';
 import { Dumbbell, FileText, Flame, Flower, Heart, Icon, Pencil, Route, Sparkles, Terminal, TerminalSquare, TerminalSquareIcon, TrendingUp, Venus } from 'lucide-react';
 import styles from './page.module.scss';
 import { useState } from 'react';
+import PressableBase from '#/components/PressableBase/PressableBase';
 
 type Page = 'trail' | 'terminal' | 'practice' | 'files' | 'progress' | 'profile';
 
@@ -142,7 +143,7 @@ const trailItems = [
 
 export default function page() {
 
-    const [activePage, setActivePage] = useState<string>('trail');
+    const [activePage, setActivePage] = useState<string>('profile');
 
     const completed = trailItems.filter(
         (item) => item.status === 'completed'
@@ -193,35 +194,37 @@ export default function page() {
                     aria-label='Atividades da minha trilha'
                 >
 
-                    <section className={styles.trailCard}>
+                    <PressableBase color='var(--color-purple-900)' radius='1rem'>
+                        <section className={styles.trailCard}>
 
-                        <div className={styles.trailInfo}>
-                            <div className={styles.trailTitle}>
-                                <Flower/>
-                                <h1>Trilha Dente-de-Leão</h1>
+                            <div className={styles.trailInfo}>
+                                <div className={styles.trailTitle}>
+                                    <Flower/>
+                                    <h1>Trilha Dente-de-Leão</h1>
+                                </div>
+                                <h2>Como a internet funciona</h2>
                             </div>
-                            <h2>Como a internet funciona</h2>
-                        </div>
 
-                        <div className={styles.trailProgress}>
+                            <div className={styles.trailProgress}>
 
-                            <div
-                                className={styles.progressTrack}
-                                role='progressbar'
-                                aria-label='Progresso da trilha'
-                                aria-valuenow={progress}
-                                aria-valuemin={0}
-                                aria-valuemax={100}
-                            >
                                 <div
-                                    className={styles.progressFill}
-                                    style={{
-                                        width: `${progress}%`,
-                                    }}
-                                />
+                                    className={styles.progressTrack}
+                                    role='progressbar'
+                                    aria-label='Progresso da trilha'
+                                    aria-valuenow={progress}
+                                    aria-valuemin={0}
+                                    aria-valuemax={100}
+                                >
+                                    <div
+                                        className={styles.progressFill}
+                                        style={{
+                                            width: `${progress}%`,
+                                        }}
+                                    />
+                                </div>
                             </div>
-                        </div>
-                    </section>
+                        </section>
+                    </PressableBase>
 
                     <section className={styles.trailPath}>
                         <Trail items={trailItems}/>
@@ -236,22 +239,25 @@ export default function page() {
                         <h2>Oi, Anne! 👋</h2>
                         <div className={styles.action}>
                             <span>Bora codar no </span>
+                            <PressableBase color='var(--color-purple-900)' radius='.8rem'>
                                 <button
                                     className={styles.actionButton}
                                     onClick={() => setActivePage('terminal')}
-                                >
+                                    >
                                     <TerminalSquare/>
                                     <span>Terminal</span>
                                 </button>
+                            </PressableBase>
                             <span>?</span>
                         </div>
                     </div>
 
                     <div className={styles.avatarBig}>
-                        <Badge
-                            icon={Pencil}
-                            variant='edit'
-                        />
+                        <PressableBase color='var(--color-purple-900)' radius='.8rem'>
+                            <button className={styles.edit}>
+                                <Pencil/>
+                            </button>
+                        </PressableBase>
                     </div>
 
                     <div className={styles.userInfo}>

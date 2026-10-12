@@ -1,150 +1,92 @@
-.node {
+div.node {
     position: relative;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
-    &::after {
-        content: "";
-        position: absolute;
+    button.trailNode {
+        display: flex;
+        align-items: center;
+        justify-content: center;
 
         width: 70px;
         height: 57px;
-        bottom: -8px;
 
+        border: none;
         border-radius: 50%;
-        z-index: 0;
 
-        transition: background-color 0.2s ease;
-    }
+        cursor: pointer;
+        user-select: none;
 
-    &.available::after {
-        background-color: #400d88;
-    }
+        transition:
+            transform 0.1s ease,
+            background-color 0.2s ease;
 
-    &.completed::after {
-        background-color: #347c01;
-    }
-
-    &.mastered::after {
-        background-color: #e6a000;
-    }
-    
-    &.locked::after {
-        background-color: var(--color-node-border-locked);
-    }
-}
-
-button.trailNode {
-    position: relative;
-    z-index: 1;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    width: 70px;
-    height: 57px;
-
-    border: none;
-    border-radius: 50%;
-
-    cursor: pointer;
-    user-select: none;
-
-    transition:
-        transform 0.2s ease,
-        background-color 0.2s ease,
-        border-color 0.2s ease;
-
-    .shine {
-        position: absolute;
-        inset: 0;
-        width: 100%;
-        height: 100%;
-
-        color: #fff;
-        pointer-events: none;
-    }
-
-    &.mastered {
         .shine {
-            opacity: 0.65;
-        }
-    }
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
 
-    &.completed {
-        .shine {
-            opacity: 0.35;
-        }
-    }
-
-    .icon {
-        z-index: 1;
-    }
-
-    &:focus-visible {
-        outline: 3px solid #93c5fd;
-        outline-offset: 4px;
-    }
-
-    &.available, &.completed {
-
-        &:hover {
-            top: 1px;
+            color: #fff;
+            pointer-events: none;
         }
 
-        &:active {
-            top: 8px;
+        .icon {
+            z-index: 1;
         }
-    }
 
-    &.available {
-        background-color: #8140dc;
-        color: var(--color-purple-50);
+        &:focus-visible {
+            outline: 3px solid #93c5fd;
+            outline-offset: 4px;
+        }
+
+        &.available {
+            background-color: #8140dc;
+            color: var(--color-purple-50);
+
+            .icon svg {
+                fill: var(--color-purple-50);
+            }
+        }
+
+        &.completed, &.mastered {
+            .icon svg {
+                stroke-width: 4;
+            }
+        }
+
+        &.completed {
+            background-color: #58CC02;
+            border: 6px solid #47a400;
+            color: #e4ffcf;
+
+            .shine {
+                opacity: 0.35;
+            }
+        }
+
+        &.mastered {
+            background-color: #ffe700;
+            border: 6px solid #FFC700;
+            color: #e6a000;
+
+            .shine {
+                opacity: 0.65;
+            }
+        }
+
+        &.locked {
+            background-color: var(--color-node-fill-locked);
+            color: var(--color-node-border-locked);
+            cursor: not-allowed;
+        }
 
         .icon svg {
-            fill: var(--color-purple-50);
+            stroke-width: 3;
+            width: 28px;
+            height: 28px;
         }
-    }
-
-    &.completed {
-        background-color: #58CC02;
-        border: 6px solid #47a400;
-        color: #e4ffcf;
-
-        .icon svg {
-            
-            stroke-width: 4;
-            fill: none;
-        }
-    }
-
-    &.mastered {
-        background-color: #ffe700;
-        border: 6px solid #FFC700;
-        color: #e6a000;
-
-        .icon svg {
-            stroke-width: 4;
-            fill: none;
-        }
-    }
-
-    &.locked {
-        background-color: var(--color-node-fill-locked);
-        color: var(--color-node-border-locked);
-        cursor: not-allowed;
-
-        .icon svg {
-            fill: none;
-        }
-    }
-
-    .icon svg {
-        stroke-width: 3;
-        width: 28px;
-        height: 28px;
     }
 }

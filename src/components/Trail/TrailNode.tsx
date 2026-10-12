@@ -4,6 +4,7 @@
 import { Check, Star, Lock } from 'lucide-react';
 import styles from './TrailNode.module.scss';
 import { CircularProgressBar } from './CircularProgressBar';
+import TrailNodeShine from './TrailNodeShine';
 
 export type TrailNodeStatus = 'locked' | 'available' | 'completed' | 'mastered';
 
@@ -52,6 +53,8 @@ export default function TrailNode({
                 disabled={isLocked}
                 className={`${styles.trailNode} ${statusClass}`}
             >
+                {isCompleted && <TrailNodeShine className={styles.shine}/>}
+                {isMastered  && <TrailNodeShine className={styles.shine}/>}
                 <span className={styles.icon}>
                     {isCompleted || isMastered
                         ? <Check/>

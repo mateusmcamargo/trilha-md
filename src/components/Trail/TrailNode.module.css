@@ -18,7 +18,7 @@
   background-color: #400d88;
 }
 .node.completed::after {
-  background-color: #46A302;
+  background-color: #347c01;
 }
 .node.mastered::after {
   background-color: #e6a000;
@@ -27,7 +27,7 @@
   background-color: var(--color-node-border-locked);
 }
 
-.trailNode {
+button.trailNode {
   position: relative;
   z-index: 1;
   display: flex;
@@ -43,48 +43,67 @@
           user-select: none;
   transition: transform 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
 }
-.trailNode:focus-visible {
+button.trailNode .shine {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  color: #fff;
+  pointer-events: none;
+}
+button.trailNode.mastered .shine {
+  opacity: 0.65;
+}
+button.trailNode.completed .shine {
+  opacity: 0.35;
+}
+button.trailNode .icon {
+  z-index: 1;
+}
+button.trailNode:focus-visible {
   outline: 3px solid #93c5fd;
   outline-offset: 4px;
 }
-.trailNode.available:hover, .trailNode.completed:hover {
+button.trailNode.available:hover, button.trailNode.completed:hover {
   top: 1px;
 }
-.trailNode.available:active, .trailNode.completed:active {
+button.trailNode.available:active, button.trailNode.completed:active {
   top: 8px;
 }
-.trailNode.available {
+button.trailNode.available {
   background-color: #8140dc;
   color: var(--color-purple-50);
 }
-.trailNode.available .icon svg {
+button.trailNode.available .icon svg {
   fill: var(--color-purple-50);
 }
-.trailNode.completed {
+button.trailNode.completed {
   background-color: #58CC02;
+  border: 6px solid #47a400;
   color: #e4ffcf;
 }
-.trailNode.completed .icon svg {
+button.trailNode.completed .icon svg {
   stroke-width: 4;
   fill: none;
 }
-.trailNode.mastered {
+button.trailNode.mastered {
   background-color: #ffe700;
+  border: 6px solid #FFC700;
   color: #e6a000;
 }
-.trailNode.mastered .icon svg {
+button.trailNode.mastered .icon svg {
   stroke-width: 4;
   fill: none;
 }
-.trailNode.locked {
+button.trailNode.locked {
   background-color: var(--color-node-fill-locked);
   color: var(--color-node-border-locked);
   cursor: not-allowed;
 }
-.trailNode.locked .icon svg {
+button.trailNode.locked .icon svg {
   fill: none;
 }
-.trailNode .icon svg {
+button.trailNode .icon svg {
   stroke-width: 3;
   width: 28px;
   height: 28px;

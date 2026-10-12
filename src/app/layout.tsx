@@ -1,7 +1,7 @@
 import './styles/globals.css';
 
 import type { Metadata } from 'next';
-import { IBM_Plex_Mono, IBM_Plex_Serif, Nunito } from 'next/font/google';
+import { Chakra_Petch, IBM_Plex_Mono, IBM_Plex_Serif, Nunito } from 'next/font/google';
 
 const ibmPlexMono = IBM_Plex_Mono({
     variable: '--font-ibm-plex-mono',
@@ -18,6 +18,12 @@ const nunito = Nunito({
     subsets: ['latin'],
 });
 
+const chakraPetch = Chakra_Petch({
+    variable: '--font-chakra-petch',
+    subsets:['latin'],
+    weight: ['300', '400', '500' ,'600', '700'],
+});
+
 export const metadata: Metadata = {
     title: 'Trilha Meninas Digitais',
     description: 'Trilha gameficada para todas.',
@@ -31,6 +37,7 @@ export default function RootLayout({ children }: LayoutProps<'/'>) {
                 ${nunito.variable}
                 ${ibmPlexMono.variable}
                 ${ibmPlexSerif.variable}
+                ${chakraPetch.variable}
             `}
         >
             <body>{children}</body>

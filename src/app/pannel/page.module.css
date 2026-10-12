@@ -11,6 +11,9 @@ div.page header.header {
   background-color: white;
   border-bottom: 4px solid var(--color-header-border);
 }
+div.page header.header div.trailInfo span {
+  font-family: var(--font-chakra-petch);
+}
 div.page header.header div.progressInfo {
   display: flex;
   gap: 2rem;

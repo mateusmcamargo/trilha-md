@@ -53,10 +53,10 @@ div.inputWrapper div.inputContainer input.input.withIconRight {
 div.inputWrapper div.inputContainer input.input::-ms-reveal, div.inputWrapper div.inputContainer input.input::-ms-clear {
   display: none;
 }
-div.inputWrapper div.inputContainer:hover input.input:not(:disabled) {
+div.inputWrapper div.inputContainer:hover:not(:focus-within) input.input:not(:disabled) {
   border-color: var(--color-input-border-hover);
 }
-div.inputWrapper div.inputContainer:hover span.iconLeft {
+div.inputWrapper div.inputContainer:hover:not(:focus-within) span.iconLeft {
   color: var(--color-input-border-hover);
 }
 div.inputWrapper div.inputContainer:focus-within input.input {

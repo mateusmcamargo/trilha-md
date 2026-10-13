@@ -1,4 +1,4 @@
-import { LogoutButton } from '#/components/button/LogoutButton';
+import { LogoutButton } from '#/components/Button/LogoutButton';
 
 export default function MentorPage() {
     return (

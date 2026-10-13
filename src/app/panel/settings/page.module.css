@@ -5,6 +5,10 @@ main.settings {
   justify-content: flex-start;
   padding: 5vw 0;
   margin: 10vh 0;
+  width: 90vw;
+}
+main.settings section.logout {
+  width: 100%;
 }
 main.settings p {
   font-size: 1.6rem;

@@ -1,6 +1,3 @@
-main.profile {
-  gap: 5vw;
-}
 main.profile div.calling {
   display: flex;
   flex-direction: column;

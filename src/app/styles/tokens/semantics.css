@@ -34,15 +34,15 @@
 
     /* input */
     --color-input-bg:               var(--color-white);
-    --color-input-text:             var(--color-slate-800);
-    --color-input-label:            var(--color-slate-800);
-    --color-input-required:         var(--color-salmon-500);
+    --color-input-text:             var(--color-gray-800);
+    --color-input-label:            var(--color-slate-600);
+    --color-input-required:         var(--color-purple-500);
     --color-input-placeholder:      var(--color-slate-400);
-    --color-input-border:           var(--color-slate-100);
-    --color-input-border-hover:     var(--color-salmon-100);
-    --color-input-border-focus:     var(--color-salmon-300);
-    --color-input-icon:             var(--color-salmon-300);
-    --color-input-icon-hover:       var(--color-salmon-500);
+    --color-input-border:           var(--color-slate-200);
+    --color-input-border-hover:     var(--color-purple-300);
+    --color-input-border-focus:     var(--color-purple-500);
+    --color-input-icon:             var(--color-purple-300);
+    --color-input-icon-hover:       var(--color-purple-500);
 
     /* button */
     --color-button-border:          var(--color-gray-300);

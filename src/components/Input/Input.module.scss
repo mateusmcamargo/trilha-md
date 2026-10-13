@@ -1,12 +1,14 @@
-.inputWrapper {
+div.inputWrapper {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    gap: .6rem;
+    gap: 1rem;
+
+    width: 100%;
 
     label {
         font-size: 1.6rem;
-        font-weight: 500;
+        font-weight: 800;
         color: var(--color-input-label);
         user-select: none;
 
@@ -18,19 +20,19 @@
         }
     }
 
-    .inputContainer {
+    div.inputContainer {
         position: relative;
         width: 100%;
 
-        .input {
-            height: 3.6rem;
-            padding: 0 1rem;
+        input.input {
+            height: calc(3.6rem + 8px);
             width: 100%;
-            border: 2px solid var(--color-input-border);
+            font-size: 1.4rem;
+            font-weight: 700;
             background-color: var(--color-input-bg);
             color: var(--color-input-text);
+            border: 3px solid var(--color-input-border);
             border-radius: 1rem;
-            font-size: 1.4rem;
             transition: .2s ease;
 
             &:disabled {
@@ -42,8 +44,8 @@
                 color: var(--color-input-placeholder);
             }
 
-            &.withIconLeft  { padding-left:  3.2rem; }
-            &.withIconRight { padding-right: 3.2rem; }
+            &.withIconLeft  { padding-left:  3.8rem; }
+            &.withIconRight { padding-right: 3.8rem; }
 
             &::-ms-reveal,
             &::-ms-clear {
@@ -52,24 +54,28 @@
         }
 
         &:hover {
-            .input:not(:disabled) {
-                border-color: var(--color-input-border-focus);
+            input.input:not(:disabled) {
+                border-color: var(--color-input-border-hover);
             }
-            .iconLeft {
+            span.iconLeft {
                 color: var(--color-input-border-hover);
             }
         }
 
         &:focus-within {
-            .input {
+            input.input {
                 border-color: var(--color-input-border-focus);
             }
-            .iconLeft {
+            span.iconLeft {
                 color: var(--color-input-border-focus);
             }
         }
 
-        .iconLeft {
+        svg {
+            stroke-width: 2.6;
+        }
+
+        span.iconLeft {
             position: absolute;
             left: 1rem;
             top: 50%;
@@ -81,7 +87,7 @@
             transition: .2s ease;
         }
 
-        .iconRight {
+        button.iconRight {
             position: absolute;
             right: 1rem;
             top: 50%;

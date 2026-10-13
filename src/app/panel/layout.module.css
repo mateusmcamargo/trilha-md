@@ -1,8 +1,14 @@
+div.tabs {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
 div.tabs main {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
+  gap: 5vw;
   padding: 5vw 0;
   margin: 10vh 0;
 }

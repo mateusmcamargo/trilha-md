@@ -1,1 +1,28 @@
-/*# sourceMappingURL=LoginForm.module.css.map */
+form.form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  width: 90vw;
+  margin: 0 auto;
+}
+form.form div.title {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+form.form div.title h1 {
+  font-size: 2.4rem;
+  font-weight: 900;
+  color: var(--color-brand-darker);
+}
+form.form div.title p {
+  line-height: 1.2;
+  color: var(--color-brand-light);
+  font-size: 1.6rem;
+  font-weight: 700;
+  text-align: center;
+}/*# sourceMappingURL=LoginForm.module.css.map */

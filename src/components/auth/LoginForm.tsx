@@ -4,8 +4,9 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { createClient } from '@/utils/supabase/client'
 import styles from './LoginForm.module.scss'
-import { Input } from '../forms/Input'
+import { Input } from '../Input/Input'
 import { Key, Mail } from 'lucide-react'
+import { LoginButton } from '../Button/LoginButton'
 
 export function LoginForm() {
     const router = useRouter()
@@ -42,7 +43,10 @@ export function LoginForm() {
 
     return (
         <form className={styles.form} onSubmit={handleSubmit} noValidate>
-            <h1 className={styles.title}>Entrar</h1>
+            <div className={styles.title}>
+                <h1 className={styles.title}>Bem vinda de volta!</h1>
+                <p>Faça login para voltar à sua trilha ;)</p>
+            </div>
 
             <Input
                 label='E-mail'
@@ -72,9 +76,9 @@ export function LoginForm() {
                 </p>
             )}
 
-            <button type='submit' disabled={loading}>
-                {loading ? 'Entrando...' : 'Entrar'}
-            </button>
+            <LoginButton
+                loading={loading}
+            />
         </form>
     )
 }

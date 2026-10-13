@@ -5,6 +5,7 @@ import { ArrowLeft } from 'lucide-react';
 import PageHeader from '#/components/Header/PageHeader';
 
 import styles from './page.module.scss';
+import { LogoutButton } from '#/components/Button/LogoutButton';
 
 export const metadata: Metadata = {
     title: 'Configurações',
@@ -22,7 +23,9 @@ export default function SettingsPage() {
                 className={styles.settings}
                 aria-label='Configurações'
             >
-                <p>Em breve.</p>
+                <section className={styles.logout}>
+                    <LogoutButton/>
+                </section>
             </main>
         </>
     );

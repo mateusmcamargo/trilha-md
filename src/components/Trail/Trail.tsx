@@ -53,6 +53,8 @@ export default function Trail({ items }: TrailProps) {
     return (
         <div
             className={styles.trail}
+            role='list'
+            aria-label='Atividades da trilha'
             style={{
                 width,
                 height,
@@ -65,6 +67,7 @@ export default function Trail({ items }: TrailProps) {
                 return (
                     <div
                         key={item.id}
+                        role='listitem'
                         className={styles.nodePosition}
                         style={{
                             left: `calc(50% + ${position.x}px)`,
@@ -73,6 +76,7 @@ export default function Trail({ items }: TrailProps) {
                     >
                         <TrailNode
                             id={item.id}
+                            title={item.title}
                             status={item.status}
                             progress={item.progress}
                             onClick={() => {

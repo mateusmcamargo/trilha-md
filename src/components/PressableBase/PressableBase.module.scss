@@ -19,18 +19,18 @@ div.wrapper {
 
         transition: transform 0.1s ease;
 
-        &:not(:disabled):hover {
+        &:not(:disabled):not([aria-disabled='true']):hover {
             transform: translateY(1px);
         }
 
-        &:not(:disabled):active {
+        &:not(:disabled):not([aria-disabled='true']):active {
             transform: translateY(var(--depth));
         }
     }
 }
 
 @media (prefers-reduced-motion: reduce) {
-    div.root > :not(.base) {
+    div.wrapper > :not(.base) {
         transition: none;
     }
 }

@@ -8,6 +8,8 @@ interface CircularProgressBarProps {
     height?: number;
     strokeWidth?: number;
     showLabel?: boolean;
+    label?: string;
+    decorative?: boolean;
     className?: string;
 }
 
@@ -17,6 +19,8 @@ export function CircularProgressBar({
     height = 100,
     strokeWidth = 8,
     showLabel = true,
+    label = 'Progresso',
+    decorative = false,
 }: CircularProgressBarProps) {
     const normalizedProgress = Math.min(100, Math.max(0, progress));
 
@@ -27,17 +31,21 @@ export function CircularProgressBar({
         <div
             className={`${styles.container} ${styles.available}`}
             style={{ width, height }}
+            aria-hidden={decorative || undefined}
         >
             <svg
                 className={styles.svg}
                 width={width}
                 height={height}
                 viewBox={`0 0 ${width} ${height}`}
-                role='progressbar'
-                aria-label='Progresso'
-                aria-valuenow={normalizedProgress}
-                aria-valuemin={0}
-                aria-valuemax={100}
+                focusable='false'
+                {...(!decorative && {
+                    role: 'progressbar',
+                    'aria-label': label,
+                    'aria-valuenow': normalizedProgress,
+                    'aria-valuemin': 0,
+                    'aria-valuemax': 100,
+                })}
             >
                 <ellipse
                     className={styles.track}

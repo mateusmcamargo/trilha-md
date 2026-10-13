@@ -16,15 +16,15 @@ div.wrapper > :not(.base) {
   z-index: 1;
   transition: transform 0.1s ease;
 }
-div.wrapper > :not(.base):not(:disabled):hover {
+div.wrapper > :not(.base):not(:disabled):not([aria-disabled=true]):hover {
   transform: translateY(1px);
 }
-div.wrapper > :not(.base):not(:disabled):active {
+div.wrapper > :not(.base):not(:disabled):not([aria-disabled=true]):active {
   transform: translateY(var(--depth));
 }
 
 @media (prefers-reduced-motion: reduce) {
-  div.root > :not(.base) {
+  div.wrapper > :not(.base) {
     transition: none;
   }
 }/*# sourceMappingURL=PressableBase.module.css.map */

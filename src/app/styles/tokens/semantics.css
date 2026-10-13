@@ -24,15 +24,14 @@
     --color-badge-background-trail: var(--color-purple-500);
     --color-badge-label-trail: var(--color-purple-50);
 
-    --color-badge-background-spark: #FFEDD5;
-    --color-badge-label-spark: #C2410C;
-
-    --color-badge-background-life: none;
+    --color-badge-label-streak: #C2410C;
+    
     --color-badge-label-life: #E11A45;
-
-    --color-badge-background-xp: none;
+    
     --color-badge-label-xp: #16C47F;
 
+    --color-badge-label-award: #F4AE52;
+    
     --color-header-border: #E5E7EB;
 
     --input-height:         3rem;

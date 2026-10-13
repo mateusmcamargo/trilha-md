@@ -46,14 +46,14 @@ span.xp svg {
   fill: var(--color-badge-label-xp);
 }
 
-span.spark {
+span.streak {
   border: none;
-  color: var(--color-badge-label-spark);
+  color: var(--color-badge-label-streak);
   font-size: 1.8rem;
   font-weight: 900;
 }
-span.spark svg {
-  fill: var(--color-badge-label-spark);
+span.streak svg {
+  fill: var(--color-badge-label-streak);
 }
 
 span.life {

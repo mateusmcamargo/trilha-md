@@ -243,7 +243,7 @@ export default function page() {
                     tabIndex={-1}
                 >
 
-                    <PressableBase color='var(--color-purple-900)' radius='1rem'>
+                    <PressableBase color='var(--color-brand-darker)' radius='1rem'>
                         <section className={styles.trailCard}>
 
                             <div className={styles.trailInfo}>
@@ -289,7 +289,7 @@ export default function page() {
                         <h1>Oi, Anne! <span aria-hidden='true'>👋</span></h1>
                         <div className={styles.action}>
                             <span>Bora codar no </span>
-                            <PressableBase color='var(--color-purple-900)' radius='.8rem'>
+                            <PressableBase color='var(--color-brand-darker)' radius='.8rem'>
                                 <button
                                     type='button'
                                     className={styles.actionButton}
@@ -304,7 +304,7 @@ export default function page() {
                     </div>
 
                     <div className={styles.avatarBig}>
-                        <PressableBase color='var(--color-purple-900)' radius='.8rem'>
+                        <PressableBase color='var(--color-brand-darker)' radius='.8rem'>
                             <button
                                 type='button'
                                 className={styles.edit}
@@ -414,7 +414,7 @@ export default function page() {
                         <p>Acho que esqueceram de<br/>programar essa parte... 😳</p>
                     </div>
 
-                    <PressableBase color='var(--color-purple-900)' radius='1rem'>
+                    <PressableBase color='var(--color-brand-darker)' radius='1rem'>
                         <button
                             onClick={() => setActivePage('trail')}
                         >

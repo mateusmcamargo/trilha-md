@@ -12,8 +12,8 @@ div.page {
         width: 100vw;
         padding: 0 5vw;
 
-        background-color: white;
-        border-bottom: 4px solid var(--color-header-border);
+        background-color: var(--color-surface);
+        border-bottom: 4px solid var(--color-border-subtle);
 
         div.trailInfo {
             span {
@@ -43,7 +43,7 @@ div.page {
         h2 {
             font-size: 2.4rem;
             font-weight: 800;
-            color: #333;
+            color: var(--color-text-primary);
         }
     }
 
@@ -59,7 +59,7 @@ div.page {
             padding: 2rem;
 
             border-radius: 1rem;
-            background-color: var(--color-purple-500);
+            background-color: var(--color-brand);
 
             z-index: 40;
 
@@ -74,19 +74,19 @@ div.page {
                     gap: .6rem;
 
                     svg {
-                        color: var(--color-purple-300);
+                        color: var(--color-brand-light);
                     }
 
                     h1 {
                         text-transform: uppercase;
                         font-weight: 800;
-                        color: var(--color-purple-300);
+                        color: var(--color-brand-light);
                         font-size: 2rem;
                     }
                 }
                     h2 {
                         font-weight: 800;
-                        color: var(--color-purple-900);
+                        color: var(--color-brand-darker);
                         font-size: 1.8rem;
                     }
             }
@@ -100,7 +100,7 @@ div.page {
                         font-size: 14px;
                         font-weight: 600;
 
-                        color: var(--color-purple-50);
+                        color: var(--color-brand-contrast);
                     }
 
                     div.progressTrack {
@@ -109,14 +109,14 @@ div.page {
                         border-radius: 50rem;
                         overflow: hidden;
 
-                        background-color: var(--color-header-border);
+                        background-color: var(--color-trail-track);
                     }
 
                     div.progressFill {
                         height: 100%;
 
                         border-radius: inherit;
-                        background-color: var(--color-purple-300);
+                        background-color: var(--color-brand-light);
 
                         transition: width 0.2s ease;
                     }
@@ -141,7 +141,7 @@ div.page {
             h1 {
                 font-size: 2rem;
                 font-weight: 800;
-                color: var(--color-purple-700);
+                color: var(--color-brand-dark);
             }
             
             div.action {
@@ -152,7 +152,7 @@ div.page {
                 span {
                     font-size: 1.6rem;
                     font-weight: 800;
-                    color: var(--color-purple-500);
+                    color: var(--color-brand);
                 }
 
                 button.actionButton {
@@ -164,22 +164,22 @@ div.page {
                     padding: .6rem 1rem;
                     cursor: pointer;
                     border-radius: .8rem;
-                    border: 4px solid var(--color-purple-900);
-                    background-color: var(--color-node-fill-available);
+                    border: 4px solid var(--color-brand-darker);
+                    background-color: var(--color-brand);
 
                     &:focus-visible {
-                        outline: 3px solid #93c5fd;
+                        outline: 3px solid var(--color-focus-ring);
                         outline-offset: 4px;
                     }
 
                     span {
-                        color: var(--color-purple-50);
+                        color: var(--color-brand-contrast);
                     }
                     svg {
                         width: 2.4rem;
                         height: 2.4rem;
                         stroke-width: 2.4;
-                        color: var(--color-purple-50);
+                        color: var(--color-brand-contrast);
                     }
                 }
             }
@@ -194,25 +194,25 @@ div.page {
             height: 60vw;
             border-radius: 1rem;
             padding: 1rem;
-            background-color: var(--color-purple-100);
+            background-color: var(--color-brand-soft);
 
             button.edit {
                 width: 3.8rem;
                 height: 3.8rem;
                 font-size: 1.8rem;
                 font-weight: 700;
-                border: solid 4px var(--color-purple-900);
-                background-color: var(--color-purple-500);
+                border: solid 4px var(--color-brand-darker);
+                background-color: var(--color-brand);
                 border-radius: .8rem;
                 cursor: pointer;
 
                 &:focus-visible {
-                    outline: 3px solid #93c5fd;
+                    outline: 3px solid var(--color-focus-ring);
                     outline-offset: 4px;
                 }
 
                 svg {
-                    color: var(--color-purple-50);
+                    color: var(--color-brand-contrast);
                     width: 2rem;
                     height: 2rem;
                     stroke-width: 3;
@@ -233,16 +233,16 @@ div.page {
             }
 
             p.username {
-                color: #6b6b6b;
+                color: var(--color-text-secondary);
             }
 
             p.journey {
-                color: #333;
+                color: var(--color-text-primary);
             }
 
             p.paths {
                 font-weight: 900;
-                color: var(--color-purple-500);
+                color: var(--color-brand);
             }
         }
 
@@ -266,7 +266,7 @@ div.page {
                     gap: .6rem;
 
                     padding: 1rem;
-                    border: 2px solid #9c9c9c;
+                    border: 2px solid var(--color-border-strong);
                     border-radius: 2rem;
 
                     div.title {
@@ -283,7 +283,7 @@ div.page {
                     p {
                         font-size: 1.8rem;
                         font-weight: 900;
-                        color: var(--color-purple-500);
+                        color: var(--color-brand);
                     }
 
                     div.content {
@@ -293,32 +293,32 @@ div.page {
                         span {
                             font-size: 1.4rem;
                             font-weight: 500;
-                            color: #6b6b6b;
+                            color: var(--color-text-secondary);
                         }
                     }
 
                     svg {
                         width: 2.2rem;
                         height: 2.2rem;
-                        color: var(--color-purple-500);
-                        fill:  var(--color-purple-500);
+                        color: var(--color-brand);
+                        fill:  var(--color-brand);
                     }
                     &.streak {
                         p {
-                            color: var(--color-badge-label-streak);
+                            color: var(--color-streak);
                         }
                         svg {
-                            color: var(--color-badge-label-streak);
-                            fill: var(--color-badge-label-streak);
+                            color: var(--color-streak);
+                            fill: var(--color-streak);
                         }
                     }
                     &.xp {
                         p {
-                            color: var(--color-badge-label-xp);
+                            color: var(--color-xp);
                         }
                         svg {
-                            color: var(--color-badge-label-xp);
-                            fill: var(--color-badge-label-xp);
+                            color: var(--color-xp);
+                            fill: var(--color-xp);
                         }
                     }
                     &.trail {
@@ -328,10 +328,10 @@ div.page {
                     }
                     &.awards {
                         p {
-                            color: var(--color-badge-label-award);
+                            color: var(--color-award);
                         }
                         svg {
-                            color: var(--color-badge-label-award);
+                            color: var(--color-award);
                             fill: none;
                         }
                     }
@@ -355,21 +355,21 @@ div.page {
                     font-size: 1.4rem;
                     font-weight: 800;
                     text-transform: uppercase;
-                    color: var(--color-purple-500);
+                    color: var(--color-brand);
                 }
             }
 
             div.box {
                 overflow: hidden;
 
-                border: 2px solid #9c9c9c;
+                border: 2px solid var(--color-border-strong);
                 border-radius: 2rem;
 
                 div.peopleTabs {
                     display: grid;
                     grid-template-columns: 1fr 1fr;
 
-                    border-bottom: 2px solid #9c9c9c;
+                    border-bottom: 2px solid var(--color-border-strong);
 
                     button.peopleTab {
                         padding: 1.4rem 0;
@@ -383,16 +383,16 @@ div.page {
                         font-size: 1.4rem;
                         font-weight: 800;
                         text-transform: uppercase;
-                        color: #6b6b6b;
+                        color: var(--color-text-secondary);
 
                         &:focus-visible {
-                            outline: 3px solid #93c5fd;
+                            outline: 3px solid var(--color-focus-ring);
                             outline-offset: -3px;
                         }
 
                         &.active {
-                            color: var(--color-purple-500);
-                            border-bottom-color: var(--color-purple-500);
+                            color: var(--color-brand);
+                            border-bottom-color: var(--color-brand);
                         }
                     }
                 }
@@ -420,14 +420,14 @@ div.page {
                             height: 4rem;
 
                             border-radius: 50%;
-                            outline: 4px solid var(--color-purple-500);
+                            outline: 4px solid var(--color-brand);
                             outline-offset: 2px;
-                            background-color: var(--color-purple-300);
+                            background-color: var(--color-brand-light);
 
                             span {
                                 font-size: 1.6rem;
                                 font-weight: 800;
-                                color: var(--color-purple-50);
+                                color: var(--color-brand-contrast);
                             }
                         }
 
@@ -439,13 +439,13 @@ div.page {
                             h3 {
                                 font-size: 1.8rem;
                                 font-weight: 800;
-                                color: #333;
+                                color: var(--color-text-primary);
                             }
 
                             span {
                                 font-size: 1.4rem;
                                 font-weight: 600;
-                                color: #6b6b6b;
+                                color: var(--color-text-secondary);
                             }
                         }
                     }
@@ -467,14 +467,14 @@ div.page {
             gap: 1rem;
 
             h1 {
-                color: var(--color-purple-900);
+                color: var(--color-brand-darker);
                 font-size: 1.8rem;
                 font-weight: 900;
             }
             
             p {
                 line-height: 1.2;
-                color: var(--color-purple-300);
+                color: var(--color-brand-light);
                 font-size: 1.6rem;
                 font-weight: 700;
                 text-align: center;
@@ -488,8 +488,8 @@ div.page {
             font-weight: 700;
             font-size: 1.6rem;
             cursor: pointer;
-            color: var(--color-purple-50);
-            background-color: var(--color-purple-500);
+            color: var(--color-brand-contrast);
+            background-color: var(--color-brand);
         }
     }
 
@@ -506,8 +506,8 @@ div.page {
         width: 100vw;
         padding: 0 2rem;
 
-        background-color: white;
-        border-top: 4px solid var(--color-header-border);
+        background-color: var(--color-surface);
+        border-top: 4px solid var(--color-border-subtle);
         transition: .1s ease;
 
         button {
@@ -528,7 +528,7 @@ div.page {
             background: none;
 
             svg {
-                color: var(--color-purple-300);
+                color: var(--color-brand-light);
                 width: 2.4rem;
                 height: 2.4rem;
                 stroke-width: 3;
@@ -537,36 +537,36 @@ div.page {
             &.active {
 
                 svg {
-                    color: var(--color-purple-500);
+                    color: var(--color-brand);
                 }
-                outline: 4px solid var(--color-purple-500);
+                outline: 4px solid var(--color-brand);
                 outline-offset: 2px;
             }
 
             &:focus-visible {
-                outline: 3px solid #93c5fd;
+                outline: 3px solid var(--color-focus-ring);
                 outline-offset: 2px;
             }
         }
 
         button.avatar {
-            background-color: var(--color-purple-300);
+            background-color: var(--color-brand-light);
 
             &.active {
-                background-color: var(--color-purple-500);
-                outline: 4px solid var(--color-purple-500);
+                background-color: var(--color-brand);
+                outline: 4px solid var(--color-brand);
                 outline-offset: 2px;
             }
 
             &:focus-visible {
-                outline: 3px solid #93c5fd;
+                outline: 3px solid var(--color-focus-ring);
                 outline-offset: 2px;
             }
             
             span {
                 font-weight: 800;
                 font-size: 1.4rem;
-                color: var(--color-purple-50);
+                color: var(--color-brand-contrast);
             }
         }
     }

@@ -17,10 +17,10 @@ interface TrailNodeProps {
 }
 
 const pressableBaseColors: Record<TrailNodeStatus, string> = {
-    available: '#400d88',
-    completed: '#347c01',
-    mastered:  '#e6a000',
-    locked:    'var(--color-node-border-locked)',
+    available: 'var(--color-node-base-available)',
+    completed: 'var(--color-node-base-completed)',
+    mastered:  'var(--color-node-base-mastered)',
+    locked:    'var(--color-node-base-locked)',
 };
 
 const statusLabels: Record<TrailNodeStatus, string> = {

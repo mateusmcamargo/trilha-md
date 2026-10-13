@@ -1,38 +1,86 @@
 :root {
-    --color-danger:             #E63946;
+    /*
+        naming: --color-<scope>-<property>[-<variant>][-<state>]
+        property: bg | text | border | icon | base
+        scopes without property (brand, streak, xp...) are the color itself
+        only semantics.css may reference primitives
+    */
 
-    --color-label:              #1E2225;
+    /* surfaces, borders and text */
+    --color-surface:            var(--color-white);
+    --color-border-subtle:      var(--color-slate-200);
+    --color-border-strong:      var(--color-gray-500);
+    --color-text-strong:        var(--color-slate-900);
+    --color-text-primary:       var(--color-gray-800);
+    --color-text-secondary:     var(--color-gray-700);
 
-    --color-input: var(--color-label);
-    --color-input-background:   #F9FAFC;
-    --color-input-border:       #F1F2F5;
-    --color-input-placeholder:  #959ca6;
-    
-    --color-input-border-hover:         var(--color-salmon-100);
-    --color-input-border-focus:         var(--color-salmon-300);
-    --color-input-password-icon:        var(--color-salmon-300);
-    --color-input-password-icon-hover:  var(--color-salmon-500);
-    
-    --color-node-fill-available:  var(--color-purple-500);
-    --color-node-border-available: #400d88;
-    --color-node-label-available: var(--color-purple-500);
+    /* brand */
+    --color-brand:              var(--color-purple-500);
+    --color-brand-light:        var(--color-purple-300);
+    --color-brand-soft:         var(--color-purple-100);
+    --color-brand-dark:         var(--color-purple-700);
+    --color-brand-darker:       var(--color-purple-900);
+    --color-brand-contrast:     var(--color-purple-50);
 
-    --color-node-fill-locked:  #d9d9d9;
-    --color-node-border-locked: #a6a6a6;
-    --color-node-label-locked: #a6a6a6;
+    /* feedback */
+    --color-focus-ring:         var(--color-blue-300);
+    --color-danger:             var(--color-red-500);
 
-    --color-badge-background-trail: var(--color-purple-500);
-    --color-badge-label-trail: var(--color-purple-50);
+    /* game stats */
+    --color-streak:             var(--color-orange-700);
+    --color-xp:                 var(--color-mint-500);
+    --color-life:               var(--color-red-600);
+    --color-award:              var(--color-orange-300);
 
-    --color-badge-label-streak: #C2410C;
-    
-    --color-badge-label-life: #E11A45;
-    
-    --color-badge-label-xp: #16C47F;
+    /* input */
+    --color-input-bg:               var(--color-white);
+    --color-input-text:             var(--color-slate-800);
+    --color-input-label:            var(--color-slate-800);
+    --color-input-required:         var(--color-salmon-500);
+    --color-input-placeholder:      var(--color-slate-400);
+    --color-input-border:           var(--color-slate-100);
+    --color-input-border-hover:     var(--color-salmon-100);
+    --color-input-border-focus:     var(--color-salmon-300);
+    --color-input-icon:             var(--color-salmon-300);
+    --color-input-icon-hover:       var(--color-salmon-500);
 
-    --color-badge-label-award: #F4AE52;
-    
-    --color-header-border: #E5E7EB;
+    /* button */
+    --color-button-border:          var(--color-gray-300);
+    --color-button-bg-hover:        var(--color-gray-100);
+
+    /* badge */
+    --color-badge-border:           var(--color-black);
+    --color-badge-bg-trail:         var(--color-brand);
+    --color-badge-text-trail:       var(--color-brand-contrast);
+
+    /* trail node: bg = fill, base = 3d bottom, icon = check/star/lock */
+    --color-node-bg-available:      var(--color-purple-400);
+    --color-node-icon-available:    var(--color-purple-50);
+    --color-node-base-available:    var(--color-purple-800);
+
+    --color-node-bg-completed:      var(--color-green-500);
+    --color-node-border-completed:  var(--color-green-700);
+    --color-node-icon-completed:    var(--color-green-100);
+    --color-node-base-completed:    var(--color-green-900);
+
+    --color-node-bg-mastered:       var(--color-yellow-400);
+    --color-node-border-mastered:   var(--color-yellow-600);
+    --color-node-icon-mastered:     var(--color-yellow-800);
+    --color-node-base-mastered:     var(--color-yellow-800);
+
+    --color-node-bg-locked:         var(--color-gray-200);
+    --color-node-icon-locked:       var(--color-gray-400);
+    --color-node-base-locked:       var(--color-gray-400);
+
+    --color-node-shine:             var(--color-white);
+
+    /* trail node progress ring */
+    --color-node-ring-track:        var(--color-gray-200);
+    --color-node-ring-progress:     var(--color-purple-500);
+    --color-node-ring-text:         var(--color-purple-700);
+
+    /* trail card progress bar */
+    --color-trail-track:            var(--color-slate-200);
 
     --input-height:         3rem;
     --input-border-radius:  1rem;

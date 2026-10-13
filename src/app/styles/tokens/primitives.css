@@ -8,8 +8,10 @@
     --color-purple-50:  #F5EEFC;
     --color-purple-100: #E8D9F8;
     --color-purple-300: #B98CEA;
-    --color-purple-500: #6e1de1;
+    --color-purple-400: #8140DC;
+    --color-purple-500: #6E1DE1;
     --color-purple-700: #5A299B;
+    --color-purple-800: #400D88;
     --color-purple-900: #301557;
 
     --color-salmon-50:  #FFF1F5;
@@ -21,7 +23,45 @@
 
     --color-yellow-100: #FDF0D5;
     --color-yellow-300: #FFEA88;
+    --color-yellow-400: #FFE700;
     --color-yellow-500: #FFD51E;
+    --color-yellow-600: #FFC700;
     --color-yellow-700: #FFC349;
+    --color-yellow-800: #E6A000;
     --color-yellow-900: #D99B21;
+
+    --color-green-100:  #E4FFCF;
+    --color-green-500:  #58CC02;
+    --color-green-700:  #47A400;
+    --color-green-900:  #347C01;
+
+    --color-mint-500:   #16C47F;
+
+    --color-orange-300: #F4AE52;
+    --color-orange-700: #C2410C;
+
+    --color-red-500:    #E63946;
+    --color-red-600:    #E11A45;
+
+    --color-blue-300:   #93C5FD;
+
+    /* neutrals with a blue tint */
+    --color-slate-50:   #F9FAFC;
+    --color-slate-100:  #F1F2F5;
+    --color-slate-200:  #E5E7EB;
+    --color-slate-400:  #959CA6;
+    --color-slate-800:  #1E2225;
+    --color-slate-900:  #111827;
+
+    /* pure neutrals */
+    --color-gray-100:   #F4F4F4;
+    --color-gray-200:   #D9D9D9;
+    --color-gray-300:   #CCCCCC;
+    --color-gray-400:   #A6A6A6;
+    --color-gray-500:   #9C9C9C;
+    --color-gray-700:   #6B6B6B;
+    --color-gray-800:   #333333;
+
+    --color-white:      #FFFFFF;
+    --color-black:      #000000;
 }

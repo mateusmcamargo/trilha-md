@@ -7,14 +7,14 @@
     label {
         font-size: 1.6rem;
         font-weight: 500;
-        color: var(--color-label);
+        color: var(--color-input-label);
         user-select: none;
 
         span.required {
             font-size: 1.8rem;
             padding-left: 4px;
             font-weight: 500;
-            color: var(--color-salmon-500);
+            color: var(--color-input-required);
         }
     }
 
@@ -27,8 +27,8 @@
             padding: 0 1rem;
             width: 100%;
             border: 2px solid var(--color-input-border);
-            background-color: white;
-            color: var(--color-input);
+            background-color: var(--color-input-bg);
+            color: var(--color-input-text);
             border-radius: 1rem;
             font-size: 1.4rem;
             transition: .2s ease;
@@ -53,7 +53,7 @@
 
         &:hover {
             .input:not(:disabled) {
-                border-color: var(--color-salmon-300);
+                border-color: var(--color-input-border-focus);
             }
             .iconLeft {
                 color: var(--color-input-border-hover);
@@ -86,7 +86,7 @@
             right: 1rem;
             top: 50%;
             transform: translateY(-50%);
-            color: var(--color-input-password-icon);
+            color: var(--color-input-icon);
             display: flex;
             align-items: center;
             background: none;
@@ -96,7 +96,7 @@
             z-index: 1;
 
             &:hover:not(:disabled) {
-                color: var(--color-input-password-icon-hover);
+                color: var(--color-input-icon-hover);
             }
 
             &:disabled {

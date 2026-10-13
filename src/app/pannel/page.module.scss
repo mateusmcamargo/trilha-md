@@ -526,18 +526,19 @@ div.page {
 
         button.navButton {
             background: none;
-
+            
             svg {
                 color: var(--color-brand-light);
                 width: 2.4rem;
                 height: 2.4rem;
-                stroke-width: 3;
+                stroke-width: 2.5;
             }
-
+            
             &.active {
+                background-color: var(--color-purple-500);
 
                 svg {
-                    color: var(--color-brand);
+                    color: var(--color-purple-50);
                 }
                 outline: 4px solid var(--color-brand);
                 outline-offset: 2px;

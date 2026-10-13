@@ -15,7 +15,7 @@ export default function SettingsPage() {
         <>
             <PageHeader
                 title='Configurações'
-                action={{ href: '/pannel/profile', label: 'Voltar', icon: ArrowLeft }}
+                action={{ href: '/panel/profile', label: 'Voltar', icon: ArrowLeft }}
             />
 
             <main

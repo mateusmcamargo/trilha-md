@@ -3,7 +3,7 @@ import type { Metadata } from 'next';
 import CodeSandbox from '#/components/CodeSandbox/CodeSandbox';
 import StatsHeader from '#/components/Header/StatsHeader';
 
-import { stats, trailProgress } from '#/app/pannel/mockData';
+import { stats, trailProgress } from '#/app/panel/mockData';
 
 import styles from './page.module.scss';
 

@@ -7,7 +7,7 @@ import CommunitySection from '#/components/CommunitySection/CommunitySection';
 import PageHeader from '#/components/Header/PageHeader';
 import PressableBase from '#/components/PressableBase/PressableBase';
 
-import { people, stats } from '#/app/pannel/mockData';
+import { people, stats } from '#/app/panel/mockData';
 
 import styles from './page.module.scss';
 
@@ -27,7 +27,7 @@ export default function ProfilePage() {
         <>
             <PageHeader
                 title='Perfil'
-                action={{ href: '/pannel/settings', label: 'Configurações', icon: Settings }}
+                action={{ href: '/panel/settings', label: 'Configurações', icon: Settings }}
             />
 
             <main
@@ -40,7 +40,7 @@ export default function ProfilePage() {
                         <span>Bora codar no </span>
                         <PressableBase color='var(--color-brand-darker)' radius='.8rem'>
                             <Link
-                                href='/pannel/terminal'
+                                href='/panel/terminal'
                                 className={styles.actionButton}
                             >
                                 <TerminalSquare aria-hidden='true'/>

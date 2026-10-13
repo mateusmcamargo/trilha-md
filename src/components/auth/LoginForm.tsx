@@ -36,7 +36,7 @@ export function LoginForm() {
             .single()
 
         setLoading(false)
-        router.push(profile?.role === 'mentor' ? '/mentor' : '/pannel')
+        router.push(profile?.role === 'mentor' ? '/mentor' : '/panel')
         router.refresh()
     }
 

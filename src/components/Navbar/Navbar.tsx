@@ -8,11 +8,11 @@ import { Dumbbell, FileText, Route, TerminalSquare, TrendingUp } from 'lucide-re
 import styles from './Navbar.module.scss';
 
 const navItems = [
-    { href: '/pannel/trail',    icon: Route,          label: 'Trilha'    },
-    { href: '/pannel/terminal', icon: TerminalSquare, label: 'Terminal'  },
-    { href: '/pannel/practice', icon: Dumbbell,       label: 'Praticar'  },
-    { href: '/pannel/files',    icon: FileText,       label: 'Materiais' },
-    { href: '/pannel/progress', icon: TrendingUp,     label: 'Progresso' },
+    { href: '/panel/trail',    icon: Route,          label: 'Trilha'    },
+    { href: '/panel/terminal', icon: TerminalSquare, label: 'Terminal'  },
+    { href: '/panel/practice', icon: Dumbbell,       label: 'Praticar'  },
+    { href: '/panel/files',    icon: FileText,       label: 'Materiais' },
+    { href: '/panel/progress', icon: TrendingUp,     label: 'Progresso' },
 ] as const;
 
 export default function Navbar() {
@@ -35,10 +35,10 @@ export default function Navbar() {
                 </Link>
             ))}
             <Link
-                href='/pannel/profile'
-                className={`${styles.avatar} ${isActive('/pannel/profile') ? styles.active : ''}`}
+                href='/panel/profile'
+                className={`${styles.avatar} ${isActive('/panel/profile') ? styles.active : ''}`}
                 aria-label='Meu perfil'
-                aria-current={isActive('/pannel/profile') ? 'page' : undefined}
+                aria-current={isActive('/panel/profile') ? 'page' : undefined}
             >
                 <span>AF</span>
             </Link>

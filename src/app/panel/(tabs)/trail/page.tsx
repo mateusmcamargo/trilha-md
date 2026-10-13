@@ -6,7 +6,7 @@ import PressableBase from '#/components/PressableBase/PressableBase';
 import StatsHeader from '#/components/Header/StatsHeader';
 import Trail from '#/components/Trail/Trail';
 
-import { stats, trailItems, trailProgress } from '#/app/pannel/mockData';
+import { stats, trailItems, trailProgress } from '#/app/panel/mockData';
 
 import styles from './page.module.scss';
 

@@ -2,7 +2,7 @@
 
 import styles from './page.module.scss';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useEffect, useRef, useState, type KeyboardEvent } from 'react';
 
 import { Award, Dumbbell, FileText, Flame, Flower, Heart, Pencil, Route, Sparkles, TerminalSquare, TrendingUp } from 'lucide-react';
 
@@ -19,10 +19,29 @@ export default function page() {
 
     const [activePage, setActivePage]           = useState<Page>('profile');
     const [activePeopleTab, setActivePeopleTab] = useState<PeopleTabs>('mentors');
+    const isFirstRender = useRef(true);
     const streak = 4;
     const life = 5;
     const xp = 240;
     const totalXp = 6430;
+
+    useEffect(() => {
+        if (isFirstRender.current) {
+            isFirstRender.current = false;
+            return;
+        }
+
+        document.querySelector<HTMLElement>('main')?.focus();
+    }, [activePage]);
+
+    const handlePeopleTabKeyDown = (event: KeyboardEvent) => {
+        if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
+
+        const next = activePeopleTab === 'mentors' ? 'friends' : 'mentors';
+
+        setActivePeopleTab(next);
+        document.getElementById(`tab-${next}`)?.focus();
+    };
 
     const navItems = [
         { page: 'trail',    icon: Route,          label: 'Trilha'    },
@@ -221,6 +240,7 @@ export default function page() {
                 <main
                     className={styles.trail}
                     aria-label='Atividades da minha trilha'
+                    tabIndex={-1}
                 >
 
                     <PressableBase color='var(--color-purple-900)' radius='1rem'>
@@ -263,13 +283,15 @@ export default function page() {
                 <main
                     className={styles.profile}
                     aria-label='Meu Perfil'
+                    tabIndex={-1}
                 >
                     <div className={styles.calling}>
-                        <h2>Oi, Anne! 👋</h2>
+                        <h1>Oi, Anne! <span aria-hidden='true'>👋</span></h1>
                         <div className={styles.action}>
                             <span>Bora codar no </span>
                             <PressableBase color='var(--color-purple-900)' radius='.8rem'>
                                 <button
+                                    type='button'
                                     className={styles.actionButton}
                                     onClick={() => setActivePage('terminal')}
                                     >
@@ -283,26 +305,31 @@ export default function page() {
 
                     <div className={styles.avatarBig}>
                         <PressableBase color='var(--color-purple-900)' radius='.8rem'>
-                            <button className={styles.edit}>
+                            <button
+                                type='button'
+                                className={styles.edit}
+                                aria-label='Editar avatar'
+                            >
                                 <Pencil/>
                             </button>
                         </PressableBase>
                     </div>
 
                     <div className={styles.userInfo}>
-                        <h3 className={styles.fullName}>Anne Franco</h3>
+                        <h2 className={styles.fullName}>Anne Franco</h2>
                         <p className={styles.username}>anne.franco26</p>
-                        <p className={styles.journey}>Começou sua trilha em outrubro de 2026</p>
-                        <p className={styles.paths}>Nenhuma trilha concluída ainda :(</p>
+                        <p className={styles.journey}>Começou sua jornada em outrubro de 2026</p>
+                        <p className={styles.paths}>Nenhuma trilha concluída ainda <span aria-hidden='true'>:(</span></p>
                     </div>
 
                     <div className={styles.userStats}>
-                        <h3>Estatísticas</h3>
+                        <h2>Estatísticas</h2>
 
-                    <div className={styles.cards}>
+                    <div className={styles.cards} role='list'>
                         {statsCards.map(({ variant, icon: Icon, value, label }) => (
                             <div
                                 key={variant}
+                                role='listitem'
                                 className={`${styles.statsCard} ${styles[variant]}`}
                             >
                                 <div className={styles.title}>
@@ -319,20 +346,26 @@ export default function page() {
                     </div>
                     </div>
 
-                    <section className={styles.people}>
+                    <section className={styles.people} aria-labelledby='people-title'>
                         <div className={styles.header}>
-                            <h3>Comunidade</h3>
+                            <h2 id='people-title'>Comunidade</h2>
                             <Link href='/buscar'>Adicionar amigas</Link>
                         </div>
 
                         <div className={styles.box}>
-                            <div role='tablist' className={styles.peopleTabs}>
+                            <div
+                                role='tablist'
+                                aria-label='Tutoras ou amigas'
+                                className={styles.peopleTabs}
+                                onKeyDown={handlePeopleTabKeyDown}
+                            >
                                 {peopleTabs.map(({ key, label }) => (
                                     <button
                                         key={key}
                                         id={`tab-${key}`}
                                         type='button'
                                         role='tab'
+                                        tabIndex={activePeopleTab === key ? 0 : -1}
                                         aria-selected={activePeopleTab === key}
                                         aria-controls='community-list'
                                         className={`${styles.peopleTab} ${activePeopleTab === key ? styles.active : ''}`}
@@ -343,24 +376,26 @@ export default function page() {
                                 ))}
                             </div>
 
-                            <ul
+                            <div
                                 id='community-list'
                                 role='tabpanel'
                                 aria-labelledby={`tab-${activePeopleTab}`}
-                                className={styles.list}
+                                tabIndex={0}
                             >
-                                {people[activePeopleTab].map(({ id, name, xp }) => (
-                                    <li key={id} className={styles.person}>
-                                        <div className={styles.photo} aria-hidden='true'>
-                                            <span>{name.slice(0, 2).toUpperCase()}</span>
-                                        </div>
-                                        <div className={styles.details}>
-                                            <h4>{name}</h4>
-                                            <span>{xp} XP</span>
-                                        </div>
-                                    </li>
-                                ))}
-                            </ul>
+                                <ul className={styles.list}>
+                                    {people[activePeopleTab].map(({ id, name, xp }) => (
+                                        <li key={id} className={styles.person}>
+                                            <div className={styles.photo} aria-hidden='true'>
+                                                <span>{name.slice(0, 2).toUpperCase()}</span>
+                                            </div>
+                                            <div className={styles.details}>
+                                                <h3>{name}</h3>
+                                                <span>{xp} XP</span>
+                                            </div>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
                         </div>
                     </section>
                 </main>
@@ -368,16 +403,17 @@ export default function page() {
                 <main
                     className={styles.terminal}
                     aria-label='Terminal de código'
+                    tabIndex={-1}
                 >
                     <CodeSandbox/>
                 </main>
             ) : (
-                <main className={styles.notFound}>
-                    <h1>Ops! Não há nada aqui :(</h1>
+                <main className={styles.notFound} tabIndex={-1}>
+                    <h1>Ops! Não há nada aqui <span aria-hidden='true'>:(</span></h1>
                 </main>
             )}
 
-            <footer className={styles.footer}>
+            <nav className={styles.footer} aria-label='Navegação principal'>
                 {navItems.map(({ page, icon: Icon, label }) => (
                     <button
                         key={page}
@@ -399,7 +435,7 @@ export default function page() {
                 >
                     <span>AF</span>
                 </button>
-            </footer>
+            </nav>
         </div>
     );
 }

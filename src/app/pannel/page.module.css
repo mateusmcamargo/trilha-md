@@ -11,10 +11,10 @@ div.page header.header {
   background-color: var(--color-surface);
   border-bottom: 4px solid var(--color-border-subtle);
 }
-div.page header.header div.trailInfo span {
+div.page header.header.headerTrail div.trailInfo span {
   font-family: var(--font-chakra-petch);
 }
-div.page header.header div.progressInfo {
+div.page header.header.headerTrail div.progressInfo {
   display: flex;
   gap: 2rem;
 }

@@ -4,44 +4,16 @@ import styles from './page.module.scss';
 import Link from 'next/link';
 import { useEffect, useRef, useState, type KeyboardEvent } from 'react';
 
-import { Award, Dumbbell, FileText, Flame, Flower, Heart, Pencil, Route, Sparkles, TerminalSquare, TrendingUp } from 'lucide-react';
+import { Award, Dumbbell, FileText, Flame, Flower, Heart, Pencil, Route, Settings, Sparkles, TerminalSquare, TrendingUp } from 'lucide-react';
 
 import { Badge } from '#/components/Badge/Badge';
 import Trail from '#/components/Trail/Trail';
 import PressableBase from '#/components/PressableBase/PressableBase';
 import CodeSandbox from '#/components/CodeSandbox/CodeSandbox';
+import Header from '#/components/Header/Header';
 
 type Page       = 'trail' | 'terminal' | 'practice' | 'files' | 'progress' | 'profile';
 type PeopleTabs = 'mentors' | 'friends';
-
-
-export default function page() {
-
-    const [activePage, setActivePage]           = useState<Page>('trail');
-    const [activePeopleTab, setActivePeopleTab] = useState<PeopleTabs>('mentors');
-    const isFirstRender = useRef(true);
-    const streak = 4;
-    const life = 5;
-    const xp = 240;
-    const totalXp = 6430;
-
-    useEffect(() => {
-        if (isFirstRender.current) {
-            isFirstRender.current = false;
-            return;
-        }
-
-        document.querySelector<HTMLElement>('main')?.focus();
-    }, [activePage]);
-
-    const handlePeopleTabKeyDown = (event: KeyboardEvent) => {
-        if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
-
-        const next = activePeopleTab === 'mentors' ? 'friends' : 'mentors';
-
-        setActivePeopleTab(next);
-        document.getElementById(`tab-${next}`)?.focus();
-    };
 
     const navItems = [
         { page: 'trail',    icon: Route,          label: 'Trilha'    },
@@ -174,13 +146,6 @@ export default function page() {
         },
     ];
 
-    const statsCards = [
-        { variant: 'streak',  icon: Flame,    value: streak,           label: 'dias de ofensiva'          },
-        { variant: 'xp',     icon: Sparkles, value: totalXp,          label: 'total de XP'               },
-        { variant: 'trail',  icon: Flower,   value: 'Dandelion',  label: 'Trilha'                    },
-        { variant: 'awards', icon: Award,    value: 'Nenhum',         label: 'certificado :(' },
-    ];
-
     const people = {
         mentors: [
             { id: '1', name: 'Maria', xp: 25279 },
@@ -197,6 +162,41 @@ export default function page() {
         { key: 'friends', label: 'Amigas'  },
     ] as const;
 
+export default function page() {
+
+    const [activePage, setActivePage]           = useState<Page>('profile');
+    const [activePeopleTab, setActivePeopleTab] = useState<PeopleTabs>('mentors');
+    const isFirstRender = useRef(true);
+    const streak = 4;
+    const life = 5;
+    const xp = 240;
+    const totalXp = 6430;
+
+    const statsCards = [
+        { variant: 'streak', icon: Flame,    value: streak,      label: 'dias de ofensiva'},
+        { variant: 'xp',     icon: Sparkles, value: totalXp,     label: 'total de XP'     },
+        { variant: 'trail',  icon: Flower,   value: 'Dandelion', label: 'Trilha'          },
+        { variant: 'awards', icon: Award,    value: 'Nenhum',    label: 'certificado :('  },
+    ];
+
+    useEffect(() => {
+        if (isFirstRender.current) {
+            isFirstRender.current = false;
+            return;
+        }
+
+        document.querySelector<HTMLElement>('main')?.focus();
+    }, [activePage]);
+
+    const handlePeopleTabKeyDown = (event: KeyboardEvent) => {
+        if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
+
+        const next = activePeopleTab === 'mentors' ? 'friends' : 'mentors';
+
+        setActivePeopleTab(next);
+        document.getElementById(`tab-${next}`)?.focus();
+    };
+
     const completed = trailItems.filter(
         (item) => item.status === 'completed'
     ).length;
@@ -207,34 +207,44 @@ export default function page() {
 
     return (
         <div className={styles.page}>
-            <header className={styles.header}>
+                {activePage !== 'profile' ? (
+                <header className={`${styles.header} ${styles.headerTrail}`}>
+                    <div className={styles.trailInfo}>
+                        <Badge
+                            icon={Flower}
+                            variant='trail'
+                            label={`${progress.toString()} %`}
+                        />
+                    </div>
 
-                <div className={styles.trailInfo}>
-                    <Badge
-                        icon={Flower}
-                        variant='trail'
-                        label={`${progress.toString()} %`}
+                    <div className={styles.progressInfo}>
+                        <Badge
+                            icon={Sparkles}
+                            variant='xp'
+                            label={xp.toString()}
+                        />
+                        <Badge
+                            icon={Flame}
+                            variant='streak'
+                            label={streak.toString()}
+                        />
+                        <Badge
+                            icon={Heart}
+                            variant='life'
+                            label={life.toString()}
+                        />
+                    </div>
+                </header>
+                ): (
+                    <Header
+                        title='Perfil'
+                        action={{
+                            href: '/settings',
+                            label: 'Configurações',
+                            icon: Settings
+                        }}
                     />
-                </div>
-
-                <div className={styles.progressInfo}>
-                    <Badge
-                        icon={Sparkles}
-                        variant='xp'
-                        label={xp.toString()}
-                    />
-                    <Badge
-                        icon={Flame}
-                        variant='streak'
-                        label={streak.toString()}
-                    />
-                    <Badge
-                        icon={Heart}
-                        variant='life'
-                        label={life.toString()}
-                    />
-                </div>
-            </header>
+                )}
 
             {activePage === 'trail' ? (
                 <main

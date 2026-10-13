@@ -1,0 +1,59 @@
+main.trail {
+  gap: calc(5vw + 6px);
+}
+main.trail section.trailCard {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 90vw;
+  padding: 2rem;
+  border-radius: 1rem;
+  background-color: var(--color-brand);
+  z-index: 40;
+}
+main.trail section.trailCard div.trailInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+main.trail section.trailCard div.trailInfo div.trailTitle {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+main.trail section.trailCard div.trailInfo div.trailTitle svg {
+  color: var(--color-brand-light);
+}
+main.trail section.trailCard div.trailInfo div.trailTitle h1 {
+  text-transform: uppercase;
+  font-weight: 800;
+  color: var(--color-brand-light);
+  font-size: 2rem;
+}
+main.trail section.trailCard div.trailInfo h2 {
+  font-weight: 800;
+  color: var(--color-brand-darker);
+  font-size: 1.8rem;
+}
+main.trail section.trailCard div.trailProgress {
+  flex-shrink: 0;
+  text-align: right;
+}
+main.trail section.trailCard div.trailProgress span.progressLabel {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-brand-contrast);
+}
+main.trail section.trailCard div.trailProgress div.progressTrack {
+  width: 100%;
+  height: 1.6rem;
+  border-radius: 50rem;
+  overflow: hidden;
+  background-color: var(--color-trail-track);
+}
+main.trail section.trailCard div.trailProgress div.progressFill {
+  height: 100%;
+  border-radius: inherit;
+  background-color: var(--color-brand-light);
+  transition: width 0.2s ease;
+}/*# sourceMappingURL=page.module.css.map */

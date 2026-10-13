@@ -25,7 +25,10 @@ const chakraPetch = Chakra_Petch({
 });
 
 export const metadata: Metadata = {
-    title: 'Trilha Meninas Digitais',
+    title: {
+        default: 'Trilha Meninas Digitais',
+        template: '%s | Trilha Meninas Digitais',
+    },
     description: 'Trilha gameficada para todas.',
 };
 

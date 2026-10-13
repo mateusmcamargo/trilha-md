@@ -1,0 +1,74 @@
+nav.nav {
+    position: fixed;
+    bottom: 0;
+    z-index: 50;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    height: 10vh;
+    width: 100vw;
+    padding: 0 2rem;
+
+    background-color: var(--color-surface);
+    border-top: 4px solid var(--color-border-subtle);
+    transition: .1s ease;
+
+    a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        width: 3.6rem;
+        height: 3.6rem;
+
+        border-radius: 50%;
+        transition: .15s ease;
+    }
+
+    a.navButton {
+        svg {
+            color: var(--color-brand-light);
+            width: 2.4rem;
+            height: 2.4rem;
+            stroke-width: 2.5;
+        }
+
+        &.active {
+            background-color: var(--color-brand);
+
+            svg {
+                color: var(--color-brand-contrast);
+            }
+            outline: 4px solid var(--color-brand);
+            outline-offset: 2px;
+        }
+
+        &:focus-visible {
+            outline: 3px solid var(--color-focus-ring);
+            outline-offset: 2px;
+        }
+    }
+
+    a.avatar {
+        background-color: var(--color-brand-light);
+
+        &.active {
+            background-color: var(--color-brand);
+            outline: 4px solid var(--color-brand);
+            outline-offset: 2px;
+        }
+
+        &:focus-visible {
+            outline: 3px solid var(--color-focus-ring);
+            outline-offset: 2px;
+        }
+
+        span {
+            font-weight: 800;
+            font-size: 1.4rem;
+            color: var(--color-brand-contrast);
+        }
+    }
+}

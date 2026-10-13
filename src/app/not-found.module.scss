@@ -1,0 +1,45 @@
+main.notFound {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+
+    min-height: 100vh;
+    padding: 0 5vw;
+
+    div.message {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+
+        h1 {
+            color: var(--color-brand-darker);
+            font-size: 1.8rem;
+            font-weight: 900;
+        }
+
+        p {
+            line-height: 1.2;
+            color: var(--color-brand-light);
+            font-size: 1.6rem;
+            font-weight: 700;
+            text-align: center;
+        }
+    }
+
+    a.button {
+        display: block;
+        width: 100%;
+        padding: 1rem;
+        border-radius: 1rem;
+        font-weight: 700;
+        font-size: 1.6rem;
+        text-align: center;
+        cursor: pointer;
+        color: var(--color-brand-contrast);
+        background-color: var(--color-brand);
+    }
+}

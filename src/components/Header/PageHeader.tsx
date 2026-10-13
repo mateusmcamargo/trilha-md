@@ -1,8 +1,8 @@
 import Link from 'next/link';
 import type { LucideIcon } from 'lucide-react';
-import styles from './Header.module.scss';
+import styles from './PageHeader.module.scss';
 
-interface HeaderProps {
+interface PageHeaderProps {
     title: string;
     action: {
         href: string;
@@ -11,7 +11,7 @@ interface HeaderProps {
     };
 }
 
-export default function Header({ title, action }: HeaderProps) {
+export default function PageHeader({ title, action }: PageHeaderProps) {
     const { href, label, icon: Icon } = action;
 
     return (

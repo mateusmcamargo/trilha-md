@@ -1,3 +1,7 @@
+'use client';
+
+import { useState } from 'react';
+import Skeleton from '#/components/Skeleton/Skeleton';
 import styles from './CodeSandbox.module.scss';
 
 const CODEPEN_USER = 'Mateus-Camargo-the-flexboxer';
@@ -13,14 +17,28 @@ const embedUrl = `https://codepen.io/${CODEPEN_USER}/embed/${CODEPEN_PEN}?${para
 const penUrl   = `https://codepen.io/${CODEPEN_USER}/pen/${CODEPEN_PEN}`;
 
 export default function CodeSandbox() {
+    const [isLoaded, setIsLoaded] = useState(false);
+
     return (
         <div className={styles.sandbox}>
-            <iframe
-                className={styles.frame}
-                title='Editor de código'
-                src={embedUrl}
-                loading='lazy'
-            />
+            <div className={styles.frameWrapper} aria-busy={!isLoaded}>
+                {!isLoaded && (
+                    <Skeleton
+                        className={styles.skeleton}
+                        height='100%'
+                        radius='1rem'
+                        label='Carregando editor de código...'
+                    />
+                )}
+
+                <iframe
+                    className={`${styles.frame} ${isLoaded ? styles.loaded : ''}`}
+                    title='Editor de código'
+                    src={embedUrl}
+                    loading='lazy'
+                    onLoad={() => setIsLoaded(true)}
+                />
+            </div>
 
             <a
                 className={styles.link}

@@ -6,12 +6,28 @@ div.sandbox {
     width: 90vw;
     height: 80vh;
 
+        div.frameWrapper {
+        position: relative;
+
+        div.skeleton {
+            position: absolute;
+            inset: 0;
+        }
+    }
+
     iframe.frame {
         width: 100%;
         height: 100%;
 
         border: 0;
         border-radius: 1rem;
+
+        opacity: 0;
+        transition: opacity .2s ease;
+
+        &.loaded {
+            opacity: 1;
+        }
     }
 
     a.link {

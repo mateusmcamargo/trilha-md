@@ -82,6 +82,10 @@
     /* trail card progress bar */
     --color-trail-track:            var(--color-slate-200);
 
+    /* skeleton loader */
+    --color-skeleton-bg:            var(--color-slate-300);
+    --color-skeleton-shine:         var(--color-slate-100);
+
     --input-height:         3rem;
     --input-border-radius:  1rem;
 }

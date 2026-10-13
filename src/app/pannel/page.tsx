@@ -17,7 +17,7 @@ type PeopleTabs = 'mentors' | 'friends';
 
 export default function page() {
 
-    const [activePage, setActivePage]           = useState<Page>('profile');
+    const [activePage, setActivePage]           = useState<Page>('trail');
     const [activePeopleTab, setActivePeopleTab] = useState<PeopleTabs>('mentors');
     const isFirstRender = useRef(true);
     const streak = 4;
@@ -409,7 +409,18 @@ export default function page() {
                 </main>
             ) : (
                 <main className={styles.notFound} tabIndex={-1}>
-                    <h1>Ops! Não há nada aqui <span aria-hidden='true'>:(</span></h1>
+                    <div className={styles.message}>
+                        <h1>Ops! Não tem nada aqui!</h1>
+                        <p>Acho que esqueceram de<br/>programar essa parte... 😳</p>
+                    </div>
+
+                    <PressableBase color='var(--color-purple-900)' radius='1rem'>
+                        <button
+                            onClick={() => setActivePage('trail')}
+                        >
+                            Voltar para a sua trilha
+                        </button>
+                    </PressableBase>
                 </main>
             )}
 

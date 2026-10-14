@@ -8,6 +8,7 @@
 
     /* surfaces, borders and text */
     --color-surface:            var(--color-white);
+    --color-overlay:            color-mix(in srgb, var(--color-text-primary) 60%, transparent);
     --color-border-subtle:      var(--color-slate-200);
     --color-border-strong:      var(--color-gray-500);
     --color-text-strong:        var(--color-slate-900);
@@ -47,7 +48,7 @@
     --color-input-icon-hover:       var(--color-purple-500);
 
     /* button */
-    --color-button-border:          var(--color-gray-300);
+    --color-button-border:          var(--color-gray-400);
     --color-button-bg-hover:        var(--color-gray-100);
 
     /* badge */

@@ -1,8 +1,9 @@
 import type { Metadata } from 'next';
 
-import { ArrowLeft, Download, Pencil, Trash2 } from 'lucide-react';
+import { ArrowLeft, Download, Pencil } from 'lucide-react';
 
 import { ActionButton } from '#/components/Button/ActionButton';
+import { DeleteAccountButton } from '#/components/Button/DeleteAccountButton';
 import PageHeader from '#/components/Header/PageHeader';
 import PressableBase from '#/components/PressableBase/PressableBase';
 import { ProfileForm } from '#/components/ProfileForm/ProfileForm';
@@ -51,7 +52,7 @@ export default function ProfileSettingsPage() {
 
                 <section className={styles.account} aria-label='Dados e conta'>
                     <ActionButton icon={Download}>Exportar meus dados</ActionButton>
-                    <ActionButton icon={Trash2} variant='danger'>Deletar conta</ActionButton>
+                    <DeleteAccountButton/>
                 </section>
             </main>
         </>

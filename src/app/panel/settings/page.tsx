@@ -1,11 +1,14 @@
 import type { Metadata } from 'next';
+import Link from 'next/link';
 
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, ChevronRight } from 'lucide-react';
 
 import PageHeader from '#/components/Header/PageHeader';
 
 import styles from './page.module.scss';
 import { LogoutButton } from '#/components/Button/LogoutButton';
+
+import { settingsSections } from './links';
 
 export const metadata: Metadata = {
     title: 'Configurações',
@@ -23,6 +26,27 @@ export default function SettingsPage() {
                 className={styles.settings}
                 aria-label='Configurações'
             >
+                {settingsSections.map(({ title, links }) => (
+                    <section key={title} className={styles.section}>
+                        <h2>{title}</h2>
+
+                        <ul>
+                            {links.map(({ slug, label, icon: Icon }) => (
+                                <li key={slug}>
+                                    <Link
+                                        href={`/panel/settings/${slug}`}
+                                        className={styles.link}
+                                    >
+                                        <Icon aria-hidden='true'/>
+                                        <span>{label}</span>
+                                        <ChevronRight aria-hidden='true'/>
+                                    </Link>
+                                </li>
+                            ))}
+                        </ul>
+                    </section>
+                ))}
+
                 <section className={styles.logout}>
                     <LogoutButton/>
                 </section>

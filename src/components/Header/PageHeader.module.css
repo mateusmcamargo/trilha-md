@@ -12,7 +12,7 @@ header.header {
   border-bottom: 4px solid var(--color-border-subtle);
 }
 header.header h1 {
-  color: var(--color-text-secondary);
+  color: var(--color-brand-dark);
   font-size: 2.4rem;
   font-weight: 900;
 }
@@ -30,5 +30,5 @@ header.header a.action svg {
   width: 3.6rem;
   height: 3.6rem;
   stroke-width: 2.4;
-  color: var(--color-text-secondary);
+  color: var(--color-brand-dark);
 }/*# sourceMappingURL=PageHeader.module.css.map */

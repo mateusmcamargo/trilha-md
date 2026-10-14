@@ -5,7 +5,56 @@ main.settings {
   justify-content: flex-start;
   padding: 5vw 0;
   margin: 10vh 0;
+  gap: 5vw;
   width: 90vw;
+}
+main.settings section.section {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  width: 100%;
+}
+main.settings section.section h2 {
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--color-text-primary);
+}
+main.settings section.section ul {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  list-style: none;
+  cursor: pointer;
+}
+main.settings section.section a.link {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  height: calc(3.6rem + 8px);
+  padding: 0 1.2rem;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  background-color: var(--color-surface);
+  border: 3px solid var(--color-border-subtle);
+  border-radius: 1rem;
+  transition: 0.2s ease;
+}
+main.settings section.section a.link:hover {
+  border-color: var(--color-brand-light);
+}
+main.settings section.section a.link:focus-visible {
+  outline: 3px solid var(--color-focus-ring);
+  outline-offset: 4px;
+}
+main.settings section.section a.link span {
+  flex: 1;
+}
+main.settings section.section a.link svg {
+  width: 2.4rem;
+  height: 2.4rem;
+  stroke-width: 2.4;
+  color: var(--color-brand-light);
 }
 main.settings section.logout {
   width: 100%;

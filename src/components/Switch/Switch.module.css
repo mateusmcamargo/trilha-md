@@ -1,0 +1,61 @@
+label.switch {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 1.2rem;
+  cursor: pointer;
+}
+label.switch input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+label.switch span.track {
+  position: relative;
+  flex-shrink: 0;
+  width: 5.6rem;
+  height: 3.2rem;
+  border-radius: 1rem;
+  background-color: var(--color-brand-soft);
+  transition: background-color 0.2s ease;
+}
+label.switch span.track::after {
+  content: "";
+  position: absolute;
+  top: 0.4rem;
+  left: 0.4rem;
+  width: 2.4rem;
+  height: 2.4rem;
+  border-radius: 0.8rem;
+  background-color: var(--color-surface);
+  box-shadow: 0 0.2rem 0.4rem rgba(0, 0, 0, 0.5);
+  transition: transform 0.2s ease;
+}
+label.switch span.label {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--color-text-secondary);
+  transition: color 0.2s ease;
+}
+label.switch input:checked + span.track {
+  background-color: var(--color-brand);
+}
+label.switch input:checked + span.track::after {
+  transform: translateX(2.4rem);
+}
+label.switch input:checked ~ span.label {
+  color: var(--color-text-primary);
+}
+label.switch input:focus-visible + span.track {
+  outline: 3px solid var(--color-focus-ring);
+  outline-offset: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  label.switch span.track,
+  label.switch span.track::after,
+  label.switch span.label {
+    transition: none;
+  }
+}/*# sourceMappingURL=Switch.module.css.map */

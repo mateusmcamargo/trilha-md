@@ -1,0 +1,53 @@
+div.toggle {
+    display: flex;
+    width: 100%;
+
+    border: 3px solid var(--color-brand);
+    border-radius: 1rem;
+    overflow: hidden;
+
+    label.option {
+        position: relative;
+        display: flex;
+        flex: 1;
+
+        cursor: pointer;
+
+        input {
+            position: absolute;
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        span {
+            display: flex;
+            flex: 1;
+            align-items: center;
+            justify-content: center;
+
+            height: 4.2rem;
+
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: var(--color-brand);
+            transition: background-color .2s ease, color .2s ease;
+        }
+
+        input:checked + span {
+            color: var(--color-brand-contrast);
+            background-color: var(--color-brand);
+        }
+
+        input:focus-visible + span {
+            outline: 3px solid var(--color-focus-ring);
+            outline-offset: -.6rem;
+        }
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    div.toggle label.option span {
+        transition: none;
+    }
+}

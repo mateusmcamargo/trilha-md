@@ -1,3 +1,11 @@
+
+export const user = {
+    name:     'Anne Franco',
+    username: 'anne.franco26',
+    email:    'anne.franco@exemplo.com',
+    verified: true
+};
+
 export const stats = {
     streak: 4,
     life: 5,

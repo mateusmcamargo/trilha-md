@@ -1,0 +1,65 @@
+    form.form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3rem;
+
+    width: 100%;
+
+    fieldset.group {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+
+        width: 100%;
+        min-width: 0;
+
+        legend {
+            margin-bottom: 2rem;
+
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--color-text-primary);
+        }
+
+        p.hint {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--color-text-secondary);
+        }
+    }
+
+    p.error {
+        font-size: 1.6rem;
+        font-weight: 900;
+        text-align: left;
+        color: var(--color-danger);
+    }
+
+    div.verified {
+        width: 100%;
+
+        span {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 1rem;
+            
+            width: 100%;
+            font-size: 1.4rem;
+            font-weight: 800;
+            
+            svg {
+                width: 1.8rem;
+                height: 1.8rem;
+                stroke-width: 3;
+            }
+            &.verified {
+                color: var(--color-green-500);
+            }
+            &.notVerified {
+                color: var(--color-danger);
+            }
+        }
+    }
+}

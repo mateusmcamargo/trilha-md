@@ -25,6 +25,8 @@
     /* feedback */
     --color-focus-ring:         var(--color-blue-300);
     --color-danger:             var(--color-red-500);
+    --color-danger-dark:        var(--color-red-700);
+    --color-danger-darker:      var(--color-red-900);
 
     /* game stats */
     --color-streak:             var(--color-orange-700);

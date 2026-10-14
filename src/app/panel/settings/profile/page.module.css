@@ -1,0 +1,61 @@
+main.profile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 5vw 0;
+  margin: 10vh 0;
+  gap: 5vw;
+  width: 90vw;
+}
+main.profile div.avatar {
+  position: relative;
+}
+main.profile div.avatar div.picture {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 14rem;
+  height: 14rem;
+  border-radius: 50%;
+  background-color: var(--color-brand-light);
+  outline: 4px solid var(--color-brand);
+  outline-offset: 2px;
+}
+main.profile div.avatar div.picture span {
+  font-size: 4.8rem;
+  font-weight: 800;
+  color: var(--color-brand-contrast);
+}
+main.profile div.avatar button.editButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  right: -1rem;
+  bottom: -1rem;
+  width: 4.8rem;
+  height: 4.8rem;
+  font-weight: 700;
+  border: solid 4px var(--color-brand-darker);
+  background-color: var(--color-brand);
+  border-radius: 50%;
+  cursor: pointer;
+}
+main.profile div.avatar button.editButton:focus-visible {
+  outline: 3px solid var(--color-focus-ring);
+  outline-offset: 4px;
+}
+main.profile div.avatar button.editButton svg {
+  color: var(--color-brand-contrast);
+  width: 2rem;
+  height: 2rem;
+  stroke-width: 3;
+}
+main.profile section.account {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  width: 100%;
+}/*# sourceMappingURL=page.module.css.map */

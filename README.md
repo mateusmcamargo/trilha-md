@@ -33,6 +33,8 @@ npm install
 
 ### 2. Configurar o Supabase
 
+> Se quiser rodar no modo demonstração, basta pular para a etapa 4.
+
 Crie um projeto no [dashboard do Supabase](https://supabase.com/dashboard) e vincule ao repositório local:
 
 ```bash
@@ -49,8 +51,6 @@ npx supabase db push
 ### 3. Variáveis de ambiente
 
 #### 3.1 Modo demonstração (sem Supabase)
-
-> Se quiser rodar no modo demonstração, basta pular para a etapa 4.
 
 Se as variáveis acima não estiverem definidas, ou se `NEXT_PUBLIC_USE_MOCK=true`, o app roda em modo demonstração: o login aceita qualquer e-mail e senha e todas as telas usam os dados de exemplo de `src/app/panel/mockData.ts`, incluindo o usuário. Ideal para apresentações e testes sem internet.
 

@@ -5,7 +5,6 @@ import { ArrowLeft, Download, Pencil } from 'lucide-react';
 import { ActionButton } from '#/components/Button/ActionButton';
 import { DeleteAccountButton } from '#/components/Button/DeleteAccountButton';
 import PageHeader from '#/components/Header/PageHeader';
-import PressableBase from '#/components/PressableBase/PressableBase';
 import { ProfileForm } from '#/components/ProfileForm/ProfileForm';
 
 import { user } from '#/utils/mockData';

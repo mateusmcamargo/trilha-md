@@ -1,6 +1,5 @@
 'use client'
 
-import Navbar from '#/components/Navbar/Navbar';
 import { MockAlert } from '#/components/MockAlert/MockAlert';
 
 import { useState, type ReactNode } from 'react';

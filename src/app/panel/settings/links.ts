@@ -1,4 +1,4 @@
-import { Bell, Code, CodeXml, GraduationCap, Info, Route, ShieldCheck, ShieldQuestion, SlidersHorizontal, User, UserCog, Users, Venus } from 'lucide-react';
+import { Bell, CodeXml, GraduationCap, Info, Route, ShieldCheck, ShieldQuestion, SlidersHorizontal, UserCog, Users, Venus } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 
 interface SettingsLink {

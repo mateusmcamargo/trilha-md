@@ -2,7 +2,7 @@
 
 # Trilha Meninas Digitais
 
-Software desenvolvido para o projeto de extensão [Meninas Digitais UTFPR-CP](https://www.instagram.com/meninasdigitaisutfprcp/), para a disciplina de Certificadora de Competência 3.
+Web app mobile first de aprendizado em parceria com o projeto [Meninas Digitais UTFPR-CP](https://www.instagram.com/meninasdigitaisutfprcp/), para a disciplina de Certificadora de Competência 3.
 
 <!--
 Projeto disponível no [Vercel](https://vercel.com/new).
@@ -10,7 +10,7 @@ Projeto disponível no [Vercel](https://vercel.com/new).
 
 ## Sobre
 
-O programa acompanha mentoradas ao longo de um ciclo: elas se matriculam, participam de atividades, refletem sobre a experiência e evoluem até a certificação final, por meio de uma trilha gamificada.
+O programa acompanha mentoradas ao longo de um ciclo: elas se matriculam, participam de atividades, questionários e minigames, refletem sobre a experiência e evoluem até a certificação final, por meio de uma trilha gamificada.
 
 ![Ciclo do App](/.github/images/app_cicle.png)
 

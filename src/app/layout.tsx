@@ -35,7 +35,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: LayoutProps<'/'>) {
     return (
         <html
-            lang='pt-br'
+            lang='pt-BR'
             className={`
                 ${nunito.variable}
                 ${ibmPlexMono.variable}

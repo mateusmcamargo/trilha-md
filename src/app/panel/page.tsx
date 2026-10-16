@@ -1,5 +1,5 @@
 import { redirect } from 'next/navigation';
 
-export default function panelPage() {
+export default function PanelPage() {
     redirect('/panel/trail');
 }

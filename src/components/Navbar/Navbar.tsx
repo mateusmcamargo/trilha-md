@@ -5,6 +5,9 @@ import { usePathname } from 'next/navigation';
 
 import { Dumbbell, FileText, Route, TerminalSquare, TrendingUp } from 'lucide-react';
 
+import { user } from '#/utils/mockData';
+import { getInitials } from '#/utils/getInitials';
+
 import styles from './Navbar.module.scss';
 
 const navItems = [
@@ -16,8 +19,8 @@ const navItems = [
 ] as const;
 
 export default function Navbar() {
-    const pathname = usePathname();
 
+    const pathname = usePathname();
     const isActive = (href: string) =>
         pathname === href || pathname.startsWith(`${href}/`);
 
@@ -40,7 +43,7 @@ export default function Navbar() {
                 aria-label='Meu perfil'
                 aria-current={isActive('/panel/profile') ? 'page' : undefined}
             >
-                <span>AF</span>
+                <span>{getInitials(user.name)}</span>
             </Link>
         </nav>
     );

@@ -3,6 +3,8 @@
 import Link from 'next/link';
 import { useState, type KeyboardEvent } from 'react';
 
+import { getInitials } from '#/utils/getInitials';
+
 import styles from './CommunitySection.module.scss';
 
 type PeopleTabs = 'mentors' | 'friends';
@@ -75,7 +77,7 @@ export default function CommunitySection({ people }: CommunitySectionProps) {
                         {people[activePeopleTab].map(({ id, name, xp }) => (
                             <li key={id} className={styles.person}>
                                 <div className={styles.photo} aria-hidden='true'>
-                                    <span>{name.slice(0, 2).toUpperCase()}</span>
+                                    <span>{getInitials(name)}</span>
                                 </div>
                                 <div className={styles.details}>
                                     <h3>{name}</h3>

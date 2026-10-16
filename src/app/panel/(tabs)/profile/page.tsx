@@ -7,7 +7,7 @@ import CommunitySection from '#/components/CommunitySection/CommunitySection';
 import PageHeader from '#/components/Header/PageHeader';
 import PressableBase from '#/components/PressableBase/PressableBase';
 
-import { people, stats } from '#/app/panel/mockData';
+import { people, stats, user } from '#/utils/mockData';
 
 import styles from './page.module.scss';
 
@@ -16,11 +16,13 @@ export const metadata: Metadata = {
 };
 
 export default function ProfilePage() {
+    const firstName = user.name.split(' ')[0];
+
     const statsCards = [
-        { variant: 'streak', icon: Flame,    value: stats.streak,   label: 'dias de ofensiva'},
-        { variant: 'xp',     icon: Sparkles, value: stats.totalXp,  label: 'total de XP'     },
-        { variant: 'trail',  icon: Flower,   value: 'Dandelion',    label: 'Trilha'          },
-        { variant: 'awards', icon: Award,    value: 'Nenhum',       label: 'certificado :('  },
+        { variant: 'streak', icon: Flame,    value: stats.streak,  label: 'dias de ofensiva'},
+        { variant: 'xp',     icon: Sparkles, value: stats.totalXp, label: 'total de XP'     },
+        { variant: 'trail',  icon: Flower,   value: 'Dandelion',   label: 'Trilha'          },
+        { variant: 'awards', icon: Award,    value: 'Nenhum',      label: 'certificado :('  },
     ];
 
     return (
@@ -35,7 +37,7 @@ export default function ProfilePage() {
                 aria-label='Meu Perfil'
             >
                 <div className={styles.calling}>
-                    <h2>Oi, Anne! <span aria-hidden='true'>👋</span></h2>
+                    <h2>Oi, {firstName}! <span aria-hidden='true'>👋</span></h2>
                     <div className={styles.action}>
                         <span>Bora codar no </span>
                         <PressableBase color='var(--color-brand-darker)' radius='.8rem'>
@@ -64,9 +66,9 @@ export default function ProfilePage() {
                 </div>
 
                 <div className={styles.userInfo}>
-                    <h2 className={styles.fullName}>Anne Franco</h2>
-                    <p className={styles.username}>anne.franco26</p>
-                    <p className={styles.journey}>Começou sua jornada em outrubro de 2026</p>
+                    <h2 className={styles.fullName}>{user.name}</h2>
+                    <p className={styles.username}>{user.username}</p>
+                    <p className={styles.journey}>Começou sua jornada em outubro de 2026</p>
                     <p className={styles.paths}>Nenhuma trilha concluída ainda <span aria-hidden='true'>:(</span></p>
                 </div>
 

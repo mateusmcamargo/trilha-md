@@ -8,7 +8,8 @@ import PageHeader from '#/components/Header/PageHeader';
 import PressableBase from '#/components/PressableBase/PressableBase';
 import { ProfileForm } from '#/components/ProfileForm/ProfileForm';
 
-import { user } from '#/app/panel/mockData';
+import { user } from '#/utils/mockData';
+import { getInitials } from '#/utils/getInitials';
 
 import styles from './page.module.scss';
 
@@ -17,8 +18,7 @@ export const metadata: Metadata = {
 };
 
 export default function ProfileSettingsPage() {
-    const names = user.name.trim().split(/\s+/);
-    const initials = `${names[0][0]}${names.length > 1 ? names[names.length - 1][0] : ''}`.toUpperCase();
+    const initials = getInitials(user.name);
 
     return (
         <>

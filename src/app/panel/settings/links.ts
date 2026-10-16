@@ -34,7 +34,7 @@ export const settingsSections: SettingsSection[] = [
     {
         title: 'Sobre',
         links: [
-            { slug: 'about-projet',       label: 'Sobre o Meninas Digitais',   icon: Venus          },
+            { slug: 'about-project',       label: 'Sobre o Meninas Digitais',   icon: Venus          },
             { slug: 'about-app',          label: 'Sobre o aplicativo',         icon: Info           },
             { slug: 'privacy-disclaimer', label: 'Sobre os seus dados', icon: ShieldQuestion },
         ],

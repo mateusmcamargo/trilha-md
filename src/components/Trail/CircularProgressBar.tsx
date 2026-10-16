@@ -21,6 +21,7 @@ export function CircularProgressBar({
     showLabel = true,
     label = 'Progresso',
     decorative = false,
+    className,
 }: CircularProgressBarProps) {
     const normalizedProgress = Math.min(100, Math.max(0, progress));
 
@@ -29,7 +30,7 @@ export function CircularProgressBar({
 
     return (
         <div
-            className={`${styles.container} ${styles.available}`}
+            className={[styles.container, styles.available, className].filter(Boolean).join(' ')}
             style={{ width, height }}
             aria-hidden={decorative || undefined}
         >

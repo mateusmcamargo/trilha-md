@@ -1,16 +1,19 @@
 'use client'
 
-import { useState } from 'react'
+import { useId, useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { createClient } from '@/utils/supabase/client'
+import { getSupabase } from '#/utils/supabase/getSupabase'
+import { isMockMode } from '#/utils/mockMode'
 import styles from './LoginForm.module.scss'
 import { Input } from '../Input/Input'
-import { Key, Mail } from 'lucide-react'
-import { LoginButton } from '../Button/LoginButton'
+import { Info, Key, Mail } from 'lucide-react'
+import { SubmitButton } from '../Button/SubmitButton'
+import FormError from '../FormError/FormError'
 
 export function LoginForm() {
     const router = useRouter()
-    const supabase = createClient()
+    const supabase = getSupabase()
+    const errorId = useId()
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
@@ -22,7 +25,17 @@ export function LoginForm() {
         setError(null)
         setLoading(true)
 
+        if (!supabase) {
+            router.push('/panel')
+            return
+        }
+
         const { data, error } = await supabase.auth.signInWithPassword({ email, password })
+
+        if (error?.name === 'AuthRetryableFetchError') {
+            router.push('/panel')
+            return
+        }
 
         if (error || !data.user) {
             setLoading(false)
@@ -36,7 +49,6 @@ export function LoginForm() {
             .eq('id', data.user.id)
             .single()
 
-        setLoading(false)
         router.push(profile?.role === 'mentor' ? '/mentor' : '/panel')
         router.refresh()
     }
@@ -44,7 +56,7 @@ export function LoginForm() {
     return (
         <form className={styles.form} onSubmit={handleSubmit} noValidate>
             <div className={styles.title}>
-                <h1 className={styles.title}>Bem vinda de volta!</h1>
+                <h1>Bem vinda de volta!</h1>
                 <p>Faça login para voltar à sua trilha ;)</p>
             </div>
 
@@ -55,6 +67,8 @@ export function LoginForm() {
                 autoComplete='email'
                 placeholder='seuemail@dominio.com'
                 required
+                aria-invalid={error ? true : undefined}
+                aria-describedby={error ? errorId : undefined}
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
             />
@@ -66,19 +80,27 @@ export function LoginForm() {
                 placeholder='●●●●●●'
                 autoComplete='current-password'
                 required
+                aria-invalid={error ? true : undefined}
+                aria-describedby={error ? errorId : undefined}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
             />
 
-            {error && (
-                <p className={styles.error} role='alert'>
-                    {error}
-                </p>
+            {isMockMode && (
+                <div className={styles.notice}>
+                    <div className={styles.title}>
+                        <Info/>
+                        <span>Modo demonstração</span>
+                    </div>
+                    <p>Use qualquer e-mail e senha. Os dados são de exemplo.</p>
+                </div>
             )}
 
-            <LoginButton
-                loading={loading}
-            />
+            {error && <FormError id={errorId}>{error}</FormError>}
+
+            <SubmitButton loading={loading} loadingLabel='Entrando...'>
+                Entrar
+            </SubmitButton>
         </form>
     )
 }

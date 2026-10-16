@@ -30,13 +30,13 @@ export function Input({
         : type;
 
     return (
-        <div className={`${styles.inputWrapper} ${disabled ? styles.disabled : ''}`}>
+        <div className={styles.inputWrapper}>
 
             {label &&
                 <label htmlFor={inputId}>
                     {label}
                     {required &&
-                        <span className={styles.required}>*</span>
+                        <span className={styles.required} aria-hidden='true'>*</span>
                     }
                 </label>
             }
@@ -53,12 +53,12 @@ export function Input({
                     type={resolvedType}
                     required={required}
                     disabled={disabled}
-                    className={`
-                        ${styles.input || ''} 
-                        ${Icon ? styles.withIconLeft : ''} 
-                        ${isPassword ? styles.withIconRight : ''} 
-                        ${className}
-                    `.trim()}
+                    className={[
+                        styles.input,
+                        Icon && styles.withIconLeft,
+                        isPassword && styles.withIconRight,
+                        className,
+                    ].filter(Boolean).join(' ')}
                     {...props}
                 />
 

@@ -1,4 +1,3 @@
-
 export const user = {
     name:     'Anne Franco',
     username: 'anne.franco26',
@@ -149,7 +148,7 @@ export const people = {
 };
 
 const completed = trailItems.filter(
-    (item) => item.status === 'completed'
+    (item) => item.status === 'completed' || item.status === 'mastered'
 ).length;
 
 export const trailProgress = Math.round(

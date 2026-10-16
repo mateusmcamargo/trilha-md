@@ -29,7 +29,7 @@ export default function Skeleton({
             role={label ? 'status' : undefined}
             aria-hidden={label ? undefined : 'true'}
         >
-            {label && <span className={styles.srOnly}>{label}</span>}
+            {label && <span className='sr-only'>{label}</span>}
         </div>
     );
 }

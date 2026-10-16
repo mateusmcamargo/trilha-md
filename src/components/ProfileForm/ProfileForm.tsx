@@ -7,6 +7,7 @@ import { CaseSensitive, Check, Key, Mail, User, X } from 'lucide-react';
 
 import { Input } from '../Input/Input';
 import { SaveButton } from '../Button/SaveButton';
+import FormError from '../FormError/FormError';
 
 import styles from './ProfileForm.module.scss';
 
@@ -82,14 +83,14 @@ export function ProfileForm({ user }: ProfileFormProps) {
 
             {user.verified ? (
                 <span className={styles.verified}>
-                    <Check/>
+                    <Check aria-hidden='true'/>
                     E-mail verificado
                 </span>
             ) : (
                 <span className={styles.notVerified}>
-                    <X/>
+                    <X aria-hidden='true'/>
                     E-mail não verificado.
-                    <a href="#">Verificar agora</a>
+                    <button type='button'>Verificar agora</button>
                     {/*disparar email de verificação, mudar span para 'E-mail de verificação enviado!'*/}
                 </span>
             )}
@@ -126,11 +127,7 @@ export function ProfileForm({ user }: ProfileFormProps) {
                 />
             </fieldset>
 
-            {error && (
-                <p id={errorId} className={styles.error} role='alert'>
-                    {error}
-                </p>
-            )}
+            {error && <FormError id={errorId}>{error}</FormError>}
 
             <SaveButton/>
         </form>

@@ -3,7 +3,7 @@ import type { Metadata } from 'next';
 import { ArrowLeft } from 'lucide-react';
 
 import PageHeader from '#/components/Header/PageHeader';
-import SegmentedControl from '#/components/Toggle/Toggle';
+import Toggle from '#/components/Toggle/Toggle';
 import Switch from '#/components/Switch/Switch';
 
 import styles from './page.module.scss';
@@ -38,7 +38,7 @@ export default function PreferencesPage() {
                     <h2>Aparência</h2>
 
                     <div className={styles.options}>
-                        <SegmentedControl
+                        <Toggle
                             name='theme'
                             label='Tema'
                             options={[

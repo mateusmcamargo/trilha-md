@@ -6,7 +6,7 @@ import PressableBase from '#/components/PressableBase/PressableBase';
 import StatsHeader from '#/components/Header/StatsHeader';
 import Trail from '#/components/Trail/Trail';
 
-import { stats, trailItems, trailProgress } from '#/app/panel/mockData';
+import { stats, trailItems, trailProgress } from '#/utils/mockData';
 
 import styles from './page.module.scss';
 
@@ -35,7 +35,7 @@ export default function TrailPage() {
                         <div className={styles.trailInfo}>
                             <div className={styles.trailTitle}>
                                 <Flower/>
-                                <h1>Trilha Dente-de-Leão</h1>
+                                <h1>Trilha Dandelion</h1>
                             </div>
                             <h2>Como a internet funciona</h2>
                         </div>

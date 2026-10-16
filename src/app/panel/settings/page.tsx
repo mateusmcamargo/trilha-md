@@ -3,12 +3,12 @@ import Link from 'next/link';
 
 import { ArrowLeft, ChevronRight } from 'lucide-react';
 
+import { LogoutButton } from '#/components/Button/LogoutButton';
 import PageHeader from '#/components/Header/PageHeader';
 
-import styles from './page.module.scss';
-import { LogoutButton } from '#/components/Button/LogoutButton';
-
 import { settingsSections } from './links';
+
+import styles from './page.module.scss';
 
 export const metadata: Metadata = {
     title: 'Configurações',

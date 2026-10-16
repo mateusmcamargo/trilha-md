@@ -35,7 +35,7 @@ export async function updateSession(request: NextRequest) {
 
     if (user && (path === '/login' || path === '/register')) {
         const url = request.nextUrl.clone()
-        url.pathname = '/pannel'
+        url.pathname = '/panel'
         return NextResponse.redirect(url)
     }
 
@@ -48,7 +48,7 @@ export async function updateSession(request: NextRequest) {
 
         if (profile?.role !== 'mentor') {
             const url = request.nextUrl.clone()
-            url.pathname = '/pannel'
+            url.pathname = '/panel'
             return NextResponse.redirect(url)
         }
     }

@@ -16,15 +16,43 @@
 html {
     height: 100%;
     font-family: var(--font-nunito);
+    font-size: 62.5%; /* 1rem = 10px, mas respeita o tamanho de fonte configurado pelo usuário */
 }
 
 html, body {
-    font-size: 10px;
     max-width: 100vw;
     overflow-x: hidden;
 }
 
 body {
+    font-size: 1rem;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+}
+
+/* o reset acima remove o outline; este é o fallback para quem não define o próprio */
+a:focus-visible,
+button:focus-visible,
+[tabindex='0']:focus-visible {
+    outline: 3px solid var(--color-focus-ring);
+    outline-offset: 2px;
+}
+
+/* texto visível apenas para leitores de tela */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+    }
 }

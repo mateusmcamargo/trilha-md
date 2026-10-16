@@ -20,12 +20,12 @@ interface Position {
     y: number;
 }
 
-export default function Trail({ items }: TrailProps) {
+const NODE_SIZE = 80;
+const VERTICAL_DISTANCE = 90;
+const AMPLITUDE = 64;      // max displacement per wave
+const NODES_PER_WAVE = 6;  // how many nodes form a wave
 
-    const NODE_SIZE = 80;
-    const VERTICAL_DISTANCE = 90;
-    const AMPLITUDE = 64;      // max displacement per wave
-    const NODES_PER_WAVE = 6;  // how many nodes form a wave
+export default function Trail({ items }: TrailProps) {
 
     const positions: Position[] = items.map((_, index) => {
         const angle = (index / NODES_PER_WAVE) * Math.PI * 2;

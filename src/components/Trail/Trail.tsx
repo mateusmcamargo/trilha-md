@@ -47,7 +47,7 @@ export default function Trail({ items }: TrailProps) {
     const width = maxX - minX + NODE_SIZE + 200;
 
     const height = positions.length
-        ? positions[positions.length - 1].y + NODE_SIZE + 150
+        ? positions[positions.length - 1].y + NODE_SIZE
         : 0;
 
     return (

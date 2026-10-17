@@ -21,7 +21,7 @@ button.submitButton {
 
     &:disabled {
         cursor: not-allowed;
-        opacity: .7;
+        background-color: var(--color-brand-light);
     }
 
     svg {

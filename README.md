@@ -1,6 +1,6 @@
 ![Banner do Projeto Áster](/.github/images/banner.png)
 
-Web app mobile first de aprendizado gameficado em parceria com o projeto [Meninas Digitais UTFPR-CP](https://www.instagram.com/meninasdigitaisutfprcp/), para a disciplina de Certificadora da Competência 3.
+Web app mobile first de aprendizado gamificado em parceria com o projeto [Meninas Digitais UTFPR-CP](https://www.instagram.com/meninasdigitaisutfprcp/), para a disciplina de Certificadora da Competência 3.
 
 <!--
 Projeto disponível no [Vercel](https://vercel.com/new).
@@ -8,7 +8,7 @@ Projeto disponível no [Vercel](https://vercel.com/new).
 
 ## Sobre
 
-O programa acompanha mentoradas ao longo de um ciclo: elas se matriculam, participam de atividades, questionários e minigames, refletem sobre a experiência e evoluem até a certificação final, por meio de uma trilha gameficada.
+O programa acompanha mentoradas ao longo de um ciclo: elas se matriculam, participam de atividades, questionários e minigames, refletem sobre a experiência e evoluem até a certificação final, por meio de uma trilha gamificada.
 
 ![Fluxograma do Ciclo do App](/.github/images/app_cicle.png)
 

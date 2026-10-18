@@ -7,16 +7,17 @@ import { DeleteAccountButton } from '#/components/Button/DeleteAccountButton';
 import PageHeader from '#/components/Header/PageHeader';
 import { ProfileForm } from '#/components/ProfileForm/ProfileForm';
 
-import { user } from '#/utils/mockData';
-import { getInitials } from '#/utils/getInitials';
+import { getPanelData } from '#/utils/panelData';
 
 import styles from './page.module.scss';
+import { getInitials } from '#/utils/getInitials';
 
 export const metadata: Metadata = {
     title: 'Perfil',
 };
 
-export default function ProfileSettingsPage() {
+export default async function ProfileSettingsPage() {
+    const { user } = await getPanelData();
     const initials = getInitials(user.name);
 
     return (

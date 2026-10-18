@@ -7,7 +7,7 @@ import CommunitySection from '#/components/CommunitySection/CommunitySection';
 import PageHeader from '#/components/Header/PageHeader';
 import PressableBase from '#/components/PressableBase/PressableBase';
 
-import { people, stats, user } from '#/utils/mockData';
+import { getPanelData } from '#/utils/panelData';
 
 import styles from './page.module.scss';
 
@@ -15,14 +15,16 @@ export const metadata: Metadata = {
     title: 'Perfil',
 };
 
-export default function ProfilePage() {
+export default async function ProfilePage() {
+    const { user, stats, trail, people, journeyStart, completedTrails, certificates } = await getPanelData();
     const firstName = user.name.split(' ')[0];
 
     const statsCards = [
-        { variant: 'streak', icon: Flame,    value: stats.streak,  label: 'dias de ofensiva'},
-        { variant: 'xp',     icon: Sparkles, value: stats.totalXp, label: 'total de XP'     },
-        { variant: 'trail',  icon: Flower,   value: 'Dandelion',   label: 'Trilha'          },
-        { variant: 'awards', icon: Award,    value: 'Nenhum',      label: 'certificado :('  },
+        { variant: 'streak', icon: Flame,    value: stats.streak,           label: 'dias de ofensiva'},
+        { variant: 'xp',     icon: Sparkles, value: stats.totalXp,          label: 'total de XP'     },
+        { variant: 'trail',  icon: Flower,   value: trail?.name ?? 'Nenhuma', label: 'Trilha'         },
+        { variant: 'awards', icon: Award,    value: certificates || 'Nenhum',
+            label: certificates === 0 ? 'certificado :(' : certificates === 1 ? 'certificado' : 'certificados' },
     ];
 
     return (
@@ -66,10 +68,12 @@ export default function ProfilePage() {
                 </div>
 
                 <div className={styles.userInfo}>
-                    <h2 className={styles.fullName}>{user.name}</h2>
-                    <p className={styles.username}>{user.username}</p>
-                    <p className={styles.journey}>Começou sua jornada em outubro de 2026</p>
-                    <p className={styles.paths}>Nenhuma trilha concluída ainda <span aria-hidden='true'>:(</span></p>
+                    {journeyStart && <p className={styles.journey}>Começou sua jornada em {journeyStart}</p>}
+                    <p className={styles.paths}>
+                        {completedTrails === 0
+                            ? <>Nenhuma trilha concluída ainda <span aria-hidden='true'>:(</span></>
+                            : `${completedTrails} ${completedTrails === 1 ? 'trilha concluída' : 'trilhas concluídas'}`}
+                    </p>
                 </div>
 
                 <div className={styles.userStats}>

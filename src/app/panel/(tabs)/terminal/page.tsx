@@ -3,8 +3,6 @@ import type { Metadata } from 'next';
 import CodeSandbox from '#/components/CodeSandbox/CodeSandbox';
 import StatsHeader from '#/components/Header/StatsHeader';
 
-import { stats, trailProgress } from '#/utils/mockData';
-
 import styles from './page.module.scss';
 
 export const metadata: Metadata = {
@@ -12,14 +10,10 @@ export const metadata: Metadata = {
 };
 
 export default function TerminalPage() {
+
     return (
         <>
-            <StatsHeader
-                progress={trailProgress}
-                xp={stats.xp}
-                streak={stats.streak}
-                life={stats.life}
-            />
+            <StatsHeader/>
 
             <main
                 className={styles.terminal}

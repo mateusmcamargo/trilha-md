@@ -6,23 +6,36 @@ import PressableBase from '#/components/PressableBase/PressableBase';
 import StatsHeader from '#/components/Header/StatsHeader';
 import Trail from '#/components/Trail/Trail';
 
-import { stats, trailItems, trailProgress } from '#/utils/mockData';
-
 import styles from './page.module.scss';
+import { getPanelData } from '#/utils/panelData';
 
 export const metadata: Metadata = {
     title: 'Trilha',
 };
 
-export default function TrailPage() {
+export default async function TrailPage() {
+
+    const { stats, trail, trailItems, trailProgress } = await getPanelData();
+
+        if (!trail) {
+            return (
+                <>
+                    <StatsHeader/>
+
+                    <main
+                        className={styles.trail}
+                        aria-label='Atividades da minha trilha'
+                    >
+                        <h1>Nenhuma trilha ativa</h1>
+                        <p>Você ainda não está matriculada em uma trilha.</p>
+                    </main>
+                </>
+            );
+        }
+
     return (
         <>
-            <StatsHeader
-                progress={trailProgress}
-                xp={stats.xp}
-                streak={stats.streak}
-                life={stats.life}
-            />
+            <StatsHeader/>
 
             <main
                 className={styles.trail}
@@ -35,9 +48,9 @@ export default function TrailPage() {
                         <div className={styles.trailInfo}>
                             <div className={styles.trailTitle}>
                                 <Flower/>
-                                <h1>Trilha Dandelion</h1>
+                                <h1>Trilha {trail.name}</h1>
                             </div>
-                            <h2>Como a internet funciona</h2>
+                            <h2>{trail.subtitle}</h2>
                         </div>
 
                         <div className={styles.trailProgress}>

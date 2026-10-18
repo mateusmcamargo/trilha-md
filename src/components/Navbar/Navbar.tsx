@@ -5,9 +5,6 @@ import { usePathname } from 'next/navigation';
 
 import { Dumbbell, FileText, Route, TerminalSquare, TrendingUp } from 'lucide-react';
 
-import { user } from '#/utils/mockData';
-import { getInitials } from '#/utils/getInitials';
-
 import styles from './Navbar.module.scss';
 
 const navItems = [
@@ -18,7 +15,12 @@ const navItems = [
     { href: '/panel/progress', icon: TrendingUp,     label: 'Progresso' },
 ] as const;
 
-export default function Navbar() {
+
+interface NavbarProps {
+    initials: string;
+}
+
+export default function Navbar({initials}: NavbarProps) {
 
     const pathname = usePathname();
     const isActive = (href: string) =>
@@ -43,7 +45,7 @@ export default function Navbar() {
                 aria-label='Meu perfil'
                 aria-current={isActive('/panel/profile') ? 'page' : undefined}
             >
-                <span>{getInitials(user.name)}</span>
+                <span>{initials}</span>
             </Link>
         </nav>
     );

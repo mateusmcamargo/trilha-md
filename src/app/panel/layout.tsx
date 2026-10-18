@@ -1,32 +1,16 @@
-'use client'
+import type { ReactNode } from 'react';
 
-import { useState, type ReactNode } from 'react';
-import { usePathname } from 'next/navigation';
+import { getInitials } from '#/utils/getInitials';
+import { getPanelData } from '#/utils/panelData';
 
-import Navbar from '#/components/Navbar/Navbar';
+import PanelShell from './PannelShell';
 
-import styles from './layout.module.scss';
-import { MockAlert } from '#/components/MockAlert/MockAlert';
-import { isMockMode } from '#/utils/mockMode';
-
-const pathsWithoutNavbar = ['/panel/settings'];
-
-export default function TabsLayout({ children }: { children: ReactNode }) {
-
-    const pathname = usePathname();
-    const hideNavbar = pathsWithoutNavbar.some((path) =>
-        pathname === path || pathname.startsWith(`${path}/`));
-
-    const [showMockAlert, setShowMockAlert] = useState<boolean>(isMockMode);
+export default async function PanelLayout({ children }: { children: ReactNode }) {
+    const { user } = await getPanelData();
 
     return (
-        <div className={styles.tabs}>
+        <PanelShell initials={getInitials(user.name)}>
             {children}
-            {!hideNavbar && <Navbar/>}
-            
-            {isMockMode && showMockAlert &&
-                <MockAlert onClick={() => setShowMockAlert(false)}/>
-            }
-        </div>
+        </PanelShell>
     );
 }

@@ -12,7 +12,7 @@ type PeopleTabs = 'mentors' | 'friends';
 interface Person {
     id: string;
     name: string;
-    xp: number;
+    xp?: number;
 }
 
 interface CommunitySectionProps {
@@ -81,7 +81,7 @@ export default function CommunitySection({ people }: CommunitySectionProps) {
                                 </div>
                                 <div className={styles.details}>
                                     <h3>{name}</h3>
-                                    <span>{xp} XP</span>
+                                    {xp !== undefined && <span>{xp} XP</span>}
                                 </div>
                             </li>
                         ))}

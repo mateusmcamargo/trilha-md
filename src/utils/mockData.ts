@@ -1,156 +1,135 @@
-export const user = {
-    name:     'Anne Franco',
-    username: 'anne.franco26',
-    email:    'anne.franco@exemplo.com',
-    verified: true
+import type { Tables } from '#/types/database';
+
+import { todayInSaoPaulo } from './dates';
+import type { PanelRows } from './panelData';
+
+// demo mode data, same format as database (src/types/database.ts)
+const profileId = 'mock-profile-anne';
+const mentorId  = 'mock-profile-maria';
+const editionId = 'mock-edition-dandelion';
+const createdAt = '2026-10-01T12:00:00Z';
+
+const profile: Tables<'profiles'> = {
+    id:         profileId,
+    role:       'mentee',
+    full_name:  'Anne Franco',
+    username:   'anne.franco26',
+    avatar_url: null,
+    deleted_at: null,
+    created_at: createdAt,
 };
 
-export const stats = {
-    streak: 4,
-    life: 5,
-    xp: 240,
-    totalXp: 6430,
+const edition: Tables<'editions'> = {
+    id:          editionId,
+    name:        'Dandelion',
+    subtitle:    'Como a internet funciona',
+    access_code: 'DEMO',
+    start_date:  '2026-10-01',
+    end_date:    null,
+    status:      'active',
+    created_by:  mentorId,
+    created_at:  createdAt,
 };
 
-// note: progress will be calculated as percentage, based on how many topics were completed
-export const trailItems = [
-    {
-        id: '1',
-        title: 'Boas-vindas',
-        status: 'mastered' as const,
-        progress: 100,
-    },
-    {
-        id: '2',
-        title: 'Tecnologia',
-        status: 'mastered' as const,
-        progress: 100,
-    },
-    {
-        id: '3',
-        title: 'Programação',
-        status: 'mastered' as const,
-        progress: 100,
-    },
-    {
-        id: '4',
-        title: 'Web',
-        status: 'completed' as const,
-        progress: 100,
-    },
-    {
-        id: '5',
-        title: 'Projeto',
-        status: 'completed' as const,
-        progress: 100,
-    },
-    {
-        id: '6',
-        title: 'Desafio',
-        status: 'completed' as const,
-        progress: 100,
-    },
-    {
-        id: '7',
-        title: 'Conclusão',
-        status: 'completed' as const,
-        progress: 100,
-    },
-    {
-        id: '8',
-        title: 'Lógica de Programação',
-        status: 'completed' as const,
-        progress: 100,
-    },
-    {
-        id: '9',
-        title: 'Algoritmos',
-        status: 'available' as const,
-        progress: 65,
-    },
-    {
-        id: '10',
-        title: 'HTML e CSS',
-        status: 'available' as const,
-        progress: 30,
-    },
-    {
-        id: '11',
-        title: 'JavaScript',
-        status: 'locked' as const,
-        progress: 0,
-    },
-    {
-        id: '12',
-        title: 'Git e GitHub',
-        status: 'locked' as const,
-        progress: 0,
-    },
-    {
-        id: '13',
-        title: 'Desenvolvimento Front-end',
-        status: 'locked' as const,
-        progress: 0,
-    },
-    {
-        id: '14',
-        title: 'Desenvolvimento Back-end',
-        status: 'locked' as const,
-        progress: 0,
-    },
-    {
-        id: '15',
-        title: 'Banco de Dados',
-        status: 'locked' as const,
-        progress: 0,
-    },
-    {
-        id: '16',
-        title: 'Design de Interfaces',
-        status: 'locked' as const,
-        progress: 0,
-    },
-    {
-        id: '17',
-        title: 'Trabalho em Equipe',
-        status: 'locked' as const,
-        progress: 0,
-    },
-    {
-        id: '18',
-        title: 'Desenvolvimento de Projeto',
-        status: 'locked' as const,
-        progress: 0,
-    },
-    {
-        id: '19',
-        title: 'Projeto Final',
-        status: 'locked' as const,
-        progress: 0,
-    },
-    {
-        id: '20',
-        title: 'Certificação',
-        status: 'locked' as const,
-        progress: 0,
-    },
-    ];
+const enrollment: Tables<'enrollments'> & { editions: Tables<'editions'> } = {
+    id:          'mock-enrollment-1',
+    edition_id:  editionId,
+    mentee_id:   profileId,
+    mentor_id:   mentorId,
+    team_id:     null,
+    status:      'active',
+    enrolled_at: createdAt,
+    editions:    edition,
+};
 
-export const people = {
+const titles = [
+    'Boas-vindas',
+    'Tecnologia',
+    'Programação',
+    'Web',
+    'Projeto',
+    'Desafio',
+    'Conclusão',
+    'Lógica de Programação',
+    'Algoritmos',
+    'HTML e CSS',
+    'JavaScript',
+    'Git e GitHub',
+    'Desenvolvimento Front-end',
+    'Desenvolvimento Back-end',
+    'Banco de Dados',
+    'Design de Interfaces',
+    'Trabalho em Equipe',
+    'Desenvolvimento de Projeto',
+    'Projeto Final',
+    'Certificação',
+];
+
+const activities: Tables<'activities'>[] = titles.map((title, index) => ({
+    id:            `mock-activity-${index + 1}`,
+    edition_id:    editionId,
+    position:      index + 1,
+    title,
+    description:   null,
+    material_path: null,
+    activity_date: '2026-10-01',
+    points:        30,
+    created_by:    mentorId,
+    created_at:    createdAt,
+}));
+
+// 8 completed activities, 9th is available
+const attendance: PanelRows['attendance'] = activities.slice(0, 8).map((activity) => ({
+    id:            `mock-attendance-${activity.position}`,
+    activity_id:   activity.id,
+    mentee_id:     profileId,
+    status:        'presente',
+    checked_in_at: createdAt,
+    confirmed_by:  null,
+    activities:    { points: activity.points, edition_id: activity.edition_id },
+}));
+
+// 3 mastered activities, 9th is 65% completed
+const activityProgress: Tables<'activity_progress'>[] = [
+    ...activities.slice(0, 3).map((activity) => ({
+        id:          `mock-progress-${activity.position}`,
+        activity_id: activity.id,
+        mentee_id:   profileId,
+        progress:    100,
+        mastered_at: createdAt,
+        updated_at:  createdAt,
+    })),
+    {
+        id:          'mock-progress-9',
+        activity_id: 'mock-activity-9',
+        mentee_id:   profileId,
+        progress:    65,
+        mastered_at: null,
+        updated_at:  createdAt,
+    },
+];
+
+export const mockRows: PanelRows = {
+    profile,
+    email:         'anne.franco@exemplo.com',
+    emailVerified: true,
+    userStats: {
+        profile_id:     profileId,
+        streak_days:    4,
+        last_active_on: todayInSaoPaulo(),
+        lives:          5,
+    },
+    enrollments:        [enrollment],
+    activities,
+    attendance,
+    activityProgress,
+    signedCertificates: 0,
     mentors: [
-        { id: '1', name: 'Maria', xp: 25279 },
+        { id: mentorId, full_name: 'Maria', avatar_url: '' },
     ],
     friends: [
-        { id: '2', name: 'Larinha', xp: 4987 },
-        { id: '3', name: 'Mica',    xp: 3240 },
-        { id: '4', name: 'Rebeca',  xp: 12574 },
+        { friendship_id: 'mock-friendship-1', id: 'mock-profile-2', full_name: 'Larinha', username: 'larinha', total_xp: 4987  },
+        { friendship_id: 'mock-friendship-2', id: 'mock-profile-3', full_name: 'Mica',    username: 'mica',    total_xp: 3240  },
+        { friendship_id: 'mock-friendship-3', id: 'mock-profile-4', full_name: 'Rebeca',  username: 'rebeca',  total_xp: 12574 },
     ],
 };
-
-const completed = trailItems.filter(
-    (item) => item.status === 'completed' || item.status === 'mastered'
-).length;
-
-export const trailProgress = Math.round(
-    (completed / trailItems.length) * 100
-);

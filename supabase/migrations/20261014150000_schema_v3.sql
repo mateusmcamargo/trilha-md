@@ -40,7 +40,7 @@ comment on column public.profiles.deleted_at is 'soft delete: preenchido ao "Del
 -- editions: subtítulo da trilha
 alter table public.editions add column if not exists subtitle text;
 
-comment on column public.editions.name is 'também é o nome da trilha exibido na tela (ex.: "Dente-de-Leão")';
+comment on column public.editions.name is 'também é o nome da trilha exibido na tela (ex.: "Dandelion")';
 comment on column public.editions.subtitle is 'subtítulo no cartão da trilha (ex.: "Como a internet funciona")';
 
 -- activities: points agora alimenta o XP

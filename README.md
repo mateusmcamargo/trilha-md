@@ -1,6 +1,4 @@
-![Banner do Projeto Aster](/.github/images/banner.png)
-
-# Projeto Aster
+![Banner do Projeto Áster](/.github/images/banner.png)
 
 Web app mobile first de aprendizado gameficado em parceria com o projeto [Meninas Digitais UTFPR-CP](https://www.instagram.com/meninasdigitaisutfprcp/), para a disciplina de Certificadora da Competência 3.
 

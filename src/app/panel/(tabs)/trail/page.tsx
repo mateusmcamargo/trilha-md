@@ -29,7 +29,7 @@ export default function TrailPage() {
                 aria-label='Atividades da minha trilha'
             >
 
-                <PressableBase color='var(--color-brand-darker)' radius='1rem'>
+                <PressableBase color='var(--color-brand-darker)' depth={8} radius='1rem'>
                     <section className={styles.trailCard}>
 
                         <div className={styles.trailInfo}>

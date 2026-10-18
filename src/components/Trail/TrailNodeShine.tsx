@@ -1,4 +1,3 @@
-// TrailNodeShine.tsx
 export default function TrailNodeShine({ className }: { className?: string }) {
     return (
         <svg

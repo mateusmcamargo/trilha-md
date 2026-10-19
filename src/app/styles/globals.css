@@ -49,6 +49,45 @@ button:focus-visible,
     white-space: nowrap;
 }
 
+/* ---------- <main>: padrões de layout ---------- */
+
+/* tela cheia, sem header nem navbar (login, register, not-found) */
+main.main-fullscreen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+
+    min-height: 100vh;
+    min-height: 100dvh; /* acompanha a barra do navegador no celular */
+    padding: 4rem 5vw;
+}
+
+/* abas e subpáginas do painel: coluna a partir do topo.
+   header e navbar têm 10vh cada, então vh (e não dvh) para alinhar com eles */
+main.main-tabs, main.main-subpage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 5vw;
+
+    padding: 5vw 0;
+}
+
+/* header + navbar (terminal, trail, profile): sobra 80vh entre as barras */
+main.main-tabs {
+    min-height: calc(100vh - 2 * var(--bar-height));
+    margin: var(--bar-height) auto;
+}
+
+/* só header (settings): sem navbar embaixo */
+main.main-subpage {
+    width: 90vw;
+    margin: var(--bar-height) auto 0;
+}
+
 @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after {
         animation-duration: .01ms !important;

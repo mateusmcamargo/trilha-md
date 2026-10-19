@@ -25,7 +25,7 @@ export default function PanelShell({ initials, children }: PanelShellProps) {
     const [showMockAlert, setShowMockAlert] = useState<boolean>(isMockMode);
 
     return (
-        <div className={styles.tabs}>
+        <div className={`main-subpage ${styles.tabs}`}>
             {children}
             {!hideNavbar && <Navbar initials={initials}/>}
             

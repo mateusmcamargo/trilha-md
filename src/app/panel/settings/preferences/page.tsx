@@ -21,7 +21,7 @@ export default function PreferencesPage() {
             />
 
             <main
-                className={styles.preferences}
+                className={`main-subpage ${styles.preferences}`}
                 aria-label='Preferências'
             >
                 <section className={styles.section}>

@@ -1,4 +1,8 @@
 :root {
+
+    /* Navbar and Header */
+    --bar-height: 10vh;
+
     /*
         base color: 500
         the lower the number, the brighter

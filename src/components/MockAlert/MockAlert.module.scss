@@ -5,7 +5,7 @@ div.mockAlert {
         
         position: fixed;
         right: 2rem;
-        bottom: calc(10vh + 2rem);
+        bottom: calc(var(--bar-height) 2rem);
         z-index: 999;
         
         width: 4.2rem;

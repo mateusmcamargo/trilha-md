@@ -2,12 +2,12 @@ import { Flame, Flower, Heart, Sparkles } from 'lucide-react';
 
 import { Badge } from '#/components/Badge/Badge';
 
-import { getPanelData } from '#/utils/panelData';
+import { getMenteeData } from '#/utils/menteeData';
 
 import styles from './StatsHeader.module.scss';
 
 export default async function StatsHeader() {
-    const { stats, trailProgress } = await getPanelData();
+    const { stats, trailProgress } = await getMenteeData();
 
     return (
         <header className={styles.header}>

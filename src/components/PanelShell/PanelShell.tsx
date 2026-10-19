@@ -3,31 +3,32 @@
 import { useState, type ReactNode } from 'react';
 import { usePathname } from 'next/navigation';
 
-import Navbar from '#/components/Navbar/Navbar';
+import Navbar, { type NavRole } from '#/components/Navbar/Navbar';
 
-import styles from './layout.module.scss';
+import styles from './PanelShell.module.scss';
 import { MockAlert } from '#/components/MockAlert/MockAlert';
 import { isMockMode } from '#/utils/mockMode';
 
-const pathsWithoutNavbar = ['/panel/settings'];
-
 interface PanelShellProps {
+    role: NavRole;
     initials: string;
     children: ReactNode;
 }
 
-export default function PanelShell({ initials, children }: PanelShellProps) {
+export default function PanelShell({ role, initials, children }: PanelShellProps) {
 
     const pathname = usePathname();
-    const hideNavbar = pathsWithoutNavbar.some((path) =>
-        pathname === path || pathname.startsWith(`${path}/`));
+
+    // sets pages without navbar (may be changed in the future)
+    const settingsPath = role === 'mentor' ? '/team/settings' : '/settings';
+    const hideNavbar = pathname === settingsPath || pathname.startsWith(`${settingsPath}/`);
 
     const [showMockAlert, setShowMockAlert] = useState<boolean>(isMockMode);
 
     return (
-        <div className={`main-subpage ${styles.tabs}`}>
+        <div className={styles.tabs}>
             {children}
-            {!hideNavbar && <Navbar initials={initials}/>}
+            {!hideNavbar && <Navbar role={role} initials={initials}/>}
             
             {isMockMode && showMockAlert &&
                 <MockAlert onClick={() => setShowMockAlert(false)}/>

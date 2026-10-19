@@ -1,7 +1,7 @@
 import type { Tables } from '#/types/database';
 
 import { todayInSaoPaulo } from './dates';
-import type { PanelRows } from './panelData';
+import type { MenteeRows } from './menteeData';
 
 // demo mode data, same format as database (src/types/database.ts)
 const profileId = 'mock-profile-anne';
@@ -79,7 +79,7 @@ const activities: Tables<'activities'>[] = titles.map((title, index) => ({
 }));
 
 // 8 completed activities, 9th is available
-const attendance: PanelRows['attendance'] = activities.slice(0, 8).map((activity) => ({
+const attendance: MenteeRows['attendance'] = activities.slice(0, 8).map((activity) => ({
     id:            `mock-attendance-${activity.position}`,
     activity_id:   activity.id,
     mentee_id:     profileId,
@@ -109,7 +109,7 @@ const activityProgress: Tables<'activity_progress'>[] = [
     },
 ];
 
-export const mockRows: PanelRows = {
+export const mockRows: MenteeRows = {
     profile,
     email:         'anne.franco@exemplo.com',
     emailVerified: true,

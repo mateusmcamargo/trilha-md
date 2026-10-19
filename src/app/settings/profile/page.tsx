@@ -7,7 +7,7 @@ import { DeleteAccountButton } from '#/components/Button/DeleteAccountButton';
 import PageHeader from '#/components/Header/PageHeader';
 import { ProfileForm } from '#/components/ProfileForm/ProfileForm';
 
-import { getPanelData } from '#/utils/panelData';
+import { getMenteeData } from '#/utils/menteeData';
 
 import styles from './page.module.scss';
 import { getInitials } from '#/utils/getInitials';
@@ -17,14 +17,14 @@ export const metadata: Metadata = {
 };
 
 export default async function ProfileSettingsPage() {
-    const { user } = await getPanelData();
+    const { user } = await getMenteeData();
     const initials = getInitials(user.name);
 
     return (
         <>
             <PageHeader
                 title='Perfil'
-                action={{ href: '/panel/settings', label: 'Voltar', icon: ArrowLeft }}
+                action={{ href: '/settings', label: 'Voltar', icon: ArrowLeft }}
             />
 
             <main

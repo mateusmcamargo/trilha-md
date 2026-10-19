@@ -20,7 +20,7 @@ export default function NotFound() {
             </div>
 
             <PressableBase color='var(--color-brand-darker)' radius='1rem'>
-                <Link href='/panel/trail' className={styles.button}>
+                <Link href='/trail' className={styles.button}>
                     Voltar para a sua trilha
                 </Link>
             </PressableBase>

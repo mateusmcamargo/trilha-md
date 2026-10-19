@@ -19,7 +19,7 @@ export default function SettingsPage() {
         <>
             <PageHeader
                 title='Configurações'
-                action={{ href: '/panel/profile', label: 'Voltar', icon: ArrowLeft }}
+                action={{ href: '/profile', label: 'Voltar', icon: ArrowLeft }}
             />
 
             <main
@@ -34,7 +34,7 @@ export default function SettingsPage() {
                             {links.map(({ slug, label, icon: Icon }) => (
                                 <li key={slug}>
                                     <Link
-                                        href={`/panel/settings/${slug}`}
+                                        href={`/settings/${slug}`}
                                         className={styles.link}
                                     >
                                         <Icon aria-hidden='true'/>

@@ -7,7 +7,7 @@ import CommunitySection from '#/components/CommunitySection/CommunitySection';
 import PageHeader from '#/components/Header/PageHeader';
 import PressableBase from '#/components/PressableBase/PressableBase';
 
-import { getPanelData } from '#/utils/panelData';
+import { getMenteeData } from '#/utils/menteeData';
 
 import styles from './page.module.scss';
 
@@ -16,7 +16,7 @@ export const metadata: Metadata = {
 };
 
 export default async function ProfilePage() {
-    const { user, stats, trail, people, journeyStart, completedTrails, certificates } = await getPanelData();
+    const { user, stats, trail, people, journeyStart, completedTrails, certificates } = await getMenteeData();
     const firstName = user.name.split(' ')[0];
 
     const statsCards = [
@@ -31,11 +31,11 @@ export default async function ProfilePage() {
         <>
             <PageHeader
                 title='Perfil'
-                action={{ href: '/panel/settings', label: 'Configurações', icon: Settings }}
+                action={{ href: '/settings', label: 'Configurações', icon: Settings }}
             />
 
             <main
-                className={styles.profile}
+                className={`main-tabs ${styles.profile}`}
                 aria-label='Meu Perfil'
             >
                 <div className={styles.calling}>
@@ -44,7 +44,7 @@ export default async function ProfilePage() {
                         <span>Bora codar no </span>
                         <PressableBase color='var(--color-brand-darker)' radius='.8rem'>
                             <Link
-                                href='/panel/terminal'
+                                href='/terminal'
                                 className={styles.actionButton}
                             >
                                 <TerminalSquare aria-hidden='true'/>

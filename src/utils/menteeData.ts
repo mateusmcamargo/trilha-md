@@ -11,7 +11,7 @@ import { createClient } from './supabase/server';
 
 type Functions = Database['public']['Functions'];
 
-export interface PanelRows {
+export interface MenteeRows {
     profile: Tables<'profiles'>;
     email: string;
     emailVerified: boolean;
@@ -34,11 +34,11 @@ interface TrailItem {
     progress: number;
 }
 
-function sumPoints(rows: PanelRows['attendance']) {
+function sumPoints(rows: MenteeRows['attendance']) {
     return rows.reduce((total, row) => total + row.activities.points, 0);
 }
 
-export function buildPanelData(rows: PanelRows) {
+export function buildMenteeData(rows: MenteeRows) {
     const { profile, userStats, enrollments, activities, attendance, activityProgress } = rows;
 
     const currentEnrollment = enrollments.find((enrollment) => enrollment.status === 'active');
@@ -92,6 +92,7 @@ export function buildPanelData(rows: PanelRows) {
         user: {
             name: profile.full_name,
             username: profile.username,
+            role: profile.role,
             email: rows.email,
             verified: rows.emailVerified,
         },
@@ -130,8 +131,8 @@ export function buildPanelData(rows: PanelRows) {
 
 // cache: layout and page asks the same data at the same request,
 // but the search is triggered only once.
-export const getPanelData = cache(async () => {
-    if (isMockMode) return buildPanelData(mockRows);
+export const getMenteeData = cache(async () => {
+    if (isMockMode) return buildMenteeData(mockRows);
 
     const supabase = await createClient();
 
@@ -172,7 +173,7 @@ export const getPanelData = cache(async () => {
 
     if (activities?.error) throw new Error(activities.error.message);
 
-    return buildPanelData({
+    return buildMenteeData({
         profile: profile.data,
         email: user.email ?? '',
         emailVerified: !!user.email_confirmed_at,

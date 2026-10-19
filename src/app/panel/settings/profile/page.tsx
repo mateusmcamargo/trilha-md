@@ -28,7 +28,7 @@ export default async function ProfileSettingsPage() {
             />
 
             <main
-                className={styles.profile}
+                className={`main-subpage ${styles.profile}`}
                 aria-label='Editar perfil'
             >
                 <div className={styles.avatar}>

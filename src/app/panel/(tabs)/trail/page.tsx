@@ -38,7 +38,7 @@ export default async function TrailPage() {
             <StatsHeader/>
 
             <main
-                className={styles.trail}
+                className={`main-tabs ${styles.trail}`}
                 aria-label='Atividades da minha trilha'
             >
 

@@ -13,7 +13,7 @@ export default function NotFound() {
     const [showMockAlert, setShowMockAlert] = useState<boolean>(isMockMode);
 
     return (
-        <main className={styles.notFound}>
+        <main className={`main-fullscreen ${styles.notFound}`}>
             <div className={styles.message}>
                 <h1>Ops! Não tem nada aqui!</h1>
                 <p>Acho que esqueceram de<br/>programar essa parte... <span aria-hidden='true'>😳</span></p>

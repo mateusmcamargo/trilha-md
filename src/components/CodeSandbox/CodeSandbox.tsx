@@ -20,7 +20,7 @@ export default function CodeSandbox() {
     const [isLoaded, setIsLoaded] = useState(false);
 
     return (
-        <div className={styles.sandbox}>
+        <div className={styles.sandbox} style={{height: 'calc(100vh - 2 * var(--bar-height))'}}>
             <div className={styles.frameWrapper} aria-busy={!isLoaded}>
                 {!isLoaded && (
                     <Skeleton

@@ -23,7 +23,7 @@ export default function SettingsPage() {
             />
 
             <main
-                className={styles.settings}
+                className={`main-subpage ${styles.settings}`}
                 aria-label='Configurações'
             >
                 {settingsSections.map(({ title, links }) => (

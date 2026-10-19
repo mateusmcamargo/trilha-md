@@ -13,6 +13,7 @@ import FormError from '../FormError/FormError'
 import { AuthSwitchLink } from './AuthSwitchLink'
 
 import styles from './LoginForm.module.scss'
+import { FormTitle } from '../FormTitle/FormTitle'
 
 type Field = 'name' | 'username' | 'email' | 'password' | 'confirmPassword' | 'accessCode'
 
@@ -97,11 +98,7 @@ export function RegisterForm() {
             return fail(undefined, 'Não foi possível criar a conta. Tente novamente.')
         }
 
-        const { error: joinError } = await supabase.rpc('join_edition', { p_access_code: code })
-
-        if (joinError) {
-            return fail(undefined, 'Sua conta foi criada, mas não conseguimos entrar na trilha. Fale com a sua tutora.')
-        }
+        await supabase.rpc('join_edition', { p_access_code: code })
 
         router.push('/panel')
         router.refresh()
@@ -109,10 +106,10 @@ export function RegisterForm() {
 
     return (
         <form className={styles.form} onSubmit={handleSubmit} noValidate>
-            <div className={styles.title}>
-                <h1>Crie sua conta!</h1>
-                <p>Use o código que sua tutora te passou ;)</p>
-            </div>
+            <FormTitle
+                title='Crie sua conta!'
+                description='Use o código que sua tutora te passou ;)'
+            />
 
             <Input
                 label='Nome'

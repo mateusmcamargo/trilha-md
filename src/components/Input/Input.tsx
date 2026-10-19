@@ -2,20 +2,24 @@ import { useId, useState } from 'react';
 import styles from './Input.module.scss';
 
 import { Eye, EyeOff, LucideIcon } from 'lucide-react';
+import { HelpTip } from '../HelpTip/HelpTip';
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
     icon?: LucideIcon;
     label?: string;
+    help?: string;
 }
 
 export function Input({
     icon: Icon,
     label,
+    help,
     id,
     className = '',
     type,
     required,
     disabled,
+    'aria-describedby': describedBy,
     ...props
 }: InputProps) {
 
@@ -23,6 +27,8 @@ export function Input({
 
     const generatedId = useId();
     const inputId = id || generatedId;
+    const helpId = `${inputId}-help`;
+    const hasHelp = !!(help && label);
 
     const isPassword = type === 'password';
     const resolvedType = isPassword
@@ -33,12 +39,16 @@ export function Input({
         <div className={styles.inputWrapper}>
 
             {label &&
-                <label htmlFor={inputId}>
-                    {label}
-                    {required &&
-                        <span className={styles.required} aria-hidden='true'>*</span>
-                    }
-                </label>
+                <div className={styles.labelRow}>
+                    <label htmlFor={inputId}>
+                        {label}
+                        {required &&
+                            <span className={styles.required} aria-hidden='true'>*</span>
+                        }
+                    </label>
+
+                    {hasHelp && <HelpTip id={helpId} label={label} text={help}/>}
+                </div>
             }
 
             <div className={styles.inputContainer}>
@@ -59,6 +69,7 @@ export function Input({
                         isPassword && styles.withIconRight,
                         className,
                     ].filter(Boolean).join(' ')}
+                    aria-describedby={[describedBy, hasHelp ? helpId : undefined].filter(Boolean).join(' ') || undefined}
                     {...props}
                 />
 

@@ -1,14 +1,18 @@
 'use client'
 
+import { Info, Key, Mail } from 'lucide-react'
+
 import { useId, useState } from 'react'
 import { useRouter } from 'next/navigation'
+
 import { getSupabase } from '#/utils/supabase/getSupabase'
 import { isMockMode } from '#/utils/mockMode'
-import styles from './LoginForm.module.scss'
 import { Input } from '../Input/Input'
-import { Info, Key, Mail } from 'lucide-react'
 import { SubmitButton } from '../Button/SubmitButton'
 import FormError from '../FormError/FormError'
+import { AuthSwitchLink } from './AuthSwitchLink'
+
+import styles from './LoginForm.module.scss'
 
 export function LoginForm() {
     const router   = useRouter()
@@ -102,6 +106,8 @@ export function LoginForm() {
             <SubmitButton loading={loading} loadingLabel='Entrando...'>
                 Entrar
             </SubmitButton>
+
+            <AuthSwitchLink text='Ainda não tem conta?' href='/register' label='Criar conta'/>
         </form>
     )
 }

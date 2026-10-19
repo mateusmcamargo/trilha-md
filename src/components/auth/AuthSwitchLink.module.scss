@@ -1,0 +1,16 @@
+p.switch {
+    font-size: 1.6rem;
+    font-weight: 700;
+    text-align: center;
+    color: var(--color-text-secondary);
+
+    a {
+        font-weight: 800;
+        color: var(--color-brand-dark);
+        text-decoration: underline;
+
+        &:hover {
+            color: var(--color-brand-darker);
+        }
+    }
+}

@@ -12,6 +12,31 @@ export type Database = {
   __InternalSupabase: {
     PostgrestVersion: "14.17"
   }
+  graphql_public: {
+    Tables: {
+      [_ in never]: never
+    }
+    Views: {
+      [_ in never]: never
+    }
+    Functions: {
+      graphql: {
+        Args: {
+          extensions?: Json
+          operationName?: string
+          query?: string
+          variables?: Json
+        }
+        Returns: Json
+      }
+    }
+    Enums: {
+      [_ in never]: never
+    }
+    CompositeTypes: {
+      [_ in never]: never
+    }
+  }
   public: {
     Tables: {
       activities: {
@@ -536,12 +561,14 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      check_access_code: { Args: { p_access_code: string }; Returns: string }
       get_my_role: { Args: never; Returns: string }
       is_enrolled_in_activity: {
         Args: { p_activity_id: string }
         Returns: boolean
       }
       is_mentor_of: { Args: { p_mentee_id: string }; Returns: boolean }
+      is_username_available: { Args: { p_username: string }; Returns: boolean }
       join_edition: {
         Args: { p_access_code: string; p_mentor_id?: string }
         Returns: string
@@ -714,6 +741,9 @@ export type CompositeTypes<
     : never
 
 export const Constants = {
+  graphql_public: {
+    Enums: {},
+  },
   public: {
     Enums: {},
   },

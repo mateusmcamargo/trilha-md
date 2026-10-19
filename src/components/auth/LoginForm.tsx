@@ -13,6 +13,7 @@ import FormError from '../FormError/FormError'
 import { AuthSwitchLink } from './AuthSwitchLink'
 
 import styles from './LoginForm.module.scss'
+import { FormTitle } from '../FormTitle/FormTitle'
 
 export function LoginForm() {
     const router   = useRouter()
@@ -60,10 +61,10 @@ export function LoginForm() {
 
     return (
         <form className={styles.form} onSubmit={handleSubmit} noValidate>
-            <div className={styles.title}>
-                <h1>Bem vinda de volta!</h1>
-                <p>Faça login para voltar à sua trilha ;)</p>
-            </div>
+            <FormTitle
+                title='Bem vinda de volta!'
+                description='Faça login para voltar à sua trilha ;)'
+            />
 
             <Input
                 label='E-mail'

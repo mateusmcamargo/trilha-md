@@ -1,4 +1,4 @@
-import { Bell, CodeXml, GraduationCap, Info, Route, ShieldCheck, ShieldQuestion, SlidersHorizontal, UserCog, Users, Venus } from 'lucide-react';
+import { Bell, CodeXml, Flag, GraduationCap, Info, Route, ShieldCheck, ShieldQuestion, SlidersHorizontal, UserCog, Users, Venus } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 
 interface SettingsLink {
@@ -28,15 +28,16 @@ export const settingsSections: SettingsSection[] = [
         links: [
             { slug: 'contact-tutor',     label: 'Contactar sua tutora',      icon: GraduationCap },
             { slug: 'contact-project',   label: 'Contactar o projeto',       icon: Users         },
-            { slug: 'contact-developer', label: 'Contactar o desenvolvedor', icon: CodeXml        },
+            { slug: 'contact-developer', label: 'Contactar o desenvolvedor', icon: CodeXml       },
+            { slug: 'report-abuse',      label: 'Reportar Abuso',            icon: Flag          },
         ],
     },
     {
         title: 'Sobre',
         links: [
-            { slug: 'about-project',       label: 'Sobre o Meninas Digitais',   icon: Venus          },
-            { slug: 'about-app',          label: 'Sobre o aplicativo',         icon: Info           },
-            { slug: 'privacy-disclaimer', label: 'Sobre os seus dados', icon: ShieldQuestion },
+            { slug: 'about-project',      label: 'Sobre o Meninas Digitais', icon: Venus          },
+            { slug: 'about-app',          label: 'Sobre o aplicativo',       icon: Info           },
+            { slug: 'privacy-disclaimer', label: 'Sobre os seus dados',      icon: ShieldQuestion },
         ],
     },
 ];

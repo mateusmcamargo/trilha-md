@@ -7,34 +7,6 @@ form.form {
 
     width: 90vw;
     margin: 0 auto;
-    
-    div.title {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        gap: 1rem;
-
-        width: 100%;
-
-        h1 {
-            font-size: 2.4rem;
-            font-weight: 900;
-            color: var(--color-brand-darker);
-        }
-
-        p {
-            width: 100%;
-            border: 3px dashed var(--color-brand);
-            color: var(--color-brand);
-            background-color: var(--color-brand-contrast);
-            padding: 1rem;
-            border-radius: 1rem;
-            font-size: 1.6rem;
-            font-weight: 700;
-            text-align: center;
-        }
-    }
 
     div.notice {
         display: flex;

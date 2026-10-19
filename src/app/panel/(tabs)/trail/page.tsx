@@ -8,6 +8,7 @@ import Trail from '#/components/Trail/Trail';
 
 import styles from './page.module.scss';
 import { getPanelData } from '#/utils/panelData';
+import { JoinEditionForm } from '#/components/JoinEditionForm/JoinEditionForm';
 
 export const metadata: Metadata = {
     title: 'Trilha',
@@ -23,11 +24,10 @@ export default async function TrailPage() {
                     <StatsHeader/>
 
                     <main
-                        className={styles.trail}
+                        className={`main-tabs ${styles.trail}`}
                         aria-label='Atividades da minha trilha'
                     >
-                        <h1>Nenhuma trilha ativa</h1>
-                        <p>Você ainda não está matriculada em uma trilha.</p>
+                        <JoinEditionForm/>
                     </main>
                 </>
             );

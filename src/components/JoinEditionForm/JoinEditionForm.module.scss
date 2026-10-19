@@ -1,0 +1,36 @@
+form.form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+
+    width: 90vw;
+    margin: 0 auto;
+
+    button.help {
+        display: flex;
+        align-items: center;
+        gap: .8rem;
+
+        width: 100%;
+        color: var(--color-brand-light);
+        font-size: 1.6rem;
+        font-weight: 900;
+        text-decoration: underline;
+        text-decoration-thickness: 3;
+        background: none;
+        cursor: pointer;
+        transition: .2s ease;
+        
+        &:hover {
+            color: var(--color-brand);
+        }
+
+        svg {
+            width: 2.4rem;
+            height: 2.4rem;
+            stroke-width: 2.7;
+        }
+    }
+}

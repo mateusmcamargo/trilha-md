@@ -6,6 +6,13 @@ div.inputWrapper {
 
     width: 100%;
 
+    div.labelRow {
+        position: relative;
+        display: flex;
+        align-items: center;
+        gap: .4rem;
+    }
+
     label {
         font-size: 1.6rem;
         font-weight: 800;

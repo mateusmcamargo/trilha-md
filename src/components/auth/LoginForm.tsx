@@ -16,47 +16,47 @@ import styles from './LoginForm.module.scss'
 import { FormTitle } from '../FormTitle/FormTitle'
 
 export function LoginForm() {
-    const router   = useRouter()
-    const supabase = getSupabase()
-    const errorId  = useId()
+    const router   = useRouter();
+    const supabase = getSupabase();
+    const errorId  = useId();
 
-    const [email,    setEmail]    = useState<string>('')
-    const [password, setPassword] = useState<string>('')
-    const [error,    setError]    = useState<string | null>(null)
-    const [loading,  setLoading]  = useState<boolean>(false)
+    const [email,    setEmail]    = useState<string>('');
+    const [password, setPassword] = useState<string>('');
+    const [error,    setError]    = useState<string | null>(null);
+    const [loading,  setLoading]  = useState<boolean>(false);
 
     async function handleSubmit(e: React.FormEvent) {
-        e.preventDefault()
-        setError(null)
-        setLoading(true)
+        e.preventDefault();
+        setError(null);
+        setLoading(true);
 
         if (!supabase) {
-            router.push('/panel')
-            return
+            router.push('/trail');
+            return;
         }
 
-        const { data, error } = await supabase.auth.signInWithPassword({ email, password })
+        const { data, error } = await supabase.auth.signInWithPassword({ email, password });
 
         if (error?.name === 'AuthRetryableFetchError') {
-            setLoading(false)
-            setError('Não foi possível conectar. Tente novamente.')
-            return
+            setLoading(false);
+            setError('Não foi possível conectar. Tente novamente.');
+            return;
         }
 
         if (error || !data.user) {
-            setLoading(false)
-            setError('E-mail ou senha inválidos.')
-            return
+            setLoading(false);
+            setError('E-mail ou senha inválidos.');
+            return;
         }
 
         const { data: profile } = await supabase
             .from('profiles')
             .select('role')
             .eq('id', data.user.id)
-            .single()
+            .single();
 
-        router.push(profile?.role === 'mentor' ? '/mentor' : '/panel')
-        router.refresh()
+        router.push(profile?.role === 'mentor' ? '/team' : '/trail');
+        router.refresh();
     }
 
     return (

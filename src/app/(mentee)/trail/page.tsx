@@ -7,7 +7,7 @@ import StatsHeader from '#/components/Header/StatsHeader';
 import Trail from '#/components/Trail/Trail';
 
 import styles from './page.module.scss';
-import { getPanelData } from '#/utils/panelData';
+import { getMenteeData } from '#/utils/menteeData';
 import { JoinEditionForm } from '#/components/JoinEditionForm/JoinEditionForm';
 
 export const metadata: Metadata = {
@@ -16,7 +16,7 @@ export const metadata: Metadata = {
 
 export default async function TrailPage() {
 
-    const { stats, trail, trailItems, trailProgress } = await getPanelData();
+    const { stats, trail, trailItems, trailProgress } = await getMenteeData();
 
         if (!trail) {
             return (

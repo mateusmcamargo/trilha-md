@@ -3,24 +3,37 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
-import { Dumbbell, FileText, Route, TerminalSquare, TrendingUp } from 'lucide-react';
+import { Dumbbell, FileText, LayoutDashboard, Route, TerminalSquare, TrendingUp, UserRoundGroup } from 'lucide-react';
 
 import styles from './Navbar.module.scss';
 
-const navItems = [
-    { href: '/panel/trail',    icon: Route,          label: 'Trilha'    },
-    { href: '/panel/terminal', icon: TerminalSquare, label: 'Terminal'  },
-    { href: '/panel/practice', icon: Dumbbell,       label: 'Praticar'  },
-    { href: '/panel/files',    icon: FileText,       label: 'Materiais' },
-    { href: '/panel/progress', icon: TrendingUp,     label: 'Progresso' },
-] as const;
+const navItems = {
+    mentee: [
+        { href: '/trail',    icon: Route,          label: 'Trilha'    },
+        { href: '/terminal', icon: TerminalSquare, label: 'Terminal'  },
+        { href: '/practice', icon: Dumbbell,       label: 'Praticar'  },
+        { href: '/files',    icon: FileText,       label: 'Materiais' },
+        { href: '/progress', icon: TrendingUp,     label: 'Progresso' },
+    ],
+    mentor: [
+        { href: '/team/dashboard', icon: LayoutDashboard, label: 'Painel' },
+        { href: '/team/mentees',   icon: UserRoundGroup,  label: 'Meninas' },
+    ],
+} as const;
 
+const profileHref = {
+    mentee: '/profile',
+    mentor: '/team/profile',
+} as const;
+
+export type NavRole = keyof typeof navItems;
 
 interface NavbarProps {
+    role: NavRole;
     initials: string;
 }
 
-export default function Navbar({initials}: NavbarProps) {
+export default function Navbar({ role, initials }: NavbarProps) {
 
     const pathname = usePathname();
     const isActive = (href: string) =>
@@ -28,7 +41,7 @@ export default function Navbar({initials}: NavbarProps) {
 
     return (
         <nav className={styles.nav} aria-label='Navegação principal'>
-            {navItems.map(({ href, icon: Icon, label }) => (
+            {navItems[role].map(({ href, icon: Icon, label }) => (
                 <Link
                     key={href}
                     href={href}
@@ -40,10 +53,10 @@ export default function Navbar({initials}: NavbarProps) {
                 </Link>
             ))}
             <Link
-                href='/panel/profile'
-                className={`${styles.avatar} ${isActive('/panel/profile') ? styles.active : ''}`}
+                href={profileHref[role]}
+                className={`${styles.avatar} ${isActive(profileHref[role]) ? styles.active : ''}`}
                 aria-label='Meu perfil'
-                aria-current={isActive('/panel/profile') ? 'page' : undefined}
+                aria-current={isActive(profileHref[role]) ? 'page' : undefined}
             >
                 <span>{initials}</span>
             </Link>

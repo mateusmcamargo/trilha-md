@@ -17,7 +17,7 @@ export default function PreferencesPage() {
         <>
             <PageHeader
                 title='Preferências'
-                action={{ href: '/panel/settings', label: 'Voltar', icon: ArrowLeft }}
+                action={{ href: '/settings', label: 'Voltar', icon: ArrowLeft }}
             />
 
             <main
@@ -28,8 +28,8 @@ export default function PreferencesPage() {
                     <h2>Sua Trilha</h2>
 
                     <div className={styles.options}>
-                        <Switch name='sounds' label='Efeitos Sonoros' defaultChecked/>
-                        <Switch name='animations' label='Animações' defaultChecked/>
+                        <Switch name='sounds'        label='Efeitos Sonoros' defaultChecked/>
+                        <Switch name='animations'    label='Animações' defaultChecked/>
                         <Switch name='funnyMessages' label='Mensagens engraçadinhas' defaultChecked/>
                     </div>
                 </section>

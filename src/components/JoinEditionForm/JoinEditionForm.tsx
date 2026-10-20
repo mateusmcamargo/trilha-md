@@ -56,7 +56,7 @@ export function JoinEditionForm() {
             <Input
                 label='Código de acesso'
                 icon={Ticket}
-                help='O código que sua mentora te passou quando você se matriculou'
+                help='Esse é o código que sua tutora te passou quando você se matriculou, por exemplo: "MD2026"'
                 type='text'
                 autoComplete='off'
                 autoCapitalize='none'
@@ -75,7 +75,7 @@ export function JoinEditionForm() {
                 Entrar na trilha
             </SubmitButton>
 
-            <button className={styles.help}>
+            <button type='button' className={styles.help}>
                 <MessageCircleQuestionMark/>
                 <p>Preciso de ajuda</p>
             </button>

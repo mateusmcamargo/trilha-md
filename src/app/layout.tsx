@@ -26,10 +26,10 @@ const chakraPetch = Chakra_Petch({
 
 export const metadata: Metadata = {
     title: {
-        default: 'Trilha Meninas Digitais',
-        template: '%s | Trilha Meninas Digitais',
+        default: 'Áster',
+        template: '%s | Áster',
     },
-    description: 'Trilha gameficada para todas.',
+    description: 'Tecnologia gameficada para todas.',
 };
 
 export default function RootLayout({ children }: LayoutProps<'/'>) {

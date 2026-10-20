@@ -19,6 +19,16 @@ const profile: Tables<'profiles'> = {
     created_at: createdAt,
 };
 
+export const mentorProfile: Tables<'profiles'> = {
+    id:         mentorId,
+    role:       'mentor',
+    full_name:  'Maria da Silva',
+    username:   'maria',
+    avatar_url: null,
+    deleted_at: null,
+    created_at: createdAt,
+};
+
 const edition: Tables<'editions'> = {
     id:          editionId,
     name:        'Dandelion',
@@ -125,7 +135,7 @@ export const mockRows: MenteeRows = {
     activityProgress,
     signedCertificates: 0,
     mentors: [
-        { id: mentorId, full_name: 'Maria', avatar_url: '' },
+        { id: mentorId, full_name: mentorProfile.full_name, avatar_url: '' },
     ],
     friends: [
         { friendship_id: 'mock-friendship-1', id: 'mock-profile-2', full_name: 'Larinha', username: 'larinha', total_xp: 4987  },

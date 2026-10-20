@@ -16,9 +16,11 @@ O software agiliza o processo com uma aplicação única com foco em acessibilid
 
 ## Funcionalidades desenvolvidas
 
-- Login e logout com Supabase Auth
-- Cadastro em `/register`
-- Painel da mentorada: trilha, perfil e configurações
+- Login e logout com Supabase Auth, com redirecionamento por perfil (mentorada ou tutora)
+- Cadastro em `/register`, com matrícula na trilha pelo código de acesso
+- Entrada em uma trilha pelo código de acesso, para quem ainda não tem matrícula
+- Painel da mentorada: trilha, terminal, perfil e configurações
+- Área da tutora em `/team` (em construção)
 - Preferências: sons, animações e tema
 - Modo demonstração com dados mockados
 - Banco PostgreSQL com Row Level Security
@@ -41,7 +43,7 @@ npm install
 
 ### 2. Configurar o Supabase
 
-> Se quiser rodar no modo demonstração, basta pular para a [Etapa 4](#4.-Rodar-o-projeto).
+> Se quiser rodar no modo demonstração, basta pular para a [Etapa 4](#4-rodar-o-projeto).
 
 Crie um projeto no [dashboard do Supabase](https://supabase.com/dashboard) e vincule ao repositório local:
 
@@ -103,13 +105,14 @@ Abra [http://localhost:3000](http://localhost:3000) no navegador.
 
 ## Como testar
 
-**Modo demonstração:** basta fazer login com qualquer e-mail e senha.
+**Modo demonstração:** faça login com qualquer e-mail e senha.
+**Entrar** abre a trilha da mentorada e **Entrar como mentora** abre a área da tutora em `/team`.
 
 **Com Supabase:**
 
-1. Entre com uma das contas padrão abaixo ou crie uma em `/register`.
-2. Abra a trilha e navegue pelos nós.
-3. Abra o perfil e as configurações.
+1. Entre com uma das contas padrão abaixo ou crie uma em `/register`, usando o código de acesso da edição de teste.
+2. Como mentorada: abra a trilha e navegue pelos nós, depois o perfil e as configurações.
+3. Como tutora: o login abre o painel em `/team/dashboard`.
 4. Faça logout.
 
 ### Contas de acesso padrão
@@ -141,7 +144,7 @@ Código de acesso da edição de teste (`Dandelion`): `MD2026`
 | Node.js                      | 20+            | https://nodejs.org                   |
 | Next.js                      | 16.3.5         | https://nextjs.org                   |
 | React                        | 19.2.8         | https://react.dev                    |
-| TypeScript                   | 7.0            | https://www.typescriptlang.org       |
+| TypeScript                   | 5              | https://www.typescriptlang.org       |
 | Sass                         | 1.105.1        | https://sass-lang.com                |
 | lucide-react                 | 1.47.0         | https://lucide.dev                   |
 | Supabase (Auth + PostgreSQL) | plano gratuito | https://supabase.com                 |
@@ -167,20 +170,26 @@ public/                   # arquivos públicos de recurso
 
 src/
 ├── app/
-│   ├── login/            # login (Supabase Auth)
-│   ├── mentor/           # área da tutora
-│   ├── panel/
-│   │   ├── (tabs)/       # trilha, terminal e perfil (com a Navbar)
+│   ├── (mentee)/         # área da mentorada (route group, não entra na URL)
+│   │   ├── trail/        # trilha, ou entrada por código se não houver matrícula
+│   │   ├── terminal/     # terminal de código
+│   │   ├── profile/      # perfil
 │   │   └── settings/     # configurações (sem a Navbar)
+│   ├── team/             # área da tutora (/team, /team/dashboard)
+│   ├── login/            # login (Supabase Auth)
 │   ├── register/         # cadastro (Supabase Auth)
 │   ├── styles/           # globals.css, tokens de cor e semantics.css
+│   ├── page.tsx          # redireciona para /trail
 │   └── not-found.tsx     # página 404 (rotas ainda não construídas caem aqui)
 ├── components/           # componentes reutilizáveis, cada um com seu .module.scss
 ├── types/
 │   └── database.ts       # tipos gerados pelo Supabase (schema v3)
 ├── utils/
-│   ├── supabase/         # client.ts, server.ts e middleware.ts (sessão)
-│   └── mockData.ts       # dados mockados, usados só no modo demonstração
+│   ├── supabase/         # client.ts, server.ts, middleware.ts (sessão) e getSupabase.ts
+│   ├── menteeData.ts     # dados da área da mentorada
+│   ├── teamData.ts       # dados da área da tutora
+│   ├── mockData.ts       # dados mockados, usados só no modo demonstração
+│   └── mockMode.ts       # liga o modo demonstração
 └── proxy.ts              # renova a sessão do Supabase a cada requisição
 
 supabase/

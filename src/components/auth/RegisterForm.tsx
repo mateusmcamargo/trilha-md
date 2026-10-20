@@ -1,6 +1,6 @@
 'use client'
 
-import { CaseSensitive, Info, Key, Mail, Ticket, User } from 'lucide-react'
+import { CaseSensitive, GraduationCap, Info, Key, Mail, Ticket, User } from 'lucide-react'
 
 import { useId, useState } from 'react'
 import { useRouter } from 'next/navigation'
@@ -14,6 +14,7 @@ import { AuthSwitchLink } from './AuthSwitchLink'
 
 import styles from './LoginForm.module.scss'
 import { FormTitle } from '../FormTitle/FormTitle'
+import { ActionButton } from '../Button/ActionButton'
 
 type Field = 'name' | 'username' | 'email' | 'password' | 'confirmPassword' | 'accessCode';
 
@@ -210,6 +211,16 @@ export function RegisterForm() {
             <SubmitButton loading={loading} loadingLabel='Criando conta...'>
                 Criar conta
             </SubmitButton>
+
+            {isMockMode && (
+                <ActionButton
+                    icon={GraduationCap}
+                    disabled={loading}
+                    onClick={() => router.push('/team')}
+                >
+                    Entrar como mentora
+                </ActionButton>
+            )}
 
             <AuthSwitchLink text='Já tem uma conta?' href='/login' label='Entrar'/>
         </form>

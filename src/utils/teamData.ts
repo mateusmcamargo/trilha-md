@@ -3,7 +3,7 @@ import { redirect } from 'next/navigation';
 
 import type { Tables } from '#/types/database';
 
-import { mockRows } from './mockData';
+import { mentorProfile } from './mockData';
 import { isMockMode } from './mockMode';
 import { createClient } from './supabase/server';
 
@@ -19,8 +19,7 @@ function buildTeamUser(profile: Tables<'profiles'>, email: string, verified: boo
 
 export const getTeamData = cache(async () => {
     if (isMockMode) {
-        const { profile, email, emailVerified } = mockRows;
-        return { user: { ...buildTeamUser(profile, email, emailVerified), role: 'mentor' } };
+        return { user: buildTeamUser(mentorProfile, 'maria.silva@exemplo.com', true) };
     }
 
     const supabase = await createClient();

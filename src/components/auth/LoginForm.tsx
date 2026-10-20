@@ -14,6 +14,7 @@ import { AuthSwitchLink } from './AuthSwitchLink'
 
 import styles from './LoginForm.module.scss'
 import { FormTitle } from '../FormTitle/FormTitle'
+import { ActionButton } from '../Button/ActionButton'
 
 export function LoginForm() {
     const router   = useRouter();
@@ -98,7 +99,7 @@ export function LoginForm() {
                         <Info/>
                         <span>Modo demonstração</span>
                     </div>
-                    <p>Use qualquer e-mail e senha. Os dados são de exemplo.</p>
+                    <p>Nada será salvo, os dados são de exemplo. Use qualquer e-mail e senha.</p>
                 </div>
             )}
 
@@ -107,6 +108,15 @@ export function LoginForm() {
             <SubmitButton loading={loading} loadingLabel='Entrando...'>
                 Entrar
             </SubmitButton>
+
+            {isMockMode && (
+                <ActionButton
+                    disabled={loading}
+                    onClick={() => router.push('/team')}
+                >
+                    Entrar como mentora
+                </ActionButton>
+            )}
 
             <AuthSwitchLink text='Ainda não tem conta?' href='/register' label='Criar conta'/>
         </form>

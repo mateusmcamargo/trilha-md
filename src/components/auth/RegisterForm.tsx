@@ -1,6 +1,6 @@
 'use client'
 
-import { CaseSensitive, GraduationCap, Info, Key, Mail, Ticket, User } from 'lucide-react'
+import { CaseSensitive, Info, Key, Mail, Ticket, User } from 'lucide-react'
 
 import { useId, useState } from 'react'
 import { useRouter } from 'next/navigation'
@@ -202,7 +202,7 @@ export function RegisterForm() {
                         <Info/>
                         <span>Modo demonstração</span>
                     </div>
-                    <p>Nada será salvo. Preencha os campos para continuar.</p>
+                    <p>Nada será salvo, os dados são de exemplo. Preencha os campos para continuar.</p>
                 </div>
             )}
 
@@ -214,7 +214,6 @@ export function RegisterForm() {
 
             {isMockMode && (
                 <ActionButton
-                    icon={GraduationCap}
                     disabled={loading}
                     onClick={() => router.push('/team')}
                 >

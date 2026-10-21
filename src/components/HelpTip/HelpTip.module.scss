@@ -2,7 +2,7 @@ span.helpTip {
     display: flex;
     align-items: center;
 
-    margin: -.4rem 0; /* o botão (2.4rem) não aumenta a altura da linha da label */
+    margin: -.4rem 0; /* the button (2.4rem) doesn't grow the label row height */
 
     button.button {
         position: relative;
@@ -30,13 +30,13 @@ span.helpTip {
             stroke-width: 2.4;
         }
 
-        /* seta do balão: um quadrado girado, só com as duas bordas de cima */
+        /* bubble arrow: a rotated square, with only the two top borders */
         &::after {
             content: '';
             position: absolute;
             top: calc(100% + .45rem);
             left: calc(50% - .5rem);
-            z-index: 11; /* acima do tooltip (10), para cobrir a borda dele sob a seta */
+            z-index: 11; /* above the tooltip (10), to cover its border under the arrow */
 
             box-sizing: border-box;
             width: 1rem;
@@ -59,7 +59,7 @@ span.helpTip {
 
     span.tooltip {
         position: absolute;
-        top: calc(100% + 1.2rem); /* espaço para a seta */
+        top: calc(100% + 1.2rem); /* room for the arrow */
         left: 0;
         right: 0;
         z-index: 10;

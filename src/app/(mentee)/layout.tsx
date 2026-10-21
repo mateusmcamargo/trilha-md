@@ -8,7 +8,7 @@ import { getMenteeData } from '#/utils/menteeData';
 export default async function PanelLayout({ children }: { children: ReactNode }) {
     const { user } = await getMenteeData();
 
-    // mentoras têm a própria área
+    // mentors have their own area
     if (user.role === 'mentor') redirect('/team/dashboard');
 
     return (

@@ -41,7 +41,7 @@ export function JoinEditionForm() {
             return setError('Não foi possível entrar na trilha. Tente novamente.')
         }
 
-        // refaz a busca do painel: a trilha passa a aparecer no lugar do formulário
+        // refetches the panel data: the trail shows up in place of the form
         router.refresh()
         setLoading(false)
     }

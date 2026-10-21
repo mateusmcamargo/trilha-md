@@ -47,3 +47,12 @@ src/**/*.module.css
 
 # zip
 *.zip
+
+# playwright mcp
+.playwright-mcp/
+
+# powershell scripts
+*.ps1
+
+# claude code
+.claude/

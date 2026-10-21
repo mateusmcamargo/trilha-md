@@ -12,8 +12,8 @@ interface HelpTipProps {
     text: string;
 }
 
-// O tooltip se ancora no pai posicionado mais próximo (no Input, a .labelRow),
-// por isso ocupa a largura do campo e nunca estoura a tela no celular.
+// the tooltip anchors to the nearest positioned parent (in Input, the .labelRow),
+// so it takes the field width and never overflows the screen on mobile
 export function HelpTip({ id, label, text }: HelpTipProps) {
     const [open, setOpen] = useState<boolean>(false);
 
@@ -23,7 +23,7 @@ export function HelpTip({ id, label, text }: HelpTipProps) {
     useEffect(() => {
         if (!open) return;
 
-        // qualquer toque ou clique fora do botão fecha (o botão alterna sozinho)
+        // any tap or click outside the button closes it (the button toggles itself)
         const handlePointerDown = (event: PointerEvent) => {
             if (!buttonRef.current?.contains(event.target as Node)) setOpen(false);
         };
@@ -43,9 +43,9 @@ export function HelpTip({ id, label, text }: HelpTipProps) {
 
     const handleClick = () => {
         const type = pointerType.current;
-        pointerType.current = 'keyboard'; // clique de teclado não passa por pointerdown
+        pointerType.current = 'keyboard'; // keyboard click doesn't go through pointerdown
 
-        // mouse: o hover já abriu, então o clique só mantém aberto
+        // mouse: hover already opened it, so the click only keeps it open
         setOpen((prev) => type === 'mouse' ? true : !prev);
     };
 

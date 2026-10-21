@@ -40,7 +40,7 @@ export function ProfileForm({ user }: ProfileFormProps) {
             return;
         }
 
-        // TODO: salvar as alterações do perfil
+        // TODO: save the profile changes
     }
 
     return (
@@ -91,7 +91,7 @@ export function ProfileForm({ user }: ProfileFormProps) {
                     <X aria-hidden='true'/>
                     E-mail não verificado.
                     <button type='button'>Verificar agora</button>
-                    {/*disparar email de verificação, mudar span para 'E-mail de verificação enviado!'*/}
+                    {/* send verification email, change span to 'E-mail de verificação enviado!' */}
                 </span>
             )}
             </div>

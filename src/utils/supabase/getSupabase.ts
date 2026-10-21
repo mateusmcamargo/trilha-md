@@ -2,7 +2,7 @@ import { isMockMode } from '../mockMode';
 
 import { createClient } from './client';
 
-// Retorna null no modo demonstração ou se o cliente do Supabase não puder ser criado.
+// returns null in demo mode or if the supabase client can't be created
 export function getSupabase() {
     if (isMockMode) return null;
 

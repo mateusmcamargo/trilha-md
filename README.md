@@ -20,11 +20,12 @@ O software agiliza o processo com uma aplicação única com foco em acessibilid
 - Cadastro em `/register`, com matrícula na trilha pelo código de acesso
 - Entrada em uma trilha pelo código de acesso, para quem ainda não tem matrícula
 - Painel da mentorada: trilha, terminal, perfil e configurações
-- Área da tutora em `/team` (em construção)
+- Escolha da tutora pela mentorada, no perfil, quando a matrícula ainda não tem tutora
+- Área da tutora em `/team` (em construção): lista de mentoradas em `/team/mentees`, com adoção e cancelamento de adoção
 - Preferências: sons, animações e tema
 - Modo demonstração com dados mockados
 - Banco PostgreSQL com Row Level Security
-- Página 404 personalizada.
+- Tela de erro com botão "Tentar de novo" e página 404 personalizada.
 
 ## Instalação
 
@@ -112,12 +113,13 @@ Abra [http://localhost:3000](http://localhost:3000) no navegador.
 
 1. Entre com uma das contas padrão abaixo ou crie uma em `/register`, usando o código de acesso da edição de teste.
 2. Como mentorada: abra a trilha e navegue pelos nós, depois o perfil e as configurações.
-3. Como tutora: o login abre o painel em `/team/dashboard`.
-4. Faça logout.
+3. Como tutora: o login abre o painel em `/team/dashboard`. Em `/team/mentees`, adote uma mentorada sem tutora e depois cancele a adoção.
+4. Como mentorada sem tutora (ex.: Rebeca): no perfil, aba **Tutoras**, use **Escolher tutora**.
+5. Faça logout.
 
 ### Contas de acesso padrão
 
-Criadas pelo `db push` (migration `seed_default_users`).
+Criadas pelo `db push` (migrations `seed_default_users` e `seed_more_users`). A lista completa, com todas as contas, está em [USERS.md](USERS.md).
 
 | Perfil    | Nome           | Usuário     | E-mail                    | Senha  |
 |-----------|----------------|-------------|---------------------------|--------|
@@ -127,6 +129,17 @@ Criadas pelo `db push` (migration `seed_default_users`).
 Código de acesso da edição de teste (`Dandelion`): `MD2026`
 
 > **ATENÇÃO:** essas contas têm senha conhecida. Use o `db push` apenas em projetos de teste.
+
+## Acesso das tutoras aos dados
+
+| Dado | Qualquer tutora | Só a tutora responsável |
+|------|-----------------|-------------------------|
+| Nome, usuário, foto, trilha, tutora, XP e ofensiva | Sim | Sim |
+| Presenças, reflexões, certificados e andamento | Não | Sim |
+
+- A "tutora responsável" é a que adotou a mentorada (`enrollments.mentor_id`). Isso é garantido por Row Level Security, não só pelas telas.
+- O XP de todas as mentoradas vem da função `list_mentee_xp`, que devolve só o total por trilha, sem expor as presenças.
+- Matrículas só mudam por funções do banco: entrar na trilha, adotar, cancelar adoção e escolher tutora.
 
 ## Estilização
 
@@ -175,11 +188,13 @@ src/
 │   │   ├── terminal/     # terminal de código
 │   │   ├── profile/      # perfil
 │   │   └── settings/     # configurações (sem a Navbar)
-│   ├── team/             # área da tutora (/team, /team/dashboard)
+│   ├── team/             # área da tutora (/team, /team/dashboard, /team/mentees)
 │   ├── login/            # login (Supabase Auth)
 │   ├── register/         # cadastro (Supabase Auth)
 │   ├── styles/           # globals.css, tokens de cor e semantics.css
 │   ├── page.tsx          # redireciona para /trail
+│   ├── error.tsx         # tela de erro com "Tentar de novo"
+│   ├── global-error.tsx  # o mesmo, para erro no layout raiz
 │   └── not-found.tsx     # página 404 (rotas ainda não construídas caem aqui)
 ├── components/           # componentes reutilizáveis, cada um com seu .module.scss
 ├── types/

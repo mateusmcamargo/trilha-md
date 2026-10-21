@@ -1,0 +1,19 @@
+section.section {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+
+    width: 90vw;
+
+    h2 {
+        font-size: 2rem;
+        font-weight: 800;
+        color: var(--color-brand-dark);
+    }
+}
+
+div.cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+    gap: 1.2rem;
+}

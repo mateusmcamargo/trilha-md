@@ -2,7 +2,8 @@ import type { Tables } from '#/types/database';
 
 import { todayInSaoPaulo } from './dates';
 import type { MenteeRows } from './menteeData';
-import type { MenteeRow } from './teamData';
+import type { DashboardInput } from './dashboardData';
+import type { MenteeRow, XpRow } from './teamData';
 
 // demo mode data, same format as database (src/types/database.ts)
 const profileId = 'mock-profile-anne';
@@ -180,4 +181,98 @@ export const mockMenteeRows: MenteeRow[] = [
         enrollments: mockEnrollment('mock-enrollment-4', otherMentor),
         user_stats: { streak_days: 1, last_active_on: todayInSaoPaulo() },
     },
+];
+
+// general dashboard: attendance rate (%) of the mentor's mentees
+export const mockOverviewRates: Record<string, number | null> = {
+    [profileId]: 88,
+};
+
+// individual dashboard in demo mode: weekly activities counted back from today, so the charts are never empty
+const daysAgo = (days: number) => {
+    const date = new Date(`${todayInSaoPaulo()}T12:00:00Z`);
+    date.setUTCDate(date.getUTCDate() - days);
+    return date.toISOString().slice(0, 10);
+};
+
+export function mockDashboardInput(menteeId: string): DashboardInput | null {
+    if (menteeId !== profileId) return null;
+
+    // irregular dates and points, so the charts vary; the last two activities are still to come
+    const offsets = [126, 119, 112, 108, 98, 91, 84, 80, 70, 63, 56, 49, 45, 35, 28, 17, 10, 3, -4, -11];
+    const points  = [20, 30, 30, 40, 30, 50, 30, 60, 30, 40, 50, 30, 60, 20, 40, 50, 30, 60, 30, 40];
+
+    const dated = activities.map((activity, index) => ({
+        id:            activity.id,
+        title:         activity.title,
+        activity_date: daysAgo(offsets[index]),
+        points:        points[index],
+    }));
+
+    const status = (index: number) =>
+        [3, 8, 13].includes(index) ? 'falta' : [6, 12].includes(index) ? 'justificada' : 'presente';
+
+    const at = (offset: number, hour = 19) => `${daysAgo(offset)}T${String(hour).padStart(2, '0')}:00:00Z`;
+
+    const mastered = [0, 1, 2, 4, 5, 7, 8, 9, 11, 14];
+
+    const attendance = dated.slice(0, 18).map((activity, index) => ({
+        activity_id:   activity.id,
+        status:        status(index),
+        checked_in_at: `${activity.activity_date}T${index % 2 ? '18' : '14'}:00:00Z`,
+    }));
+
+    return {
+        mentee:    { id: profileId, full_name: profile.full_name, username: profile.username, avatar_url: null },
+        avatarUrl: null,
+        trailName:     edition.name,
+        trailSubtitle: edition.subtitle,
+        activities:    dated,
+        attendance,
+        // demo has a single trail, so the total xp is the trail's
+        xpAllTrails: dated.slice(0, 18).reduce(
+            (total, activity, index) => total + (attendance[index].status === 'presente' ? activity.points : 0),
+            0,
+        ),
+        reflections: [
+            { rating: 5, created_at: at(110, 20) },
+            { rating: 3, created_at: at(98, 21) },
+            { rating: 4, created_at: at(84, 20) },
+            { rating: 4, created_at: at(63, 22) },
+            { rating: 2, created_at: at(56, 20) },
+            { rating: 5, created_at: at(45, 21) },
+            { rating: 3, created_at: at(28, 20) },
+            { rating: 4, created_at: at(10, 20) },
+        ],
+        progress: [
+            ...mastered.map((index) => ({
+                activity_id: dated[index].id,
+                progress:    100,
+                mastered_at: `${dated[index].activity_date}T19:00:00Z`,
+                updated_at:  `${dated[index].activity_date}T19:00:00Z`,
+            })),
+            // partial updates, some on the same day; the available activity (3, the first one not attended) has 65%
+            ...[100, 100, 57, 57, 57, 29, 17, 3, 1].map((offset, index) => ({
+                activity_id: dated[[6, 8, 12, 6, 13, 8, 18, 19, 3][index]].id,
+                progress:    [10, 20, 30, 40, 50, 60, 15, 25, 65][index],
+                mastered_at: null,
+                updated_at:  at(offset),
+            })),
+        ],
+        stats:             { streak_days: 9, last_active_on: todayInSaoPaulo() },
+        certificateStatus: null,
+    };
+}
+
+// list_mentee_xp in demo mode: Anne's xp is the sum of her present activities (same as her individual dashboard)
+const anneInput = mockDashboardInput(profileId)!;
+const anneXp = anneInput.attendance
+    .filter((row) => row.status === 'presente')
+    .reduce((total, row) => total + anneInput.activities.find((activity) => activity.id === row.activity_id)!.points, 0);
+
+export const mockXpRows: XpRow[] = [
+    { mentee_id: profileId,        edition_id: editionId, xp: anneXp },
+    { mentee_id: 'mock-profile-2', edition_id: editionId, xp: 120 },
+    { mentee_id: 'mock-profile-3', edition_id: editionId, xp: 210 },
+    { mentee_id: 'mock-profile-4', edition_id: editionId, xp: 90  },
 ];

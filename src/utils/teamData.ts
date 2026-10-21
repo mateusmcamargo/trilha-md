@@ -4,7 +4,7 @@ import { redirect } from 'next/navigation';
 import type { Tables } from '#/types/database';
 
 import { yesterdayInSaoPaulo } from './dates';
-import { mentorProfile, mockMenteeRows } from './mockData';
+import { mentorProfile, mockMenteeRows, mockXpRows } from './mockData';
 import { isMockMode } from './mockMode';
 import { createClient } from './supabase/server';
 
@@ -106,7 +106,7 @@ export type MenteeItem = ReturnType<typeof buildMenteesData>['all'][number];
 
 export const getMenteesData = cache(async () => {
     if (isMockMode) {
-        return buildMenteesData(mentorProfile.id, mockMenteeRows, [], new Map());
+        return buildMenteesData(mentorProfile.id, mockMenteeRows, mockXpRows, new Map());
     }
 
     const supabase = await createClient();

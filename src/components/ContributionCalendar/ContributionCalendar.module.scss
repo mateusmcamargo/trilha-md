@@ -1,0 +1,71 @@
+div.calendar {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    width: 100%;
+}
+
+div.scroll {
+    overflow-x: auto;
+    padding-bottom: .8rem;
+}
+
+div.grid {
+    display: flex;
+    gap: .4rem;
+    width: max-content;
+}
+
+div.week {
+    display: flex;
+    flex-direction: column;
+    gap: .4rem;
+}
+
+span.month {
+    height: 1.6rem;
+
+    font-size: 1.2rem;
+    font-weight: 700;
+    line-height: 1.6rem;
+    white-space: nowrap;
+    text-transform: capitalize;
+    color: var(--color-text-secondary);
+}
+
+span.day, span.future {
+    width: 1.6rem;
+    height: 1.6rem;
+    border-radius: .4rem;
+}
+
+span.future {
+    visibility: hidden;
+}
+
+span.day {
+    &.level0 { background-color: var(--color-heatmap-0); }
+    &.level1 { background-color: var(--color-heatmap-1); }
+    &.level2 { background-color: var(--color-heatmap-2); }
+    &.level3 { background-color: var(--color-heatmap-3); }
+    &.level4 { background-color: var(--color-heatmap-4); }
+}
+
+div.legend {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: .4rem;
+
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--color-text-secondary);
+
+    span.day:first-of-type {
+        margin-left: .4rem;
+    }
+
+    span.day:last-of-type {
+        margin-right: .4rem;
+    }
+}

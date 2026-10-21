@@ -1,0 +1,98 @@
+div.person {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+}
+
+div.details {
+    display: flex;
+    flex-direction: column;
+    gap: .4rem;
+    min-width: 0;
+
+    h3 {
+        font-size: 1.4rem;
+        font-weight: 800;
+        line-height: 1.2;
+        color: var(--color-text-primary);
+    }
+
+    div.stats {
+        display: flex;
+        flex-wrap: wrap;
+        gap: .2rem .4rem;
+
+        span {
+            display: flex;
+            align-items: center;
+            gap: .4rem;
+
+            font-size: 1.2rem;
+            font-weight: 800;
+            white-space: nowrap;
+            color: var(--color-text-secondary);
+        }
+
+        svg {
+            width: 1.6rem;
+            height: 1.6rem;
+            stroke-width: 2.5;
+        }
+
+        .xp svg {
+            color: var(--color-xp);
+            fill: var(--color-xp);
+        }
+
+        .streak svg {
+            color: var(--color-streak);
+            fill: var(--color-streak);
+        }
+    }
+}
+
+div.actions {
+    display: flex;
+    justify-content: flex-end;
+}
+
+span.muted {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--color-text-secondary);
+}
+
+div.rate {
+    display: flex;
+    flex-direction: column;
+    gap: .6rem;
+    width: 100%;
+
+    font-size: 1.6rem;
+    font-weight: 800;
+    white-space: nowrap;
+    color: var(--color-text-primary);
+
+    .low {
+        color: var(--color-danger-dark);
+    }
+
+    /* same height as the percentage's font-size */
+    div.bar {
+        overflow: hidden;
+        width: 100%;
+        height: 1.6rem;
+
+        border-radius: .8rem;
+        background-color: var(--color-border-subtle);
+
+        div {
+            height: 100%;
+            border-radius: .8rem;
+        }
+
+        .danger  { background-color: var(--color-danger);  }
+        .warning { background-color: var(--color-warning); }
+        .success { background-color: var(--color-success); }
+    }
+}

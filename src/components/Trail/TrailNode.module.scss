@@ -5,7 +5,7 @@ div.node {
     align-items: center;
     justify-content: center;
 
-    button.trailNode {
+    .trailNode {
         display: flex;
         align-items: center;
         justify-content: center;
@@ -29,7 +29,7 @@ div.node {
             width: 100%;
             height: 100%;
 
-            color: var(--color-node-shine);
+            color: var(--color-shine);
             pointer-events: none;
         }
 
@@ -51,7 +51,7 @@ div.node {
             }
         }
 
-        &.completed, &.mastered {
+        &.completed, &.gold {
             .icon svg {
                 stroke-width: 4;
             }
@@ -67,10 +67,10 @@ div.node {
             }
         }
 
-        &.mastered {
-            background-color: var(--color-node-bg-mastered);
-            border: 6px solid var(--color-node-border-mastered);
-            color: var(--color-node-icon-mastered);
+        &.gold {
+            background-color: var(--color-gold-bg);
+            border: 6px solid var(--color-gold-border);
+            color: var(--color-gold-icon);
 
             .shine {
                 opacity: 0.65;
@@ -81,6 +81,12 @@ div.node {
             background-color: var(--color-node-bg-locked);
             color: var(--color-node-icon-locked);
             cursor: not-allowed;
+        }
+
+        /* no press effect or pointer: nothing happens on click */
+        &.readOnly {
+            cursor: default;
+            pointer-events: none;
         }
 
         .icon svg {

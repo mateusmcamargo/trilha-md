@@ -13,6 +13,9 @@ interface TrailItem {
 
 interface TrailProps {
     items: TrailItem[];
+    // only shows the state (mentor's view): the nodes aren't buttons
+    readOnly?: boolean;
+    onSelect?: (id: string) => void;
 }
 
 interface Position {
@@ -25,7 +28,7 @@ const VERTICAL_DISTANCE = 90;
 const AMPLITUDE = 64;      // max displacement per wave
 const NODES_PER_WAVE = 6;  // how many nodes form a wave
 
-export default function Trail({ items }: TrailProps) {
+export default function Trail({ items, readOnly, onSelect }: TrailProps) {
 
     const positions: Position[] = items.map((_, index) => {
         const angle = (index / NODES_PER_WAVE) * Math.PI * 2;
@@ -79,11 +82,8 @@ export default function Trail({ items }: TrailProps) {
                             title={item.title}
                             status={item.status}
                             progress={item.progress}
-                            onClick={() => {
-                                console.log(
-                                    `Atividade selecionada: ${item.id}`
-                                );
-                            }}
+                            readOnly={readOnly}
+                            onClick={onSelect && (() => onSelect(item.id))}
                         />
                     </div>
                 );

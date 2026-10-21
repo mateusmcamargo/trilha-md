@@ -28,7 +28,8 @@
     --color-danger:             var(--color-red-500);
     --color-danger-dark:        var(--color-red-700);
     --color-danger-darker:      var(--color-red-900);
-    --color-success:            var(--color-green-900);
+    --color-success:            var(--color-green-500);
+    --color-warning:            var(--color-yellow-800);
 
     /* game stats */
     --color-streak:             var(--color-orange-700);
@@ -36,8 +37,19 @@
     --color-life:               var(--color-red-600);
     --color-award:              var(--color-orange-300);
 
+    /* charts: grid and axis text; series use the game stats and feedback colors */
+    --color-chart-grid:             var(--color-border-subtle);
+    --color-chart-axis:             var(--color-text-secondary);
+
+    /* contribution calendar: 0 = no activity, 4 = most activity */
+    --color-heatmap-0:              var(--color-border-subtle);
+    --color-heatmap-1:              color-mix(in srgb, var(--color-brand) 30%, var(--color-surface));
+    --color-heatmap-2:              color-mix(in srgb, var(--color-brand) 55%, var(--color-surface));
+    --color-heatmap-3:              var(--color-brand);
+    --color-heatmap-4:              var(--color-brand-darker);
+
     /* input */
-    --color-input-bg:               var(--color-white);
+    --color-input-bg:              var(--color-white);
     --color-input-text:             var(--color-gray-800);
     --color-input-label:            var(--color-slate-600);
     --color-input-required:         var(--color-purple-500);
@@ -71,16 +83,16 @@
     --color-node-icon-completed:    var(--color-green-100);
     --color-node-base-completed:    var(--color-green-900);
 
-    --color-node-bg-mastered:       var(--color-yellow-400);
-    --color-node-border-mastered:   var(--color-yellow-600);
-    --color-node-icon-mastered:     var(--color-yellow-800);
-    --color-node-base-mastered:     var(--color-yellow-800);
+    --color-gold-bg:                var(--color-yellow-400);
+    --color-gold-border:            var(--color-yellow-600);
+    --color-gold-icon:              var(--color-yellow-800);
+    --color-gold-base:              var(--color-yellow-800);
 
     --color-node-bg-locked:         var(--color-gray-200);
     --color-node-icon-locked:       var(--color-gray-400);
     --color-node-base-locked:       var(--color-gray-400);
 
-    --color-node-shine:             var(--color-white);
+    --color-shine:                  var(--color-white);
 
     /* trail node progress ring */
     --color-node-ring-track:        var(--color-gray-200);

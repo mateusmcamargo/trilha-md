@@ -38,13 +38,12 @@ function sumPoints(rows: MenteeRows['attendance']) {
     return rows.reduce((total, row) => total + row.activities.points, 0);
 }
 
-export function buildMenteeData(rows: MenteeRows) {
-    const { profile, userStats, enrollments, activities, attendance, activityProgress } = rows;
-
-    const currentEnrollment = enrollments.find((enrollment) => enrollment.status === 'active');
-    const currentEdition = currentEnrollment?.editions ?? null;
-
-    const doneIds = new Set(attendance.map((row) => row.activity_id));
+// shared with the mentor's view of the mentee's trail (dashboardData.ts)
+export function buildTrail(
+    activities: Pick<Tables<'activities'>, 'id' | 'title'>[],
+    doneIds: Set<string>,
+    activityProgress: Pick<Tables<'activity_progress'>, 'activity_id' | 'mastered_at' | 'progress'>[],
+) {
     const progressByActivity = new Map(activityProgress.map((row) => [row.activity_id, row]));
 
     let availableFound = false;
@@ -56,7 +55,7 @@ export function buildMenteeData(rows: MenteeRows) {
             return {
                 id: activity.id,
                 title: activity.title,
-                status: progress?.mastered_at ? 'mastered' : 'completed',
+                status: progress?.mastered_at ? 'gold' : 'completed',
                 progress: 100,
             };
         }
@@ -75,12 +74,27 @@ export function buildMenteeData(rows: MenteeRows) {
     });
 
     const completed = trailItems.filter(
-        (item) => item.status === 'completed' || item.status === 'mastered'
+        (item) => item.status === 'completed' || item.status === 'gold'
     ).length;
 
     const trailProgress = trailItems.length
         ? Math.round((completed / trailItems.length) * 100)
         : 0;
+
+    return { trailItems, trailProgress };
+}
+
+export function buildMenteeData(rows: MenteeRows) {
+    const { profile, userStats, enrollments, activities, attendance, activityProgress } = rows;
+
+    const currentEnrollment = enrollments.find((enrollment) => enrollment.status === 'active');
+    const currentEdition = currentEnrollment?.editions ?? null;
+
+    const { trailItems, trailProgress } = buildTrail(
+        activities,
+        new Set(attendance.map((row) => row.activity_id)),
+        activityProgress,
+    );
 
     // streak is set to zero only at next activity, so, we check it here
     const streakIsAlive = !!userStats.last_active_on

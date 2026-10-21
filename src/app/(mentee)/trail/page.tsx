@@ -1,10 +1,8 @@
 import type { Metadata } from 'next';
 
-import { Flower } from 'lucide-react';
-
-import PressableBase from '#/components/PressableBase/PressableBase';
 import StatsHeader from '#/components/Header/StatsHeader';
 import Trail from '#/components/Trail/Trail';
+import TrailCard from '#/components/Trail/TrailCard';
 
 import styles from './page.module.scss';
 import { getMenteeData } from '#/utils/menteeData';
@@ -42,37 +40,7 @@ export default async function TrailPage() {
                 aria-label='Atividades da minha trilha'
             >
 
-                <PressableBase color='var(--color-brand-darker)' depth={8} radius='1rem'>
-                    <section className={styles.trailCard}>
-
-                        <div className={styles.trailInfo}>
-                            <div className={styles.trailTitle}>
-                                <Flower/>
-                                <h1>Trilha {trail.name}</h1>
-                            </div>
-                            {trail.subtitle && <h2>{trail.subtitle}</h2>}
-                        </div>
-
-                        <div className={styles.trailProgress}>
-
-                            <div
-                                className={styles.progressTrack}
-                                role='progressbar'
-                                aria-label='Progresso da trilha'
-                                aria-valuenow={trailProgress}
-                                aria-valuemin={0}
-                                aria-valuemax={100}
-                            >
-                                <div
-                                    className={styles.progressFill}
-                                    style={{
-                                        width: `${trailProgress}%`,
-                                    }}
-                                />
-                            </div>
-                        </div>
-                    </section>
-                </PressableBase>
+                <TrailCard name={trail.name} subtitle={trail.subtitle} progress={trailProgress}/>
 
                 <section className={styles.trailPath}>
                     <Trail items={trailItems}/>

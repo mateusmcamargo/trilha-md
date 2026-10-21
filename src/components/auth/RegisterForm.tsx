@@ -117,7 +117,7 @@ export function RegisterForm() {
         <form className={styles.form} onSubmit={handleSubmit} noValidate>
             <FormTitle
                 title='Crie sua conta!'
-                description='Use o código que sua tutora te passou ;)'
+                description='Use o código que sua mentora te passou ;)'
             />
 
             <Input
@@ -189,7 +189,7 @@ export function RegisterForm() {
                 autoComplete='off'
                 autoCapitalize='none'
                 spellCheck={false}
-                placeholder='Código da sua tutora'
+                placeholder='Código da sua mentora'
                 required
                 value={accessCode}
                 onChange={(e) => setAccessCode(e.target.value)}

@@ -50,18 +50,18 @@ export function JoinEditionForm() {
         <form className={styles.form} onSubmit={handleSubmit} noValidate>
             <FormTitle
                 title='Nenhuma trilha ativa :('
-                description='Você ainda não está matriculada em uma trilha. Use o código da sua tutora para entrar!'
+                description='Você ainda não está matriculada em uma trilha. Use o código da sua mentora para entrar!'
             />
 
             <Input
                 label='Código de acesso'
                 icon={Ticket}
-                help='Esse é o código que sua tutora te passou quando você se matriculou, por exemplo: "MD2026"'
+                help='Esse é o código que sua mentora te passou quando você se matriculou, por exemplo: "MD2026"'
                 type='text'
                 autoComplete='off'
                 autoCapitalize='none'
                 spellCheck={false}
-                placeholder='Código da sua tutora'
+                placeholder='Código da sua mentora'
                 required
                 value={accessCode}
                 onChange={(e) => setAccessCode(e.target.value)}

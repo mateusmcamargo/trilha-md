@@ -44,7 +44,7 @@ export function AdoptButton({ enrollmentId, menteeName, variant = 'full', onDone
         setLoading(false);
 
         if (adoptError) {
-            if (adoptError.code === 'P0002') return setError('Essa mentorada já tem uma tutora.');
+            if (adoptError.code === 'P0002') return setError('Essa mentorada já tem uma mentora.');
             return setError('Não foi possível adotar. Tente novamente.');
         }
 
@@ -83,14 +83,10 @@ export function AdoptButton({ enrollmentId, menteeName, variant = 'full', onDone
                 onClose={handleClose}
                 title={`Adotar a ${menteeName.trim().split(/\s+/)[0]}?`}
                 icon={HeartHandshake}
-                description='Você passará a ser a tutora responsável por ela nesta trilha.'
+                description='Você passará a ser a mentora responsável por ela nesta trilha.'
                 dismissible={!loading}
                 actions={
                     <>
-                        <Button fullWidth data-autofocus disabled={loading} onClick={handleClose}>
-                            Cancelar
-                        </Button>
-
                         <Button
                             fullWidth
                             variant='brand'
@@ -101,6 +97,15 @@ export function AdoptButton({ enrollmentId, menteeName, variant = 'full', onDone
                             onClick={handleConfirm}
                         >
                             {loading ? 'Adotando...' : 'Sim, adotar'}
+                        </Button>
+
+                        <Button
+                            fullWidth
+                            data-autofocus
+                            disabled={loading}
+                            onClick={handleClose}
+                        >
+                            Cancelar
                         </Button>
                     </>
                 }

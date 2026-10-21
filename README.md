@@ -16,12 +16,12 @@ O software agiliza o processo com uma aplicação única com foco em acessibilid
 
 ## Funcionalidades desenvolvidas
 
-- Login e logout com Supabase Auth, com redirecionamento por perfil (mentorada ou tutora)
+- Login e logout com Supabase Auth, com redirecionamento por perfil (mentorada ou mentora)
 - Cadastro em `/register`, com matrícula na trilha pelo código de acesso
 - Entrada em uma trilha pelo código de acesso, para quem ainda não tem matrícula
 - Painel da mentorada: trilha, terminal, perfil e configurações
-- Escolha da tutora pela mentorada, no perfil, quando a matrícula ainda não tem tutora
-- Área da tutora em `/team` (em construção): lista de mentoradas em `/team/mentees`, com adoção e cancelamento de adoção
+- Escolha da mentora pela mentorada, no perfil, quando a matrícula ainda não tem mentora
+- Área da mentora em `/team` (em construção): lista de mentoradas em `/team/mentees`, com adoção e cancelamento de adoção
 - Preferências: sons, animações e tema
 - Modo demonstração com dados mockados
 - Banco PostgreSQL com Row Level Security
@@ -107,14 +107,14 @@ Abra [http://localhost:3000](http://localhost:3000) no navegador.
 ## Como testar
 
 **Modo demonstração:** faça login com qualquer e-mail e senha.
-**Entrar** abre a trilha da mentorada e **Entrar como mentora** abre a área da tutora em `/team`.
+**Entrar** abre a trilha da mentorada e **Entrar como mentora** abre a área da mentora em `/team`.
 
 **Com Supabase:**
 
 1. Entre com uma das contas padrão abaixo ou crie uma em `/register`, usando o código de acesso da edição de teste.
 2. Como mentorada: abra a trilha e navegue pelos nós, depois o perfil e as configurações.
-3. Como tutora: o login abre o painel em `/team/dashboard`. Em `/team/mentees`, adote uma mentorada sem tutora e depois cancele a adoção.
-4. Como mentorada sem tutora (ex.: Rebeca): no perfil, aba **Tutoras**, use **Escolher tutora**.
+3. Como mentora: o login abre o painel em `/team/dashboard`. Em `/team/mentees`, adote uma mentorada sem mentora e depois cancele a adoção.
+4. Como mentorada sem mentora (ex.: Rebeca): no perfil, aba **Mentoras**, use **Escolher mentora**.
 5. Faça logout.
 
 ### Contas de acesso padrão
@@ -130,16 +130,16 @@ Código de acesso da edição de teste (`Dandelion`): `MD2026`
 
 > **ATENÇÃO:** essas contas têm senha conhecida. Use o `db push` apenas em projetos de teste.
 
-## Acesso das tutoras aos dados
+## Acesso das mentoras aos dados
 
-| Dado | Qualquer tutora | Só a tutora responsável |
+| Dado | Qualquer mentora | Só a mentora responsável |
 |------|-----------------|-------------------------|
-| Nome, usuário, foto, trilha, tutora, XP e ofensiva | Sim | Sim |
+| Nome, usuário, foto, trilha, mentora, XP e ofensiva | Sim | Sim |
 | Presenças, reflexões, certificados e andamento | Não | Sim |
 
-- A "tutora responsável" é a que adotou a mentorada (`enrollments.mentor_id`). Isso é garantido por Row Level Security, não só pelas telas.
+- A "mentora responsável" é a que adotou a mentorada (`enrollments.mentor_id`). Isso é garantido por Row Level Security, não só pelas telas.
 - O XP de todas as mentoradas vem da função `list_mentee_xp`, que devolve só o total por trilha, sem expor as presenças.
-- Matrículas só mudam por funções do banco: entrar na trilha, adotar, cancelar adoção e escolher tutora.
+- Matrículas só mudam por funções do banco: entrar na trilha, adotar, cancelar adoção e escolher mentora.
 
 ## Estilização
 
@@ -188,7 +188,7 @@ src/
 │   │   ├── terminal/     # terminal de código
 │   │   ├── profile/      # perfil
 │   │   └── settings/     # configurações (sem a Navbar)
-│   ├── team/             # área da tutora (/team, /team/dashboard, /team/mentees)
+│   ├── team/             # área da mentora (/team, /team/dashboard, /team/mentees)
 │   ├── login/            # login (Supabase Auth)
 │   ├── register/         # cadastro (Supabase Auth)
 │   ├── styles/           # globals.css, tokens de cor e semantics.css
@@ -202,7 +202,7 @@ src/
 ├── utils/
 │   ├── supabase/         # client.ts, server.ts, middleware.ts (sessão) e getSupabase.ts
 │   ├── menteeData.ts     # dados da área da mentorada
-│   ├── teamData.ts       # dados da área da tutora
+│   ├── teamData.ts       # dados da área da mentora
 │   ├── mockData.ts       # dados mockados, usados só no modo demonstração
 │   └── mockMode.ts       # liga o modo demonstração
 └── proxy.ts              # renova a sessão do Supabase a cada requisição

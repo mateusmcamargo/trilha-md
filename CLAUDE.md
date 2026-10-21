@@ -14,7 +14,7 @@ Web app mobile first de aprendizado gamificado para o projeto de extensão Menin
 ## Estrutura
 
 - `src/app/(mentee)/`: área da mentorada (`/trail`, `/terminal`, `/profile`, `/settings/*`)
-- `src/app/team/`: área da tutora (`/team/dashboard`, `/team/mentees`, `/team/profile`, `/team/settings`)
+- `src/app/team/`: área da mentora (`/team/dashboard`, `/team/mentees`, `/team/profile`, `/team/settings`)
 - Cada área tem layout, `PanelShell`, navbar e verificação de papel próprios. Componentes de formulário são compartilhados
 - `src/app/error.tsx` e `global-error.tsx`: telas de erro com "Tentar de novo". Neste Next a prop é `retry`, não `reset`. O `error.tsx` fica na raiz porque `getMenteeData`/`getTeamData` rodam nos layouts, e um `error.tsx` não captura erro do layout do próprio segmento
 - `USERS.md`: contas de teste (senha e edição de teste); consultar antes de logar para testar
@@ -42,14 +42,14 @@ Web app mobile first de aprendizado gamificado para o projeto de extensão Menin
 - Dados mock seguem os tipos de `src/types/database.ts`
 - No cliente, usar `getSupabase()` (retorna `null` no modo demonstração)
 - Nunca expor a service role key no frontend
-- Listagem de mentoradas (nome, foto, trilha, tutora, XP, ofensiva) é aberta a todas as tutoras. Presenças, reflexões, certificados e andamento são só da tutora responsável, garantido por RLS (`is_mentor_of`); consultas desses dados devem filtrar por `enrollments.mentor_id = auth.uid()`
-- XP não é guardado: é a soma de `activities.points` das presenças (`status = 'presente'`). Existe o XP da trilha (edição da matrícula ativa) e o total (todas as trilhas); deixar claro qual está na tela. A tutora lê o XP de todas pela RPC `list_mentee_xp`, não por `attendance`
+- Listagem de mentoradas (nome, foto, trilha, mentora, XP, ofensiva) é aberta a todas as mentoras. Presenças, reflexões, certificados e andamento são só da mentora responsável, garantido por RLS (`is_mentor_of`); consultas desses dados devem filtrar por `enrollments.mentor_id = auth.uid()`
+- XP não é guardado: é a soma de `activities.points` das presenças (`status = 'presente'`). Existe o XP da trilha (edição da matrícula ativa) e o total (todas as trilhas); deixar claro qual está na tela. A mentora lê o XP de todas pela RPC `list_mentee_xp`, não por `attendance`
 
 ## Banco (Supabase)
 
 - Toda mudança de schema é uma migration nova em `supabase/migrations/` (`YYYYMMDDHHMMSS_nome.sql`). Nunca editar migration já aplicada
 - Autorização via RLS. RPCs `security definer` com `set search_path = ''` e `grant execute` explícito
-- Leituras de dados detalhados da mentorada usam `is_mentor_of(mentee_id)`, não `get_my_role() = 'mentor'` (que libera para qualquer tutora). Só use o papel quando o dado for de listagem
+- Leituras de dados detalhados da mentorada usam `is_mentor_of(mentee_id)`, não `get_my_role() = 'mentor'` (que libera para qualquer mentora). Só use o papel quando o dado for de listagem
 - Matrículas (`enrollments`) não têm policy de update: só mudam por RPC (`join_edition`, `adopt_mentee`, `release_mentee`, `choose_mentor`). Nova mudança de matrícula = nova RPC
 - Depois de mudar o schema: `npx supabase db push` e regenerar `src/types/database.ts`
 - A migration de seed cria contas com senha conhecida: `db push` só em projetos de teste

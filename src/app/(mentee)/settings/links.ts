@@ -26,7 +26,7 @@ export const settingsSections: SettingsSection[] = [
     {
         title: 'Ajuda',
         links: [
-            { slug: 'contact-tutor',     label: 'Contactar sua tutora',      icon: GraduationCap },
+            { slug: 'contact-mentor',     label: 'Contactar sua mentora',      icon: GraduationCap },
             { slug: 'contact-project',   label: 'Contactar o projeto',       icon: Users         },
             { slug: 'contact-developer', label: 'Contactar o desenvolvedor', icon: CodeXml       },
             { slug: 'report-abuse',      label: 'Reportar Abuso',            icon: Flag          },

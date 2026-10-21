@@ -83,14 +83,10 @@ export function ReleaseButton({ enrollmentId, menteeName, variant = 'full', onDo
                 onClose={handleClose}
                 title={`Cancelar adoção da ${menteeName.trim().split(/\s+/)[0]}?`}
                 icon={HeartCrack}
-                description='Você deixará de ser a tutora responsável por ela e outra tutora poderá adotá-la.'
+                description='Você deixará de ser a mentora responsável por ela e outra mentora poderá adotá-la.'
                 dismissible={!loading}
                 actions={
                     <>
-                        <Button fullWidth data-autofocus disabled={loading} onClick={handleClose}>
-                            Voltar
-                        </Button>
-
                         <Button
                             fullWidth
                             variant='danger'
@@ -101,6 +97,10 @@ export function ReleaseButton({ enrollmentId, menteeName, variant = 'full', onDo
                             onClick={handleConfirm}
                         >
                             {loading ? 'Cancelando...' : 'Sim, cancelar'}
+                        </Button>
+
+                        <Button fullWidth data-autofocus disabled={loading} onClick={handleClose}>
+                            Voltar
                         </Button>
                     </>
                 }

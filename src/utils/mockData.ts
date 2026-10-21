@@ -2,6 +2,7 @@ import type { Tables } from '#/types/database';
 
 import { todayInSaoPaulo } from './dates';
 import type { MenteeRows } from './menteeData';
+import type { MenteeRow } from './teamData';
 
 // demo mode data, same format as database (src/types/database.ts)
 const profileId = 'mock-profile-anne';
@@ -143,3 +144,40 @@ export const mockRows: MenteeRows = {
         { friendship_id: 'mock-friendship-3', id: 'mock-profile-4', full_name: 'Rebeca',  username: 'rebeca',  total_xp: 12574 },
     ],
 };
+
+// mentees list as seen by the mentor (Maria) in demo mode
+const otherMentor = { id: 'mock-profile-joana', full_name: 'Joana Pereira', avatar_url: null };
+const mockEnrollment = (id: string, mentor: MenteeRow['enrollments'][number]['mentor']) => [{
+    id,
+    edition_id: editionId,
+    editions:   { name: edition.name },
+    mentor,
+}];
+
+export const mockMenteeRows: MenteeRow[] = [
+    {
+        id: profileId, full_name: profile.full_name, username: profile.username, avatar_url: null,
+        enrollments: mockEnrollment(enrollment.id, { id: mentorId, full_name: mentorProfile.full_name, avatar_url: null }),
+        user_stats: { streak_days: 4, last_active_on: todayInSaoPaulo() },
+    },
+    {
+        id: 'mock-profile-5', full_name: 'Beatriz Lima', username: 'bia.lima', avatar_url: null,
+        enrollments: [],
+        user_stats: { streak_days: 0, last_active_on: null },
+    },
+    {
+        id: 'mock-profile-2', full_name: 'Larissa Souza', username: 'larinha', avatar_url: null,
+        enrollments: mockEnrollment('mock-enrollment-2', null),
+        user_stats: { streak_days: 2, last_active_on: todayInSaoPaulo() },
+    },
+    {
+        id: 'mock-profile-3', full_name: 'Micaela Rocha', username: 'mica', avatar_url: null,
+        enrollments: mockEnrollment('mock-enrollment-3', null),
+        user_stats: { streak_days: 7, last_active_on: todayInSaoPaulo() },
+    },
+    {
+        id: 'mock-profile-4', full_name: 'Rebeca Alves', username: 'rebeca', avatar_url: null,
+        enrollments: mockEnrollment('mock-enrollment-4', otherMentor),
+        user_stats: { streak_days: 1, last_active_on: todayInSaoPaulo() },
+    },
+];

@@ -1,0 +1,142 @@
+section.section {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+
+    width: 90vw;
+
+    h2 {
+        font-size: 2rem;
+        font-weight: 800;
+        color: var(--color-brand-dark);
+    }
+}
+
+div.person {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+}
+
+div.details {
+    display: flex;
+    flex-direction: column;
+    gap: .4rem;
+    min-width: 0;
+
+    h3 {
+        font-size: 1.6rem;
+        font-weight: 800;
+        line-height: 1.2;
+        color: var(--color-text-primary);
+    }
+
+    span {
+        font-size: 1.2rem;
+        font-weight: 700;
+        color: var(--color-text-secondary);
+    }
+}
+
+button.avatarButton {
+    display: flex;
+    flex-shrink: 0;
+
+    cursor: pointer;
+    border-radius: 50%;
+
+    &:focus-visible {
+        outline: 3px solid var(--color-focus-ring);
+        outline-offset: 4px;
+    }
+}
+
+p.adopted {
+    font-size: 1.4rem;
+    font-weight: 600;
+    text-align: center;
+    color: var(--color-text-secondary);
+}
+
+div.actions {
+    display: flex;
+    align-items: center;
+    gap: .8rem;
+    flex-shrink: 0;
+}
+
+div.profile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+
+    div.identity {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: .6rem;
+
+        h3 {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--color-text-primary);
+        }
+
+        span {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--color-text-secondary);
+        }
+    }
+
+    dl.info {
+        display: flex;
+        flex-direction: column;
+        gap: 1.2rem;
+
+        width: 100%;
+
+        div {
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            align-items: center;
+            gap: 1rem;
+
+            svg {
+                width: 2rem;
+                height: 2rem;
+                stroke-width: 2;
+            }
+
+            &.trail  { color: var(--color-brand); }
+            &.mentor { color: var(--color-brand-dark); }
+
+            &.trail svg,
+            &.mentor svg {
+                stroke-width: 2.6;
+            }
+
+            &.xp,
+            &.streak {
+                svg { fill: currentColor; }
+            }
+
+            &.xp     { color: var(--color-xp); }
+            &.streak { color: var(--color-streak); }
+        }
+
+        dt {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: inherit;
+        }
+
+        dd {
+            font-size: 1.6rem;
+            font-weight: 800;
+            text-align: right;
+            color: var(--color-text-primary);
+        }
+    }
+}

@@ -561,7 +561,9 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      adopt_mentee: { Args: { p_enrollment_id: string }; Returns: undefined }
       check_access_code: { Args: { p_access_code: string }; Returns: string }
+      choose_mentor: { Args: { p_mentor_id: string }; Returns: undefined }
       get_my_role: { Args: never; Returns: string }
       is_enrolled_in_activity: {
         Args: { p_activity_id: string }
@@ -593,6 +595,14 @@ export type Database = {
           username: string
         }[]
       }
+      list_mentee_xp: {
+        Args: never
+        Returns: {
+          edition_id: string
+          mentee_id: string
+          xp: number
+        }[]
+      }
       list_mentors: {
         Args: never
         Returns: {
@@ -601,6 +611,7 @@ export type Database = {
           id: string
         }[]
       }
+      release_mentee: { Args: { p_enrollment_id: string }; Returns: undefined }
       respond_friend_request: {
         Args: { p_accept: boolean; p_friendship_id: string }
         Returns: undefined

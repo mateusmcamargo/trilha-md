@@ -11,6 +11,12 @@ p.empty {
     color: var(--color-text-secondary);
 }
 
+div.wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+}
+
 div.container {
     max-height: 50vh;
     overflow-x: hidden;
@@ -66,6 +72,18 @@ div.container {
         padding: 1.2rem 1.6rem;
         vertical-align: middle;
         overflow-wrap: anywhere;
+    }
+
+    /* max-width 0: the column gets only the space left, and the content is cut instead of widening the table */
+    th.shrink, td.shrink {
+        width: 100%;
+        max-width: 0;
+    }
+
+    tbody td.noResults {
+        font-weight: 700;
+        text-align: center;
+        color: var(--color-text-secondary);
     }
 
     tbody tr:not(:last-child) td {

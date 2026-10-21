@@ -2,7 +2,9 @@
 
 import { useMemo, useState, type ReactNode } from 'react';
 
-import { ChevronDown, ChevronUp, ChevronsUpDown } from 'lucide-react';
+import { ChevronDown, ChevronUp, ChevronsUpDown, Search } from 'lucide-react';
+
+import { Input } from '#/components/Input/Input';
 
 import styles from './DataList.module.scss';
 
@@ -14,6 +16,8 @@ export interface Column<T> {
     label: string;
     // relative column width (e.g. '60%'); '1%' makes the column only as wide as its content
     width?: string;
+    // takes the space left by the other columns and lets its content be cut ('...') instead of widening the table
+    shrink?: boolean;
     render: (row: T) => ReactNode;
     // without sortValue the column doesn't sort (e.g. Ações)
     sortValue?: (row: T) => SortValue;
@@ -26,7 +30,13 @@ interface DataListProps<T> {
     defaultSort?: { key: string; direction: Direction };
     emptyMessage: string;
     label: string;
+    // all text of a row that the search should match (e.g. name, trail, mentor)
+    searchText: (row: T) => string;
 }
+
+// ignores case and accents
+const normalize = (text: string) =>
+    text.normalize('NFD').replace(/\p{Diacritic}/gu, '').toLowerCase();
 
 // ascending: text A-Z, lower number first, boolean true first
 function compare(a: SortValue, b: SortValue) {
@@ -44,22 +54,29 @@ export default function DataList<T>({
     defaultSort,
     emptyMessage,
     label,
+    searchText,
 }: DataListProps<T>) {
     const [sort, setSort] = useState(defaultSort ?? null);
+    const [query, setQuery] = useState('');
 
     const sorted = useMemo(() => {
+        const term = normalize(query.trim());
+        const filtered = term
+            ? rows.filter((row) => normalize(searchText(row)).includes(term))
+            : rows;
+
         const column = columns.find((col) => col.key === sort?.key);
-        if (!sort || !column?.sortValue) return rows;
+        if (!sort || !column?.sortValue) return filtered;
 
         // ties follow the first sortable column, always A-Z
         const tiebreak = columns.find((col) => col.sortValue)!.sortValue!;
         const primary  = column.sortValue;
         const sign     = sort.direction === 'asc' ? 1 : -1;
 
-        return [...rows].sort((a, b) =>
+        return [...filtered].sort((a, b) =>
             sign * compare(primary(a), primary(b)) || compare(tiebreak(a), tiebreak(b)),
         );
-    }, [rows, columns, sort]);
+    }, [rows, columns, sort, query, searchText]);
 
     function handleSort(key: string) {
         setSort((current) => ({
@@ -71,7 +88,17 @@ export default function DataList<T>({
     if (rows.length === 0) return <p className={styles.empty}>{emptyMessage}</p>;
 
     return (
-        <div className={styles.container}>
+        <div className={styles.wrapper}>
+            <Input
+                type='search'
+                icon={Search}
+                placeholder='Pesquisar'
+                aria-label={`Pesquisar em ${label.toLowerCase()}`}
+                value={query}
+                onChange={(event) => setQuery(event.target.value)}
+            />
+
+            <div className={styles.container}>
             <table aria-label={label}>
                 <thead>
                     <tr>
@@ -84,6 +111,7 @@ export default function DataList<T>({
                                 <th
                                     key={column.key}
                                     scope='col'
+                                    className={column.shrink ? styles.shrink : undefined}
                                     style={{ width: column.width }}
                                     aria-sort={!column.sortValue ? undefined : !active ? 'none'
                                         : sort.direction === 'asc' ? 'ascending' : 'descending'}
@@ -101,15 +129,24 @@ export default function DataList<T>({
                 </thead>
 
                 <tbody>
+                    {sorted.length === 0 && (
+                        <tr>
+                            <td colSpan={columns.length} className={styles.noResults}>
+                                Nenhum resultado para &ldquo;{query.trim()}&rdquo;.
+                            </td>
+                        </tr>
+                    )}
+
                     {sorted.map((row) => (
                         <tr key={getKey(row)}>
                             {columns.map((column) => (
-                                <td key={column.key}>{column.render(row)}</td>
+                                <td key={column.key} className={column.shrink ? styles.shrink : undefined}>{column.render(row)}</td>
                             ))}
                         </tr>
                     ))}
                 </tbody>
             </table>
+            </div>
         </div>
     );
 }

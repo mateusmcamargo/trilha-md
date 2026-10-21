@@ -11,7 +11,7 @@ import { Button } from '#/components/Button/Button';
 import { ReleaseButton } from '#/components/Button/ReleaseButton';
 import DataList, { type Column } from '#/components/DataList/DataList';
 import { Modal } from '#/components/Modal/Modal';
-import { Tooltip } from '#/components/Tooltip/Tooltip';
+import TruncatedName from '#/components/TruncatedName/TruncatedName';
 import type { MenteeItem } from '#/utils/teamData';
 
 import styles from './MenteeList.module.scss';
@@ -35,7 +35,14 @@ export default function MenteeList({ mine, all }: MenteeListProps) {
         return mentee.enrollment && !mentee.enrollment.mentor ? 0 : 2;
     };
 
-    const avatarButton = (mentee: MenteeItem) => (
+    const searchText = (mentee: MenteeItem) => [
+        mentee.name,
+        mentee.username,
+        trailName(mentee),
+        mentee.enrollment?.mentor?.name ?? 'Nenhuma',
+    ].join(' ');
+
+    const avatarButton =(mentee: MenteeItem) => (
         <button
             type='button'
             className={styles.avatarButton}
@@ -43,21 +50,21 @@ export default function MenteeList({ mine, all }: MenteeListProps) {
             aria-label={`Ver perfil de ${mentee.name}`}
             onClick={() => setSelected(mentee)}
         >
-            <Avatar name={mentee.name} url={mentee.avatarUrl}/>
+            <Avatar name={mentee.name} url={mentee.avatarUrl} size='sm'/>
         </button>
     );
 
     const nameColumn: Column<MenteeItem> = {
         key: 'name',
         label: 'Nome',
-        width: '60%',
+        shrink: true,
         sortValue: (mentee) => mentee.name,
         render: (mentee) => (
             <div className={styles.person}>
                 {avatarButton(mentee)}
 
                 <div className={styles.details}>
-                    <h3>{mentee.name}</h3>
+                    <h3><TruncatedName fullName={mentee.name}>{mentee.name}</TruncatedName></h3>
                     <span>{trailName(mentee)}</span>
                 </div>
             </div>
@@ -66,12 +73,17 @@ export default function MenteeList({ mine, all }: MenteeListProps) {
 
     const mentorColumn: Column<MenteeItem> = {
         key: 'mentor',
-        label: 'Tutora',
+        label: 'Mentora',
         sortValue: adoption,
         render: (mentee) => mentee.enrollment?.mentor ? (
-            <Tooltip id={`tutora-${mentee.id}`} text={mentee.enrollment.mentor.name}>
-                <Badge variant='mentor' label={firstName(mentee.enrollment.mentor)}/>
-            </Tooltip>
+            <Badge
+                variant='mentor'
+                label={
+                    <TruncatedName fullName={mentee.enrollment.mentor.name}>
+                        {mentee.enrollment.mentor.name}
+                    </TruncatedName>
+                }
+            />
         ) : (
             <Badge variant='none' label='Nenhuma'/>
         ),
@@ -86,7 +98,7 @@ export default function MenteeList({ mine, all }: MenteeListProps) {
             render: (mentee) => (
                 <div className={styles.actions}>
                     <Button
-                        href={`/team/dashboard?mentee=${mentee.id}`}
+                        href={`/team/dashboard/${mentee.id}`}
                         variant='outline'
                         icon={LayoutDashboard}
                         depth={4}
@@ -98,20 +110,7 @@ export default function MenteeList({ mine, all }: MenteeListProps) {
     ];
 
     const allColumns: Column<MenteeItem>[] = [
-        {
-            ...nameColumn,
-            sortValue: firstName,
-            render: (mentee) => (
-                <div className={styles.person}>
-                    {avatarButton(mentee)}
-
-                    <div className={styles.details}>
-                        <h3>{firstName(mentee)}</h3>
-                        <span>{trailName(mentee)}</span>
-                    </div>
-                </div>
-            ),
-        },
+        nameColumn,
         mentorColumn,
         {
             key: 'actions',
@@ -155,6 +154,7 @@ export default function MenteeList({ mine, all }: MenteeListProps) {
 
                 <DataList
                     label='Suas mentoradas'
+                    searchText={searchText}
                     rows={mine}
                     columns={mineColumns}
                     getKey={(mentee) => mentee.id}
@@ -168,22 +168,11 @@ export default function MenteeList({ mine, all }: MenteeListProps) {
 
                 <DataList
                     label='Todas as mentoradas'
+                    searchText={searchText}
                     rows={all}
                     columns={allColumns}
                     getKey={(mentee) => mentee.id}
                     defaultSort={{ key: 'mentor', direction: 'asc' }}
-                    emptyMessage='Nenhuma mentorada cadastrada ainda.'
-                />
-            </section>
-
-            <section className={styles.section} aria-labelledby='empty-title'>
-                <h2 id='empty-title'>Lista vazia (teste)</h2>
-
-                <DataList
-                    label='Lista vazia'
-                    rows={[]}
-                    columns={allColumns}
-                    getKey={(mentee) => mentee.id}
                     emptyMessage='Nenhuma mentorada cadastrada ainda.'
                 />
             </section>
@@ -240,7 +229,7 @@ export default function MenteeList({ mine, all }: MenteeListProps) {
                             </div>
                             <div className={styles.mentor}>
                                 <GraduationCap aria-hidden='true'/>
-                                <dt>Tutora</dt>
+                                <dt>Mentora</dt>
                                 <dd>{selected.enrollment?.mentor?.name ?? 'Nenhuma'}</dd>
                             </div>
                         </dl>

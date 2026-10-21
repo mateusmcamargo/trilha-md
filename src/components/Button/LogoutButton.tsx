@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation'
 import { getSupabase } from '#/utils/supabase/getSupabase'
-import { ActionButton } from './ActionButton'
+import { Button } from './Button'
 
 export function LogoutButton() {
     const router = useRouter()
@@ -15,8 +15,8 @@ export function LogoutButton() {
     }
 
     return (
-        <ActionButton variant='brand' onClick={handleLogout}>
+        <Button variant='brand' fullWidth onClick={handleLogout}>
             Sair
-        </ActionButton>
+        </Button>
     )
 }

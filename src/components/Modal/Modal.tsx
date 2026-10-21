@@ -4,6 +4,7 @@ import { useEffect, useId, useRef } from 'react';
 import type { ReactNode } from 'react';
 
 import { X } from 'lucide-react';
+import type { LucideIcon } from 'lucide-react';
 
 import styles from './Modal.module.scss';
 
@@ -11,6 +12,7 @@ interface ModalProps {
     open: boolean;
     onClose: () => void;
     title: string;
+    icon: LucideIcon;
     description?: string;
     children?: ReactNode;
     actions?: ReactNode;
@@ -21,6 +23,7 @@ export function Modal({
     open,
     onClose,
     title,
+    icon: Icon,
     description,
     children,
     actions,
@@ -71,7 +74,10 @@ export function Modal({
         >
             <div className={styles.content}>
                 <header className={styles.header}>
-                    <h2 id={titleId}>{title}</h2>
+                    <div className={styles.title}>
+                        <Icon className={styles.icon} aria-hidden='true'/>
+                        <h2 id={titleId}>{title}</h2>
+                    </div>
 
                     {dismissible && (
                         <button

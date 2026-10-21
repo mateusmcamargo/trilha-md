@@ -2,8 +2,7 @@ import type { ReactNode } from 'react';
 
 import type { LucideIcon } from 'lucide-react';
 
-import styles from './SubmitButton.module.scss';
-import PressableBase from '../PressableBase/PressableBase';
+import { Button } from './Button';
 
 interface SubmitButtonProps {
     children: ReactNode;
@@ -12,21 +11,17 @@ interface SubmitButtonProps {
     icon?: LucideIcon;
 }
 
-export function SubmitButton({ children, loading = false, loadingLabel, icon: Icon }: SubmitButtonProps) {
+export function SubmitButton({ children, loading = false, loadingLabel, icon }: SubmitButtonProps) {
     return (
-        <PressableBase
-            color='var(--color-brand-darker)'
-            radius='1rem'
+        <Button
+            variant='brand'
+            type='submit'
+            icon={icon}
+            fullWidth
+            disabled={loading}
+            aria-busy={loading}
         >
-            <button
-                type='submit'
-                className={styles.submitButton}
-                disabled={loading}
-                aria-busy={loading}
-            >
-                {Icon && <Icon aria-hidden='true'/>}
-                {loading && loadingLabel ? loadingLabel : children}
-            </button>
-        </PressableBase>
+            {loading && loadingLabel ? loadingLabel : children}
+        </Button>
     );
 }

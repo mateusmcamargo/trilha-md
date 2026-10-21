@@ -1,8 +1,6 @@
 'use client'
 
-import Link from 'next/link';
-
-import PressableBase from '#/components/PressableBase/PressableBase';
+import { Button } from '#/components/Button/Button';
 
 import styles from './not-found.module.scss';
 import { MockAlert } from '#/components/MockAlert/MockAlert';
@@ -19,11 +17,9 @@ export default function NotFound() {
                 <p>Acho que esqueceram de<br/>programar essa parte... <span aria-hidden='true'>😳</span></p>
             </div>
 
-            <PressableBase color='var(--color-brand-darker)' radius='1rem'>
-                <Link href='/trail' className={styles.button}>
-                    Voltar para a sua trilha
-                </Link>
-            </PressableBase>
+            <Button href='/trail' variant='brand'>
+                Voltar para a sua trilha
+            </Button>
 
             {isMockMode && showMockAlert &&
                 <MockAlert onClick={() => setShowMockAlert(false)}/>

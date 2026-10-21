@@ -1,0 +1,87 @@
+/* the variant sets the colors on the PressableBase wrapper: border and base always match */
+.brand {
+    --button-bg: var(--color-brand);
+    --button-fg: var(--color-brand-contrast);
+    --button-border: var(--color-brand-darker);
+    --button-bg-hover: var(--color-brand);
+}
+
+.danger {
+    --button-bg: var(--color-danger);
+    --button-fg: var(--color-surface);
+    --button-border: var(--color-danger-darker);
+    --button-bg-hover: var(--color-danger);
+}
+
+.neutral {
+    --button-bg: var(--color-surface);
+    --button-fg: var(--color-text-primary);
+    --button-border: var(--color-button-border);
+    --button-bg-hover: var(--color-button-bg-hover);
+}
+
+.outline {
+    --button-bg: var(--color-surface);
+    --button-fg: var(--color-brand);
+    --button-border: var(--color-brand);
+    --button-bg-hover: var(--color-button-bg-hover);
+}
+
+/* opacity goes on the wrapper: button and base fade together, so the base doesn't show behind */
+div.wrapper:has(> :disabled) {
+    opacity: .7;
+}
+
+div.wrapperFull {
+    display: flex;
+    width: 100%;
+}
+
+.button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: .8rem;
+
+    height: 3.6rem;
+    padding: 0 1rem;
+
+    cursor: pointer;
+    border-radius: 1rem;
+    border: 4px solid var(--button-border);
+    background-color: var(--button-bg);
+
+    font-size: 1.6rem;
+    font-weight: 800;
+    white-space: nowrap;
+    color: var(--button-fg);
+
+    &:hover:not(:disabled):not([aria-disabled='true']) {
+        background-color: var(--button-bg-hover);
+    }
+
+    &:focus-visible {
+        outline: 3px solid var(--color-focus-ring);
+        outline-offset: 4px;
+    }
+
+    &:disabled {
+        cursor: not-allowed;
+    }
+
+    svg {
+        flex-shrink: 0;
+        width: 2rem;
+        height: 2rem;
+        stroke-width: 2.6;
+    }
+
+    &.square {
+        width: 3.6rem;
+        padding: 0;
+    }
+
+    &.full {
+        width: 100%;
+    }
+}

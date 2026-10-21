@@ -1,9 +1,9 @@
 import type { Metadata } from 'next';
-import Link from 'next/link';
 
 import { Award, Flame, Flower, Pencil, Settings, Sparkles, TerminalSquare } from 'lucide-react';
 
 import CommunitySection from '#/components/CommunitySection/CommunitySection';
+import { Button } from '#/components/Button/Button';
 import PageHeader from '#/components/Header/PageHeader';
 import PressableBase from '#/components/PressableBase/PressableBase';
 
@@ -42,15 +42,9 @@ export default async function ProfilePage() {
                     <h2>Oi, {firstName}! <span aria-hidden='true'>👋</span></h2>
                     <div className={styles.action}>
                         <span>Bora codar no </span>
-                        <PressableBase color='var(--color-brand-darker)' radius='.8rem'>
-                            <Link
-                                href='/terminal'
-                                className={styles.actionButton}
-                            >
-                                <TerminalSquare aria-hidden='true'/>
-                                <span>Terminal</span>
-                            </Link>
-                        </PressableBase>
+                        <Button href='/terminal' variant='brand' icon={TerminalSquare}>
+                            Terminal
+                        </Button>
                         <span>?</span>
                     </div>
                 </div>
@@ -68,7 +62,11 @@ export default async function ProfilePage() {
                 </div>
 
                 <div className={styles.userInfo}>
-                    {journeyStart && <p className={styles.journey}>Começou sua jornada em {journeyStart}</p>}
+                    <p className={styles.journey}>
+                        {journeyStart
+                            ? `Começou sua jornada em ${journeyStart}`
+                            : 'Sua jornada começa quando você entrar em uma trilha'}
+                    </p>
                     <p className={styles.paths}>
                         {completedTrails === 0
                             ? <>Nenhuma trilha concluída ainda <span aria-hidden='true'>:(</span></>

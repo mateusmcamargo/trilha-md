@@ -14,11 +14,11 @@ import { AuthSwitchLink } from './AuthSwitchLink'
 
 import styles from './LoginForm.module.scss'
 import { FormTitle } from '../FormTitle/FormTitle'
-import { ActionButton } from '../Button/ActionButton'
+import { Button } from '../Button/Button'
 
 type Field = 'name' | 'username' | 'email' | 'password' | 'confirmPassword' | 'accessCode';
 
-// mesmo formato do CHECK profiles_username_format no banco
+// same format as the CHECK profiles_username_format in the database
 const USERNAME_FORMAT  = /^[a-z0-9._]{3,30}$/;
 const EMAIL_FORMAT     = /^\S+@\S+\.\S+$/;
 const MIN_PASSWORD     = 8;
@@ -43,7 +43,7 @@ export function RegisterForm() {
         setError({ field, message });
     }
 
-    // marca só o campo com erro para leitores de tela
+    // marks only the field with error for screen readers
     function invalid(field: Field) {
         return error?.field === field
             ? { 'aria-invalid': true, 'aria-describedby': errorId }
@@ -213,12 +213,13 @@ export function RegisterForm() {
             </SubmitButton>
 
             {isMockMode && (
-                <ActionButton
+                <Button
+                    fullWidth
                     disabled={loading}
                     onClick={() => router.push('/team')}
                 >
                     Entrar como mentora
-                </ActionButton>
+                </Button>
             )}
 
             <AuthSwitchLink text='Já tem uma conta?' href='/login' label='Entrar'/>

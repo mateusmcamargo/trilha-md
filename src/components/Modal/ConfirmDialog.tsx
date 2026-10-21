@@ -2,7 +2,7 @@
 
 import type { LucideIcon } from 'lucide-react';
 
-import { ActionButton } from '../Button/ActionButton';
+import { Button } from '../Button/Button';
 import { Modal } from './Modal';
 
 interface ConfirmDialogProps {
@@ -15,7 +15,7 @@ interface ConfirmDialogProps {
     loadingLabel?: string;
     cancelLabel?: string;
     variant?: 'neutral' | 'danger';
-    icon?: LucideIcon;
+    icon: LucideIcon;
     loading?: boolean;
 }
 
@@ -37,19 +37,22 @@ export function ConfirmDialog({
             open={open}
             onClose={onClose}
             title={title}
+            icon={icon}
             description={description}
             dismissible={!loading}
             actions={
                 <>
-                    <ActionButton
+                    <Button
+                        fullWidth
                         data-autofocus
                         disabled={loading}
                         onClick={onClose}
                     >
                         {cancelLabel}
-                    </ActionButton>
+                    </Button>
 
-                    <ActionButton
+                    <Button
+                        fullWidth
                         variant={variant}
                         icon={icon}
                         disabled={loading}
@@ -57,7 +60,7 @@ export function ConfirmDialog({
                         onClick={onConfirm}
                     >
                         {loading && loadingLabel ? loadingLabel : confirmLabel}
-                    </ActionButton>
+                    </Button>
                 </>
             }
         />

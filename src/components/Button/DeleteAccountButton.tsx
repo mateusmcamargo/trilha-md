@@ -4,27 +4,28 @@ import { useState } from 'react';
 
 import { Trash2 } from 'lucide-react';
 
-import { ActionButton } from './ActionButton';
+import { Button } from './Button';
 import { ConfirmDialog } from '../Modal/ConfirmDialog';
 
 export function DeleteAccountButton() {
     const [open, setOpen] = useState(false);
 
     function handleConfirm() {
-        // TODO: desativar a conta (soft delete) e encerrar a sessão
+        // TODO: deactivate the account (soft delete) and end the session
         setOpen(false);
     }
 
     return (
         <>
-            <ActionButton
+            <Button
                 icon={Trash2}
                 variant='danger'
+                fullWidth
                 aria-haspopup='dialog'
                 onClick={() => setOpen(true)}
             >
                 Deletar conta
-            </ActionButton>
+            </Button>
 
             <ConfirmDialog
                 open={open}

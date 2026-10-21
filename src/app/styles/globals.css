@@ -13,10 +13,34 @@
     list-style: none;
     outline: none;
 }
+:root {
+    --scrollbar-size: .8rem;
+}
+
+* {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-scrollbar-thumb) transparent;
+}
+/* fallback for older safari, which doesn't support scrollbar-width */
+::-webkit-scrollbar {
+    width: var(--scrollbar-size);
+    height: var(--scrollbar-size);
+}
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+::-webkit-scrollbar-thumb {
+    border-radius: var(--scrollbar-size);
+    background-color: var(--color-scrollbar-thumb);
+}
+::-webkit-scrollbar-thumb:hover {
+    background-color: var(--color-scrollbar-thumb-hover);
+}
+
 html {
     height: 100%;
     font-family: var(--font-nunito);
-    font-size: 62.5%; /* 1rem = 10px, mas respeita o tamanho de fonte configurado pelo usuário */
+    font-size: 62.5%; /* 1rem = 10px, but respects the font size set by the user */
 }
 
 html, body {
@@ -30,7 +54,7 @@ body {
     -moz-osx-font-smoothing: grayscale;
 }
 
-/* o reset acima remove o outline; este é o fallback para quem não define o próprio */
+/* the reset above removes the outline; this is the fallback for those that don't set their own */
 a:focus-visible,
 button:focus-visible,
 [tabindex='0']:focus-visible {
@@ -38,7 +62,7 @@ button:focus-visible,
     outline-offset: 2px;
 }
 
-/* texto visível apenas para leitores de tela */
+/* text visible only to screen readers */
 .sr-only {
     position: absolute;
     width: 1px;
@@ -49,9 +73,9 @@ button:focus-visible,
     white-space: nowrap;
 }
 
-/* ---------- <main>: padrões de layout ---------- */
+/* ---------- <main>: layout defaults ---------- */
 
-/* tela cheia, sem header nem navbar (login, register, not-found) */
+/* fullscreen, no header or navbar (login, register, not-found) */
 main.main-fullscreen {
     display: flex;
     flex-direction: column;
@@ -60,12 +84,12 @@ main.main-fullscreen {
     gap: 2rem;
 
     min-height: 100vh;
-    min-height: 100dvh; /* acompanha a barra do navegador no celular */
+    min-height: 100dvh; /* follows the browser bar on mobile */
     padding: 4rem 5vw;
 }
 
-/* abas e subpáginas do painel: coluna a partir do topo.
-   header e navbar têm 10vh cada, então vh (e não dvh) para alinhar com eles */
+/* panel tabs and subpages: column from the top.
+   header and navbar are 10vh each, so vh (not dvh) to align with them */
 main.main-tabs, main.main-subpage {
     display: flex;
     flex-direction: column;
@@ -76,13 +100,13 @@ main.main-tabs, main.main-subpage {
     padding: 5vw 0;
 }
 
-/* header + navbar (terminal, trail, profile): sobra 80vh entre as barras */
+/* header + navbar (terminal, trail, profile): 80vh left between the bars */
 main.main-tabs {
     min-height: calc(100vh - 2 * var(--bar-height));
     margin: var(--bar-height) auto;
 }
 
-/* só header (settings): sem navbar embaixo */
+/* header only (settings): no navbar at the bottom */
 main.main-subpage {
     width: 90vw;
     margin: var(--bar-height) auto 0;

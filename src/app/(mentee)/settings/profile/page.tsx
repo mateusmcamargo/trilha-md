@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 
 import { ArrowLeft, Download, Pencil } from 'lucide-react';
 
-import { ActionButton } from '#/components/Button/ActionButton';
+import { Button } from '#/components/Button/Button';
 import { DeleteAccountButton } from '#/components/Button/DeleteAccountButton';
 import PageHeader from '#/components/Header/PageHeader';
 import { ProfileForm } from '#/components/ProfileForm/ProfileForm';
@@ -51,7 +51,7 @@ export default async function ProfileSettingsPage() {
                 <ProfileForm user={user}/>
 
                 <section className={styles.account} aria-label='Dados e conta'>
-                    <ActionButton icon={Download}>Exportar meus dados</ActionButton>
+                    <Button icon={Download} fullWidth>Exportar meus dados</Button>
                     <DeleteAccountButton/>
                 </section>
             </main>

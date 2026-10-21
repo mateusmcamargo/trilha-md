@@ -52,6 +52,10 @@
     --color-button-border:          var(--color-gray-400);
     --color-button-bg-hover:        var(--color-gray-100);
 
+    /* scrollbar */
+    --color-scrollbar-thumb:        var(--color-gray-400);
+    --color-scrollbar-thumb-hover:  var(--color-gray-500);
+
     /* badge */
     --color-badge-border:           var(--color-black);
     --color-badge-bg-trail:         var(--color-brand);

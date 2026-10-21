@@ -31,7 +31,7 @@ export default function PanelShell({ role, initials, children }: PanelShellProps
             {!hideNavbar && <Navbar role={role} initials={initials}/>}
             
             {isMockMode && showMockAlert &&
-                <MockAlert onClick={() => setShowMockAlert(false)}/>
+                <MockAlert onClose={() => setShowMockAlert(false)}/>
             }
         </div>
     );

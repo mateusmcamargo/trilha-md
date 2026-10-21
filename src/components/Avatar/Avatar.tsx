@@ -10,7 +10,7 @@ interface AvatarProps {
     size?: 'sm' | 'md' | 'lg';
 }
 
-const pixels = { sm: 24, md: 40, lg: 80 };
+const pixels = { sm: 28, md: 40, lg: 80 };
 
 // decorative: the name always appears next to it
 export default function Avatar({ name, url, size = 'md' }: AvatarProps) {

@@ -1,8 +1,9 @@
 import styles         from './Badge.module.scss';
 import { LucideIcon } from 'lucide-react';
+import type { ReactNode } from 'react';
 
 type BadgeData = {
-    label?: string;
+    label?: ReactNode;
     className: string;
     icon?: LucideIcon;
     isActive?: boolean;
@@ -11,7 +12,7 @@ type BadgeData = {
 
 type BadgeProps = {
     data?: BadgeData;
-    label?: string;
+    label?: ReactNode;
     variant?: string;
     icon?: LucideIcon;
     isActive?: boolean;

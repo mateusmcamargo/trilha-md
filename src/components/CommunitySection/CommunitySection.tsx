@@ -6,6 +6,7 @@ import { useState, type KeyboardEvent } from 'react';
 import { getInitials } from '#/utils/getInitials';
 
 import { ChooseMentorButton } from '../Button/ChooseMentorButton';
+import TruncatedName from '../TruncatedName/TruncatedName';
 
 import styles from './CommunitySection.module.scss';
 
@@ -23,7 +24,7 @@ interface CommunitySectionProps {
 }
 
 const peopleTabs = [
-    { key: 'mentors', label: 'Tutoras' },
+    { key: 'mentors', label: 'Mentoras' },
     { key: 'friends', label: 'Amigas'  },
 ] as const;
 
@@ -41,8 +42,8 @@ export default function CommunitySection({ people }: CommunitySectionProps) {
 
     const emptyMessage: Record<PeopleTabs, string> = {
         mentors: people.mentorChoices
-            ? 'Você ainda não tem tutora.'
-            : 'Entre em uma trilha para ter uma tutora.',
+            ? 'Você ainda não tem mentora.'
+            : 'Entre em uma trilha para ter uma mentora.',
         friends: 'Você ainda não tem amigas. Toque em Adicionar amigas para começar!',
     };
 
@@ -56,7 +57,7 @@ export default function CommunitySection({ people }: CommunitySectionProps) {
             <div className={styles.box}>
                 <div
                     role='tablist'
-                    aria-label='Tutoras ou amigas'
+                    aria-label='Mentoras ou amigas'
                     className={styles.peopleTabs}
                     onKeyDown={handlePeopleTabKeyDown}
                 >
@@ -99,7 +100,7 @@ export default function CommunitySection({ people }: CommunitySectionProps) {
                                         <span>{getInitials(name)}</span>
                                     </div>
                                     <div className={styles.details}>
-                                        <h3>{name}</h3>
+                                        <h3><TruncatedName fullName={name}>{name}</TruncatedName></h3>
                                         {xp !== undefined && <span>{xp} XP</span>}
                                     </div>
                                 </li>

@@ -7,7 +7,7 @@ import PressableBase from '../PressableBase/PressableBase';
 
 import styles from './Button.module.scss';
 
-type ButtonVariant = 'brand' | 'danger' | 'neutral' | 'outline';
+type ButtonVariant = 'brand' | 'danger' | 'neutral' | 'outline' | 'gold';
 
 interface ButtonBaseProps {
     variant?: ButtonVariant;
@@ -54,7 +54,7 @@ export function Button({
 
     return (
         <PressableBase
-            color='var(--button-border)'
+            color='var(--button-base, var(--button-border))'
             depth={depth}
             radius='1rem'
             className={`${styles.wrapper} ${styles[variant]} ${fullWidth ? styles.wrapperFull : ''}`}

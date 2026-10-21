@@ -27,6 +27,39 @@
     --button-bg-hover: var(--color-button-bg-hover);
 }
 
+/* same colors as a gold trail node; the base (--button-base) is darker than the border */
+.gold {
+    --button-bg: var(--color-gold-bg);
+    --button-fg: var(--color-yellow-900); /* the node's icon color (yellow-800) is too faint for text on gold */
+    --button-border: var(--color-gold-border);
+    --button-base: var(--color-gold-base);
+    --button-bg-hover: var(--color-gold-bg);
+}
+
+/* gold shine: a wide and a thin diagonal band in the left corner, behind the text.
+   Drawn by a gradient inside the button, so overflow + border-radius cut it to any shape (text, square, full width).
+   Each stop is a fixed part (rem) + a part of the button's width (%): small buttons keep a visible shine, wide ones scale it */
+.gold .button {
+    isolation: isolate;
+
+    &::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+
+        background: linear-gradient(
+            115deg,
+            var(--color-shine) 0 calc(1.8rem + 18%),
+            transparent calc(1.8rem + 18%) calc(2.2rem + 20%),
+            var(--color-shine) calc(2.2rem + 20%) calc(3.2rem + 29%),
+            transparent calc(3.2rem + 29%)
+        );
+        opacity: .65;
+        pointer-events: none;
+    }
+}
+
 /* opacity goes on the wrapper: button and base fade together, so the base doesn't show behind */
 div.wrapper:has(> :disabled) {
     opacity: .7;
@@ -38,6 +71,9 @@ div.wrapperFull {
 }
 
 .button {
+    position: relative;
+    overflow: hidden;
+
     display: flex;
     align-items: center;
     justify-content: center;

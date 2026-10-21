@@ -44,15 +44,6 @@ export function ConfirmDialog({
                 <>
                     <Button
                         fullWidth
-                        data-autofocus
-                        disabled={loading}
-                        onClick={onClose}
-                    >
-                        {cancelLabel}
-                    </Button>
-
-                    <Button
-                        fullWidth
                         variant={variant}
                         icon={icon}
                         disabled={loading}
@@ -60,6 +51,15 @@ export function ConfirmDialog({
                         onClick={onConfirm}
                     >
                         {loading && loadingLabel ? loadingLabel : confirmLabel}
+                    </Button>
+
+                    <Button
+                        fullWidth
+                        data-autofocus
+                        disabled={loading}
+                        onClick={onClose}
+                    >
+                        {cancelLabel}
                     </Button>
                 </>
             }

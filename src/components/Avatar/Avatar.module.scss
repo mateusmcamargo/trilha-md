@@ -20,11 +20,13 @@ div.avatar {
     }
 
     &.sm {
-        width: 2.4rem;
-        height: 2.4rem;
+        width: 2.8rem;
+        height: 2.8rem;
+        outline: 4px solid var(--color-brand);
+        outline-offset: 2px;
 
         span {
-            font-size: 1rem;
+            font-size: 1.2rem;
         }
     }
 

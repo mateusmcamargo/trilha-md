@@ -22,7 +22,7 @@ export default function NotFound() {
             </Button>
 
             {isMockMode && showMockAlert &&
-                <MockAlert onClick={() => setShowMockAlert(false)}/>
+                <MockAlert onClose={() => setShowMockAlert(false)}/>
             }
         </main>
     );

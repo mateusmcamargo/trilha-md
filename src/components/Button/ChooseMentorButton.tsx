@@ -10,6 +10,7 @@ import { getSupabase } from '#/utils/supabase/getSupabase';
 import Avatar from '../Avatar/Avatar';
 import FormError from '../FormError/FormError';
 import { Modal } from '../Modal/Modal';
+import TruncatedName from '../TruncatedName/TruncatedName';
 import { Button } from './Button';
 
 import styles from './ChooseMentorButton.module.scss';
@@ -44,11 +45,11 @@ export function ChooseMentorButton({ mentors }: ChooseMentorButtonProps) {
         setLoading(false);
 
         if (chooseError) {
-            if (chooseError.code === 'P0002') return setError('Você já tem uma tutora.');
+            if (chooseError.code === 'P0002') return setError('Você já tem uma mentora.');
             return setError('Não foi possível escolher. Tente novamente.');
         }
 
-        // refetches: the mentor now shows up in the Tutoras tab
+        // refetches: the mentor now shows up in the Mentoras tab
         handleClose();
         router.refresh();
     }
@@ -61,13 +62,13 @@ export function ChooseMentorButton({ mentors }: ChooseMentorButtonProps) {
                 aria-haspopup='dialog'
                 onClick={() => setOpen(true)}
             >
-                Escolher tutora
+                Escolher mentora
             </Button>
 
             <Modal
                 open={open}
                 onClose={handleClose}
-                title='Escolher tutora'
+                title='Escolher mentora'
                 icon={GraduationCap}
                 description='Ela vai acompanhar você nesta trilha.'
                 dismissible={!loading}
@@ -78,7 +79,7 @@ export function ChooseMentorButton({ mentors }: ChooseMentorButtonProps) {
                     {mentors.map((mentor) => (
                         <li key={mentor.id} className={styles.mentor}>
                             <Avatar name={mentor.name} url={null}/>
-                            <h3>{mentor.name}</h3>
+                            <h3><TruncatedName fullName={mentor.name}>{mentor.name}</TruncatedName></h3>
 
                             <Button
                                 variant='brand'

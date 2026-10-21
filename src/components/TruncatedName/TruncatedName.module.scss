@@ -1,0 +1,15 @@
+span.box {
+    display: block;
+    min-width: 0;
+    overflow: hidden;
+}
+
+span.text {
+    display: block;
+    min-width: 0;
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-align: left;
+}

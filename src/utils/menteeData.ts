@@ -111,6 +111,10 @@ export function buildMenteeData(rows: MenteeRows) {
             mentors: rows.mentors
                 .filter((mentor) => mentor.id === currentEnrollment?.mentor_id)
                 .map((mentor) => ({ id: mentor.id, name: mentor.full_name })),
+            // who can be chosen: only while the active enrollment has no mentor
+            mentorChoices: currentEnrollment && !currentEnrollment.mentor_id
+                ? rows.mentors.map((mentor) => ({ id: mentor.id, name: mentor.full_name }))
+                : null,
             friends: rows.friends.map((friend) => ({
                 id: friend.id,
                 name: friend.full_name,

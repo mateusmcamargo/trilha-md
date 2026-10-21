@@ -1,0 +1,23 @@
+ul.list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.6rem;
+
+    list-style: none;
+
+    li.mentor {
+        display: flex;
+        align-items: center;
+        gap: 1.2rem;
+
+        h3 {
+            flex: 1;
+            min-width: 0;
+
+            font-size: 1.6rem;
+            font-weight: 800;
+            line-height: 1.2;
+            color: var(--color-text-primary);
+        }
+    }
+}

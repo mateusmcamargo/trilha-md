@@ -50,7 +50,7 @@ export default async function TrailPage() {
                                 <Flower/>
                                 <h1>Trilha {trail.name}</h1>
                             </div>
-                            <h2>{trail.subtitle}</h2>
+                            {trail.subtitle && <h2>{trail.subtitle}</h2>}
                         </div>
 
                         <div className={styles.trailProgress}>

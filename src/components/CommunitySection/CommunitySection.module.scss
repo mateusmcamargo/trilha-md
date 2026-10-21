@@ -56,6 +56,22 @@ section.people {
             }
         }
 
+        div.empty {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.6rem;
+
+            padding: 2rem;
+
+            p {
+                font-size: 1.4rem;
+                font-weight: 600;
+                text-align: center;
+                color: var(--color-text-secondary);
+            }
+        }
+
         ul.list {
             display: flex;
             flex-direction: column;

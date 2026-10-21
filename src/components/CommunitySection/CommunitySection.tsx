@@ -5,6 +5,8 @@ import { useState, type KeyboardEvent } from 'react';
 
 import { getInitials } from '#/utils/getInitials';
 
+import { ChooseMentorButton } from '../Button/ChooseMentorButton';
+
 import styles from './CommunitySection.module.scss';
 
 type PeopleTabs = 'mentors' | 'friends';
@@ -16,7 +18,8 @@ interface Person {
 }
 
 interface CommunitySectionProps {
-    people: Record<PeopleTabs, Person[]>;
+    // mentorChoices: null when she can't choose a mentor right now
+    people: Record<PeopleTabs, Person[]> & { mentorChoices: Person[] | null };
 }
 
 const peopleTabs = [
@@ -34,6 +37,13 @@ export default function CommunitySection({ people }: CommunitySectionProps) {
 
         setActivePeopleTab(next);
         document.getElementById(`tab-${next}`)?.focus();
+    };
+
+    const emptyMessage: Record<PeopleTabs, string> = {
+        mentors: people.mentorChoices
+            ? 'Você ainda não tem tutora.'
+            : 'Entre em uma trilha para ter uma tutora.',
+        friends: 'Você ainda não tem amigas. Toque em Adicionar amigas para começar!',
     };
 
     return (
@@ -73,19 +83,29 @@ export default function CommunitySection({ people }: CommunitySectionProps) {
                     aria-labelledby={`tab-${activePeopleTab}`}
                     tabIndex={0}
                 >
-                    <ul className={styles.list}>
-                        {people[activePeopleTab].map(({ id, name, xp }) => (
-                            <li key={id} className={styles.person}>
-                                <div className={styles.photo} aria-hidden='true'>
-                                    <span>{getInitials(name)}</span>
-                                </div>
-                                <div className={styles.details}>
-                                    <h3>{name}</h3>
-                                    {xp !== undefined && <span>{xp} XP</span>}
-                                </div>
-                            </li>
-                        ))}
-                    </ul>
+                    {people[activePeopleTab].length === 0 ? (
+                        <div className={styles.empty}>
+                            <p>{emptyMessage[activePeopleTab]}</p>
+
+                            {activePeopleTab === 'mentors' && people.mentorChoices && (
+                                <ChooseMentorButton mentors={people.mentorChoices}/>
+                            )}
+                        </div>
+                    ) : (
+                        <ul className={styles.list}>
+                            {people[activePeopleTab].map(({ id, name, xp }) => (
+                                <li key={id} className={styles.person}>
+                                    <div className={styles.photo} aria-hidden='true'>
+                                        <span>{getInitials(name)}</span>
+                                    </div>
+                                    <div className={styles.details}>
+                                        <h3>{name}</h3>
+                                        {xp !== undefined && <span>{xp} XP</span>}
+                                    </div>
+                                </li>
+                            ))}
+                        </ul>
+                    )}
                 </div>
             </div>
         </section>

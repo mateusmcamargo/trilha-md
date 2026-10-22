@@ -86,6 +86,7 @@ function buildMenteesData(
             ),
             enrollment: enrollment && {
                 id: enrollment.id,
+                editionId: enrollment.edition_id,
                 trailName: enrollment.editions?.name ?? null,
                 mentor: enrollment.mentor && {
                     id: enrollment.mentor.id,

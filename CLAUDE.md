@@ -13,13 +13,14 @@ Web app mobile first de aprendizado gamificado para o projeto de extensão Menin
 
 ## Estrutura
 
-- `src/app/(mentee)/`: área da mentorada (`/trail`, `/terminal`, `/profile`, `/settings/*`)
-- `src/app/team/`: área da mentora (`/team/dashboard`, `/team/mentees`, `/team/profile`, `/team/settings`)
+- `src/app/(mentee)/`: área da mentorada (`/trail`, `/trail/[activityId]` (minigame ou encontro presencial), `/checkin/[code]` (destino do QR Code), `/terminal`, `/profile`, `/settings/*`)
+- `src/app/team/`: área da mentora (`/team/dashboard`, `/team/mentees`, `/team/create` (criador: `[activityId]`, `[activityId]/checkin` com o QR, `novo` para presencial), `/team/profile`, `/team/settings`)
 - Cada área tem layout, `PanelShell`, navbar e verificação de papel próprios. Componentes de formulário são compartilhados
 - `src/app/error.tsx` e `global-error.tsx`: telas de erro com "Tentar de novo". Neste Next a prop é `retry`, não `reset`. O `error.tsx` fica na raiz porque `getMenteeData`/`getTeamData` rodam nos layouts, e um `error.tsx` não captura erro do layout do próprio segmento
 - `USERS.md`: contas de teste (senha e edição de teste); consultar antes de logar para testar
 - `src/components/<Nome>/<Nome>.tsx` + `<Nome>.module.scss`
-- `src/utils/`: `menteeData.ts` (`getMenteeData`), `teamData.ts` (`getTeamData`), `mockData.ts`, `mockMode.ts`, `dates.ts`, `getInitials.ts`
+- `src/components/minigames/`: `types.ts` (tipos e registro dos modelos de item), `ActivityPlayer` (fluxo Checar/Continuar/resultado) e uma pasta por modelo com `Player` e `Editor` (hoje só `CompleteCode`). Modelo novo = pasta nova + entrada em `itemTypes` + valor no check de `activity_items.type`
+- `src/utils/`: `menteeData.ts` (`getMenteeData`, `buildTrail`), `teamData.ts` (`getTeamData`), `dashboardData.ts`, `creatorData.ts`, `mockData.ts`, `mockMode.ts`, `dates.ts`, `getInitials.ts`
 - `src/utils/supabase/`: `client.ts`, `server.ts`, `middleware.ts`, `getSupabase.ts`
 - `src/types/database.ts`: tipos gerados pelo Supabase. Não editar à mão
 
@@ -43,7 +44,8 @@ Web app mobile first de aprendizado gamificado para o projeto de extensão Menin
 - No cliente, usar `getSupabase()` (retorna `null` no modo demonstração)
 - Nunca expor a service role key no frontend
 - Listagem de mentoradas (nome, foto, trilha, mentora, XP, ofensiva) é aberta a todas as mentoras. Presenças, reflexões, certificados e andamento são só da mentora responsável, garantido por RLS (`is_mentor_of`); consultas desses dados devem filtrar por `enrollments.mentor_id = auth.uid()`
-- XP não é guardado: é a soma de `activities.points` das presenças (`status = 'presente'`). Existe o XP da trilha (edição da matrícula ativa) e o total (todas as trilhas); deixar claro qual está na tela. A mentora lê o XP de todas pela RPC `list_mentee_xp`, não por `attendance`
+- Atividades têm `kind`: `remota` (minigame; caminho principal da trilha, ordenado por `position`) ou `presencial` (evento com data; fica ao lado de uma remota via `parent_id` e não bloqueia a trilha). Presença só entra pela RPC `check_in` (QR Code); a mentorada nunca lê `activity_item_solutions`: a correção é a RPC `check_answer`
+- XP não é guardado: é a soma da view `xp_entries` (presenças nas presenciais + melhor tentativa de cada remota). Existe o XP da trilha (edição da matrícula ativa) e o total (todas as trilhas); deixar claro qual está na tela. A mentora lê o XP de todas pela RPC `list_mentee_xp`, não por `attendance`
 
 ## Banco (Supabase)
 

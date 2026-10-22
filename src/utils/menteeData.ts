@@ -4,12 +4,22 @@ import { redirect } from 'next/navigation';
 import type { TrailNodeStatus } from '#/components/Trail/TrailNode';
 import type { Database, Tables } from '#/types/database';
 
-import { yesterdayInSaoPaulo } from './dates';
+import { dayInSaoPaulo, todayInSaoPaulo, yesterdayInSaoPaulo } from './dates';
 import { mockRows } from './mockData';
 import { isMockMode } from './mockMode';
 import { createClient } from './supabase/server';
 
 type Functions = Database['public']['Functions'];
+
+// remote and in-person activities of the trail, with how many items each remote one has
+export type TrailActivity = Pick<Tables<'activities'>,
+    'id' | 'title' | 'kind' | 'position' | 'parent_id' | 'starts_at' | 'ends_at'
+> & { itemCount: number };
+
+// answered: items already answered in this attempt
+export type TrailAttempt = Pick<Tables<'attempts'>,
+    'activity_id' | 'finished_at' | 'correct_count' | 'total_count'
+> & { answered: number };
 
 export interface MenteeRows {
     profile: Tables<'profiles'>;
@@ -17,60 +27,87 @@ export interface MenteeRows {
     emailVerified: boolean;
     userStats: Tables<'user_stats'>;
     enrollments: (Tables<'enrollments'> & { editions: Tables<'editions'> })[];
-    activities: Tables<'activities'>[]; // current edition
-    attendance: (Tables<'attendance'> & {
-        activities: Pick<Tables<'activities'>, 'points' | 'edition_id'>;
-    })[];
-    activityProgress: Tables<'activity_progress'>[];
+    activities: TrailActivity[]; // current edition
+    attempts: TrailAttempt[];
+    attendedIds: string[]; // in-person activities with presence
+    xpEntries: Pick<Tables<'xp_entries'>, 'edition_id' | 'xp'>[]; // every trail
     signedCertificates: number;
     mentors: Functions['list_mentors']['Returns'];
     friends: Functions['list_friends']['Returns'];
 }
 
-interface TrailItem {
+export type EventStatus = 'upcoming' | 'today' | 'attended' | 'missed';
+
+export interface TrailBranch {
+    id: string;
+    title: string;
+    startsAt: string;
+    status: EventStatus;
+}
+
+export interface TrailItem {
     id: string;
     title: string;
     status: TrailNodeStatus;
     progress: number;
+    branches: TrailBranch[];
 }
 
-function sumPoints(rows: MenteeRows['attendance']) {
-    return rows.reduce((total, row) => total + row.activities.points, 0);
+function sumXp(rows: MenteeRows['xpEntries']) {
+    return rows.reduce((total, row) => total + (row.xp ?? 0), 0);
+}
+
+export function eventStatus(startsAt: string, attended: boolean): EventStatus {
+    if (attended) return 'attended';
+    const day = dayInSaoPaulo(startsAt);
+    const today = todayInSaoPaulo();
+    return day === today ? 'today' : day > today ? 'upcoming' : 'missed';
 }
 
 // shared with the mentor's view of the mentee's trail (dashboardData.ts)
+// main path: remote activities; in-person ones hang beside their parent (branches)
 export function buildTrail(
-    activities: Pick<Tables<'activities'>, 'id' | 'title'>[],
-    doneIds: Set<string>,
-    activityProgress: Pick<Tables<'activity_progress'>, 'activity_id' | 'mastered_at' | 'progress'>[],
+    activities: TrailActivity[],
+    attempts: TrailAttempt[],
+    attendedIds: Set<string>,
 ) {
-    const progressByActivity = new Map(activityProgress.map((row) => [row.activity_id, row]));
+    const remotes = activities
+        .filter((activity) => activity.kind === 'remota')
+        .sort((a, b) => (a.position ?? 0) - (b.position ?? 0));
+
+    const branchesOf = (parentId: string): TrailBranch[] => activities
+        .filter((activity) => activity.kind === 'presencial' && activity.parent_id === parentId && activity.starts_at)
+        .sort((a, b) => a.starts_at!.localeCompare(b.starts_at!))
+        .map((activity) => ({
+            id: activity.id,
+            title: activity.title,
+            startsAt: activity.starts_at!,
+            status: eventStatus(activity.starts_at!, attendedIds.has(activity.id)),
+        }));
 
     let availableFound = false;
 
-    const trailItems: TrailItem[] = activities.map((activity) => {
-        const progress = progressByActivity.get(activity.id);
+    const trailItems: TrailItem[] = remotes.map((activity) => {
+        const own = attempts.filter((attempt) => attempt.activity_id === activity.id);
+        const finished = own.filter((attempt) => attempt.finished_at);
+        const open = own.find((attempt) => !attempt.finished_at);
+        const base = { id: activity.id, title: activity.title, branches: branchesOf(activity.id) };
 
-        if (doneIds.has(activity.id)) {
-            return {
-                id: activity.id,
-                title: activity.title,
-                status: progress?.mastered_at ? 'gold' : 'completed',
-                progress: 100,
-            };
+        if (finished.length) {
+            const mastered = finished.some((attempt) =>
+                !!attempt.total_count && attempt.correct_count === attempt.total_count);
+            return { ...base, status: mastered ? 'gold' : 'completed', progress: 100 };
         }
 
         if (!availableFound) {
             availableFound = true;
-            return {
-                id: activity.id,
-                title: activity.title,
-                status: 'available',
-                progress: progress?.progress ?? 0,
-            };
+            const progress = open && activity.itemCount
+                ? Math.round((open.answered / activity.itemCount) * 100)
+                : 0;
+            return { ...base, status: 'available', progress };
         }
 
-        return { id: activity.id, title: activity.title, status: 'locked', progress: 0 };
+        return { ...base, status: 'locked', progress: 0 };
     });
 
     const completed = trailItems.filter(
@@ -85,15 +122,15 @@ export function buildTrail(
 }
 
 export function buildMenteeData(rows: MenteeRows) {
-    const { profile, userStats, enrollments, activities, attendance, activityProgress } = rows;
+    const { profile, userStats, enrollments, activities, attempts, attendedIds, xpEntries } = rows;
 
     const currentEnrollment = enrollments.find((enrollment) => enrollment.status === 'active');
     const currentEdition = currentEnrollment?.editions ?? null;
 
     const { trailItems, trailProgress } = buildTrail(
         activities,
-        new Set(attendance.map((row) => row.activity_id)),
-        activityProgress,
+        attempts,
+        new Set(attendedIds),
     );
 
     // streak is set to zero only at next activity, so, we check it here
@@ -113,8 +150,8 @@ export function buildMenteeData(rows: MenteeRows) {
         stats: {
             streak: streakIsAlive ? userStats.streak_days : 0,
             life: userStats.lives,
-            xp: sumPoints(attendance.filter((row) => row.activities.edition_id === currentEdition?.id)),
-            totalXp: sumPoints(attendance),
+            xp: sumXp(xpEntries.filter((row) => row.edition_id === currentEdition?.id)),
+            totalXp: sumXp(xpEntries),
         },
         trail: currentEdition
             ? { name: currentEdition.name, subtitle: currentEdition.subtitle }
@@ -159,15 +196,18 @@ export const getMenteeData = cache(async () => {
 
     const [
         profile, userStats, enrollments, attendance,
-        activityProgress, certificates, mentors, friends,
+        attempts, xpEntries, certificates, mentors, friends,
     ] = await Promise.all([
         supabase.from('profiles').select('*').eq('id', user.id).single(),
         supabase.from('user_stats').select('*').eq('profile_id', user.id).single(),
         supabase.from('enrollments').select('*, editions(*)').eq('mentee_id', user.id)
             .order('enrolled_at', { ascending: false }),
-        supabase.from('attendance').select('*, activities(points, edition_id)')
+        supabase.from('attendance').select('activity_id')
             .eq('mentee_id', user.id).eq('status', 'presente'),
-        supabase.from('activity_progress').select('*').eq('mentee_id', user.id),
+        supabase.from('attempts')
+            .select('activity_id, finished_at, correct_count, total_count, attempt_answers(count)')
+            .eq('mentee_id', user.id),
+        supabase.from('xp_entries').select('edition_id, xp').eq('mentee_id', user.id),
         supabase.from('certificates').select('id', { count: 'exact', head: true })
             .eq('mentee_id', user.id).eq('status', 'signed'),
         supabase.rpc('list_mentors'),
@@ -176,7 +216,7 @@ export const getMenteeData = cache(async () => {
 
     const failed = [
         profile, userStats, enrollments, attendance,
-        activityProgress, certificates, mentors, friends,
+        attempts, xpEntries, certificates, mentors, friends,
     ].find((result) => result.error);
 
     if (failed?.error) throw new Error(failed.error.message);
@@ -185,8 +225,9 @@ export const getMenteeData = cache(async () => {
     const currentEnrollment = enrollments.data?.find((enrollment) => enrollment.status === 'active');
 
     const activities = currentEnrollment
-        ? await supabase.from('activities').select('*')
-            .eq('edition_id', currentEnrollment.edition_id).order('position')
+        ? await supabase.from('activities')
+            .select('id, title, kind, position, parent_id, starts_at, ends_at, activity_items(count)')
+            .eq('edition_id', currentEnrollment.edition_id)
         : null;
 
     if (activities?.error) throw new Error(activities.error.message);
@@ -197,9 +238,16 @@ export const getMenteeData = cache(async () => {
         emailVerified: !!user.email_confirmed_at,
         userStats: userStats.data,
         enrollments: enrollments.data ?? [],
-        activities: activities?.data ?? [],
-        attendance: attendance.data ?? [],
-        activityProgress: activityProgress.data ?? [],
+        activities: (activities?.data ?? []).map(({ activity_items, ...activity }) => ({
+            ...activity,
+            itemCount: activity_items[0]?.count ?? 0,
+        })),
+        attempts: (attempts.data ?? []).map(({ attempt_answers, ...attempt }) => ({
+            ...attempt,
+            answered: attempt_answers[0]?.count ?? 0,
+        })),
+        attendedIds: (attendance.data ?? []).map((row) => row.activity_id),
+        xpEntries: xpEntries.data ?? [],
         signedCertificates: certificates.count ?? 0,
         mentors: mentors.data ?? [],
         friends: friends.data ?? [],

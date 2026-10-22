@@ -1,3 +1,4 @@
+import type { ActivityItem, CompleteCodeContent, ItemSolution } from '#/components/minigames/types';
 import type { Tables } from '#/types/database';
 
 import { todayInSaoPaulo } from './dates';
@@ -43,6 +44,9 @@ const edition: Tables<'editions'> = {
     created_at:  createdAt,
 };
 
+// editions the mentor sees in the creator (demo mode)
+export const mockEditions = [{ id: editionId, name: edition.name, status: edition.status }];
+
 const enrollment: Tables<'enrollments'> & { editions: Tables<'editions'> } = {
     id:          'mock-enrollment-1',
     edition_id:  editionId,
@@ -77,48 +81,87 @@ const titles = [
     'Certificação',
 ];
 
-const activities: Tables<'activities'>[] = titles.map((title, index) => ({
-    id:            `mock-activity-${index + 1}`,
-    edition_id:    editionId,
-    position:      index + 1,
+// individual dashboard and events: dates counted back from today, so the charts are never empty
+const daysAgo = (days: number) => {
+    const date = new Date(`${todayInSaoPaulo()}T12:00:00Z`);
+    date.setUTCDate(date.getUTCDate() - days);
+    return date.toISOString().slice(0, 10);
+};
+
+const at = (offset: number, hour = 19) => `${daysAgo(offset)}T${String(hour).padStart(2, '0')}:00:00Z`;
+
+export const mockActivities: Tables<'activities'>[] = titles.map((title, index) => ({
+    id:          `mock-activity-${index + 1}`,
+    edition_id:  editionId,
+    kind:        'remota',
+    position:    index + 1,
+    parent_id:   null,
     title,
-    description:   null,
-    material_path: null,
-    activity_date: '2026-10-01',
-    points:        30,
-    created_by:    mentorId,
-    created_at:    createdAt,
+    description: null,
+    starts_at:   null,
+    ends_at:     null,
+    location:    null,
+    points:      30,
+    created_by:  mentorId,
+    created_at:  createdAt,
 }));
 
-// 8 completed activities, 9th is available
-const attendance: MenteeRows['attendance'] = activities.slice(0, 8).map((activity) => ({
-    id:            `mock-attendance-${activity.position}`,
-    activity_id:   activity.id,
-    mentee_id:     profileId,
-    status:        'presente',
-    checked_in_at: createdAt,
-    confirmed_by:  null,
-    activities:    { points: activity.points, edition_id: activity.edition_id },
+// in-person events hanging beside some remote nodes: [parent position, title, days ago]
+const eventSpecs: [number, string, number][] = [
+    [1, 'Oficina de boas-vindas', 60],
+    [3, 'Roda de conversa: mulheres na computação', 45],
+    [5, 'Aula prática de HTML', 30],
+    [7, 'Reunião da equipe', 14],
+    [9, 'Oficina de lógica com papel', 0],
+    [9, 'Roda de conversa: carreira', -3],
+    [9, 'Visita técnica', -10],
+    [12, 'Hackathon da turma', -20],
+];
+
+export const mockEvents: Tables<'activities'>[] = eventSpecs.map(([parent, title, offset], index) => ({
+    id:          `mock-event-${index + 1}`,
+    edition_id:  editionId,
+    kind:        'presencial',
+    position:    null,
+    parent_id:   `mock-activity-${parent}`,
+    title,
+    description: 'Encontro presencial da turma com as mentoras.',
+    starts_at:   at(offset, 17),
+    ends_at:     at(offset, 19),
+    location:    'UTFPR-CP, laboratório E-003',
+    points:      20,
+    created_by:  mentorId,
+    created_at:  createdAt,
 }));
 
-// 3 mastered activities, 9th is 65% completed
-const activityProgress: Tables<'activity_progress'>[] = [
-    ...activities.slice(0, 3).map((activity) => ({
-        id:          `mock-progress-${activity.position}`,
-        activity_id: activity.id,
-        mentee_id:   profileId,
-        progress:    100,
-        mastered_at: createdAt,
-        updated_at:  createdAt,
+const ITEMS_PER_ACTIVITY = 5;
+
+const trailActivities = [...mockActivities, ...mockEvents].map((activity) => ({
+    ...activity,
+    itemCount: activity.kind === 'remota' ? ITEMS_PER_ACTIVITY : 0,
+}));
+
+// 8 completed activities (3 of them with every item right), the 9th has 3 of 5 items answered
+const attempts: MenteeRows['attempts'] = [
+    ...mockActivities.slice(0, 8).map((activity, index) => ({
+        activity_id:   activity.id,
+        finished_at:   createdAt,
+        correct_count: index < 3 ? ITEMS_PER_ACTIVITY : 3,
+        total_count:   ITEMS_PER_ACTIVITY,
+        answered:      ITEMS_PER_ACTIVITY,
     })),
-    {
-        id:          'mock-progress-9',
-        activity_id: 'mock-activity-9',
-        mentee_id:   profileId,
-        progress:    65,
-        mastered_at: null,
-        updated_at:  createdAt,
-    },
+    { activity_id: 'mock-activity-9', finished_at: null, correct_count: null, total_count: null, answered: 3 },
+];
+
+// presence in the first 3 events (the 4th was missed)
+const attendedIds = mockEvents.slice(0, 3).map((event) => event.id);
+
+const xpEntries: MenteeRows['xpEntries'] = [
+    ...attempts.filter((attempt) => attempt.finished_at).map((attempt) => ({
+        edition_id: editionId,
+        xp:         Math.round((30 * attempt.correct_count!) / attempt.total_count!),
+    })),
+    ...attendedIds.map(() => ({ edition_id: editionId, xp: 20 })),
 ];
 
 export const mockRows: MenteeRows = {
@@ -132,9 +175,10 @@ export const mockRows: MenteeRows = {
         lives:          5,
     },
     enrollments:        [enrollment],
-    activities,
-    attendance,
-    activityProgress,
+    activities:         trailActivities,
+    attempts,
+    attendedIds,
+    xpEntries,
     signedCertificates: 0,
     mentors: [
         { id: mentorId, full_name: mentorProfile.full_name, avatar_url: '' },
@@ -188,52 +232,55 @@ export const mockOverviewRates: Record<string, number | null> = {
     [profileId]: 88,
 };
 
-// individual dashboard in demo mode: weekly activities counted back from today, so the charts are never empty
-const daysAgo = (days: number) => {
-    const date = new Date(`${todayInSaoPaulo()}T12:00:00Z`);
-    date.setUTCDate(date.getUTCDate() - days);
-    return date.toISOString().slice(0, 10);
-};
-
 export function mockDashboardInput(menteeId: string): DashboardInput | null {
     if (menteeId !== profileId) return null;
 
-    // irregular dates and points, so the charts vary; the last two activities are still to come
-    const offsets = [126, 119, 112, 108, 98, 91, 84, 80, 70, 63, 56, 49, 45, 35, 28, 17, 10, 3, -4, -11];
-    const points  = [20, 30, 30, 40, 30, 50, 30, 60, 30, 40, 50, 30, 60, 20, 40, 50, 30, 60, 30, 40];
+    // irregular dates and scores, so the charts vary; the last activities are still to come
+    const offsets = [126, 119, 112, 108, 98, 91, 84, 80, 70, 63, 56, 49, 45, 35, 28, 17, 10, 3];
+    const correct = [5, 5, 4, 3, 5, 2, 4, 5, 3, 4, 5, 1, 4, 3, 5, 2, 4, 3];
 
-    const dated = activities.map((activity, index) => ({
-        id:            activity.id,
-        title:         activity.title,
-        activity_date: daysAgo(offsets[index]),
-        points:        points[index],
+    const finished = offsets.map((offset, index) => ({
+        activity_id:   mockActivities[index].id,
+        finished_at:   at(offset, index % 2 ? 18 : 14),
+        correct_count: correct[index],
+        total_count:   ITEMS_PER_ACTIVITY,
+        answered:      ITEMS_PER_ACTIVITY,
     }));
 
-    const status = (index: number) =>
-        [3, 8, 13].includes(index) ? 'falta' : [6, 12].includes(index) ? 'justificada' : 'presente';
+    // in the 4th event she sent a justification; past events without a record count as absences
+    const attendance = mockEvents.slice(0, 4).flatMap((event, index) =>
+        index === 1 ? [] : [{
+            activity_id:   event.id,
+            status:        index === 3 ? 'justificada' : 'presente',
+            checked_in_at: event.starts_at,
+        }]);
 
-    const at = (offset: number, hour = 19) => `${daysAgo(offset)}T${String(hour).padStart(2, '0')}:00:00Z`;
-
-    const mastered = [0, 1, 2, 4, 5, 7, 8, 9, 11, 14];
-
-    const attendance = dated.slice(0, 18).map((activity, index) => ({
-        activity_id:   activity.id,
-        status:        status(index),
-        checked_in_at: `${activity.activity_date}T${index % 2 ? '18' : '14'}:00:00Z`,
-    }));
+    const xpEntries = [
+        ...finished.map((attempt) => ({
+            xp:        Math.round((30 * attempt.correct_count) / ITEMS_PER_ACTIVITY),
+            earned_at: attempt.finished_at,
+        })),
+        ...attendance.filter((row) => row.status === 'presente')
+            .map((row) => ({ xp: 20, earned_at: row.checked_in_at })),
+    ];
 
     return {
         mentee:    { id: profileId, full_name: profile.full_name, username: profile.username, avatar_url: null },
         avatarUrl: null,
         trailName:     edition.name,
         trailSubtitle: edition.subtitle,
-        activities:    dated,
+        activities:    trailActivities,
         attendance,
+        attempts: [
+            ...finished,
+            { activity_id: mockActivities[18].id, finished_at: null, correct_count: null, total_count: null, answered: 3 },
+        ],
+        answers: finished.flatMap((attempt) => Array.from({ length: ITEMS_PER_ACTIVITY }, (_, index) => ({
+            is_correct: index < attempt.correct_count,
+        }))),
+        xpEntries,
         // demo has a single trail, so the total xp is the trail's
-        xpAllTrails: dated.slice(0, 18).reduce(
-            (total, activity, index) => total + (attendance[index].status === 'presente' ? activity.points : 0),
-            0,
-        ),
+        xpAllTrails: xpEntries.reduce((total, row) => total + row.xp, 0),
         reflections: [
             { rating: 5, created_at: at(110, 20) },
             { rating: 3, created_at: at(98, 21) },
@@ -244,31 +291,13 @@ export function mockDashboardInput(menteeId: string): DashboardInput | null {
             { rating: 3, created_at: at(28, 20) },
             { rating: 4, created_at: at(10, 20) },
         ],
-        progress: [
-            ...mastered.map((index) => ({
-                activity_id: dated[index].id,
-                progress:    100,
-                mastered_at: `${dated[index].activity_date}T19:00:00Z`,
-                updated_at:  `${dated[index].activity_date}T19:00:00Z`,
-            })),
-            // partial updates, some on the same day; the available activity (3, the first one not attended) has 65%
-            ...[100, 100, 57, 57, 57, 29, 17, 3, 1].map((offset, index) => ({
-                activity_id: dated[[6, 8, 12, 6, 13, 8, 18, 19, 3][index]].id,
-                progress:    [10, 20, 30, 40, 50, 60, 15, 25, 65][index],
-                mastered_at: null,
-                updated_at:  at(offset),
-            })),
-        ],
         stats:             { streak_days: 9, last_active_on: todayInSaoPaulo() },
         certificateStatus: null,
     };
 }
 
-// list_mentee_xp in demo mode: Anne's xp is the sum of her present activities (same as her individual dashboard)
-const anneInput = mockDashboardInput(profileId)!;
-const anneXp = anneInput.attendance
-    .filter((row) => row.status === 'presente')
-    .reduce((total, row) => total + anneInput.activities.find((activity) => activity.id === row.activity_id)!.points, 0);
+// list_mentee_xp in demo mode: same xp as her individual dashboard
+const anneXp = mockDashboardInput(profileId)!.xpAllTrails;
 
 export const mockXpRows: XpRow[] = [
     { mentee_id: profileId,        edition_id: editionId, xp: anneXp },
@@ -276,3 +305,103 @@ export const mockXpRows: XpRow[] = [
     { mentee_id: 'mock-profile-3', edition_id: editionId, xp: 210 },
     { mentee_id: 'mock-profile-4', edition_id: editionId, xp: 90  },
 ];
+
+// items of every remote activity in demo mode (same 5 for all), with the answer key
+const sampleItems: { content: CompleteCodeContent; solution: string[]; explanation: string }[] = [
+    {
+        content: {
+            instruction: 'Complete o código:',
+            code: 'if (idade >= 18) {\n  [[0]]\n}',
+            options: [
+                { id: 'a', text: 'adulto = false;' },
+                { id: 'b', text: 'adulto = true;' },
+                { id: 'c', text: 'idade--;' },
+            ],
+        },
+        solution: ['b'],
+        explanation: 'Se a idade é 18 ou mais, a pessoa é adulta: adulto recebe true.',
+    },
+    {
+        content: {
+            instruction: 'Complete o código para mostrar uma mensagem:',
+            code: '[[0]]("Olá, mundo!");',
+            options: [
+                { id: 'a', text: 'console.log' },
+                { id: 'b', text: 'print.console' },
+                { id: 'c', text: 'alert.log' },
+            ],
+        },
+        solution: ['a'],
+        explanation: 'console.log mostra uma mensagem no console.',
+    },
+    {
+        content: {
+            instruction: 'Complete a repetição de 1 a 5:',
+            code: 'for (let i = 1; i [[0]] 5; i[[1]]) {\n  console.log(i);\n}',
+            options: [
+                { id: 'a', text: '<=' },
+                { id: 'b', text: '>=' },
+                { id: 'c', text: '++' },
+                { id: 'd', text: '--' },
+            ],
+        },
+        solution: ['a', 'c'],
+        explanation: 'i começa em 1, repete enquanto i <= 5 e aumenta de 1 em 1 com ++.',
+    },
+    {
+        content: {
+            instruction: 'Complete a condição: as duas precisam ser verdadeiras.',
+            code: 'if (temIngresso [[0]] maiorDeIdade) {\n  entrar();\n}',
+            options: [
+                { id: 'a', text: '||' },
+                { id: 'b', text: '&&' },
+                { id: 'c', text: '!' },
+            ],
+        },
+        solution: ['b'],
+        explanation: '&& (E) só é verdadeiro quando os dois lados são verdadeiros.',
+    },
+    {
+        content: {
+            instruction: 'Guarde o nome em uma variável:',
+            code: '[[0]] nome = [[1]];',
+            options: [
+                { id: 'a', text: 'let' },
+                { id: 'b', text: '"Ada"' },
+                { id: 'c', text: 'if' },
+                { id: 'd', text: 'Ada' },
+            ],
+        },
+        solution: ['a', 'b'],
+        explanation: 'let cria a variável, e texto fica entre aspas: "Ada".',
+    },
+];
+
+export function mockActivityItems(activityId: string) {
+    const items: ActivityItem[] = sampleItems.map((sample, index) => ({
+        id: `${activityId}-item-${index + 1}`,
+        type: 'complete_codigo',
+        content: sample.content,
+    }));
+
+    const solutions: Record<string, ItemSolution> = Object.fromEntries(sampleItems.map((sample, index) => [
+        `${activityId}-item-${index + 1}`,
+        { solution: { blanks: sample.solution }, explanation: sample.explanation },
+    ]));
+
+    return { items, solutions };
+}
+
+// materials of the in-person events in demo mode
+export const mockMaterials: Tables<'activity_materials'>[] = mockEvents.flatMap((event) => [
+    {
+        id: `${event.id}-material-1`, activity_id: event.id, position: 1, kind: 'link',
+        title: 'Site do Meninas Digitais', url: 'https://meninas.sbc.org.br/',
+        storage_path: null, body: null, created_at: createdAt,
+    },
+    {
+        id: `${event.id}-material-2`, activity_id: event.id, position: 2, kind: 'texto',
+        title: 'Resumo do encontro', url: null, storage_path: null, created_at: createdAt,
+        body: 'Hoje conhecemos a turma, combinamos os horários e exploramos a trilha juntas.\n\nNo próximo encontro, traga suas dúvidas!',
+    },
+]);

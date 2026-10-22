@@ -41,39 +41,48 @@ export type Database = {
     Tables: {
       activities: {
         Row: {
-          activity_date: string
           created_at: string
           created_by: string
           description: string | null
           edition_id: string
+          ends_at: string | null
           id: string
-          material_path: string | null
+          kind: string
+          location: string | null
+          parent_id: string | null
           points: number
-          position: number
+          position: number | null
+          starts_at: string | null
           title: string
         }
         Insert: {
-          activity_date: string
           created_at?: string
           created_by: string
           description?: string | null
           edition_id: string
+          ends_at?: string | null
           id?: string
-          material_path?: string | null
+          kind: string
+          location?: string | null
+          parent_id?: string | null
           points?: number
-          position: number
+          position?: number | null
+          starts_at?: string | null
           title: string
         }
         Update: {
-          activity_date?: string
           created_at?: string
           created_by?: string
           description?: string | null
           edition_id?: string
+          ends_at?: string | null
           id?: string
-          material_path?: string | null
+          kind?: string
+          location?: string | null
+          parent_id?: string | null
           points?: number
-          position?: number
+          position?: number | null
+          starts_at?: string | null
           title?: string
         }
         Relationships: [
@@ -91,43 +100,200 @@ export type Database = {
             referencedRelation: "editions"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "activities_parent_id_fkey"
+            columns: ["parent_id"]
+            isOneToOne: false
+            referencedRelation: "activities"
+            referencedColumns: ["id"]
+          },
         ]
       }
-      activity_progress: {
+      activity_item_solutions: {
         Row: {
-          activity_id: string
-          id: string
-          mastered_at: string | null
-          mentee_id: string
-          progress: number
-          updated_at: string
+          explanation: string | null
+          item_id: string
+          solution: Json
         }
         Insert: {
-          activity_id: string
-          id?: string
-          mastered_at?: string | null
-          mentee_id: string
-          progress?: number
-          updated_at?: string
+          explanation?: string | null
+          item_id: string
+          solution: Json
         }
         Update: {
-          activity_id?: string
-          id?: string
-          mastered_at?: string | null
-          mentee_id?: string
-          progress?: number
-          updated_at?: string
+          explanation?: string | null
+          item_id?: string
+          solution?: Json
         }
         Relationships: [
           {
-            foreignKeyName: "activity_progress_activity_id_fkey"
+            foreignKeyName: "activity_item_solutions_item_id_fkey"
+            columns: ["item_id"]
+            isOneToOne: true
+            referencedRelation: "activity_items"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      activity_items: {
+        Row: {
+          activity_id: string
+          content: Json
+          created_at: string
+          id: string
+          position: number
+          type: string
+        }
+        Insert: {
+          activity_id: string
+          content: Json
+          created_at?: string
+          id?: string
+          position: number
+          type: string
+        }
+        Update: {
+          activity_id?: string
+          content?: Json
+          created_at?: string
+          id?: string
+          position?: number
+          type?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "activity_items_activity_id_fkey"
+            columns: ["activity_id"]
+            isOneToOne: false
+            referencedRelation: "activities"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      activity_materials: {
+        Row: {
+          activity_id: string
+          body: string | null
+          created_at: string
+          id: string
+          kind: string
+          position: number
+          storage_path: string | null
+          title: string
+          url: string | null
+        }
+        Insert: {
+          activity_id: string
+          body?: string | null
+          created_at?: string
+          id?: string
+          kind: string
+          position?: number
+          storage_path?: string | null
+          title: string
+          url?: string | null
+        }
+        Update: {
+          activity_id?: string
+          body?: string | null
+          created_at?: string
+          id?: string
+          kind?: string
+          position?: number
+          storage_path?: string | null
+          title?: string
+          url?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "activity_materials_activity_id_fkey"
+            columns: ["activity_id"]
+            isOneToOne: false
+            referencedRelation: "activities"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      attempt_answers: {
+        Row: {
+          answer: Json
+          answered_at: string
+          attempt_id: string
+          is_correct: boolean
+          item_id: string
+        }
+        Insert: {
+          answer: Json
+          answered_at?: string
+          attempt_id: string
+          is_correct: boolean
+          item_id: string
+        }
+        Update: {
+          answer?: Json
+          answered_at?: string
+          attempt_id?: string
+          is_correct?: boolean
+          item_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "attempt_answers_attempt_id_fkey"
+            columns: ["attempt_id"]
+            isOneToOne: false
+            referencedRelation: "attempts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "attempt_answers_item_id_fkey"
+            columns: ["item_id"]
+            isOneToOne: false
+            referencedRelation: "activity_items"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      attempts: {
+        Row: {
+          activity_id: string
+          correct_count: number | null
+          finished_at: string | null
+          id: string
+          mentee_id: string
+          started_at: string
+          total_count: number | null
+          xp: number | null
+        }
+        Insert: {
+          activity_id: string
+          correct_count?: number | null
+          finished_at?: string | null
+          id?: string
+          mentee_id: string
+          started_at?: string
+          total_count?: number | null
+          xp?: number | null
+        }
+        Update: {
+          activity_id?: string
+          correct_count?: number | null
+          finished_at?: string | null
+          id?: string
+          mentee_id?: string
+          started_at?: string
+          total_count?: number | null
+          xp?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "attempts_activity_id_fkey"
             columns: ["activity_id"]
             isOneToOne: false
             referencedRelation: "activities"
             referencedColumns: ["id"]
           },
           {
-            foreignKeyName: "activity_progress_mentee_id_fkey"
+            foreignKeyName: "attempts_mentee_id_fkey"
             columns: ["mentee_id"]
             isOneToOne: false
             referencedRelation: "profiles"
@@ -238,6 +404,32 @@ export type Database = {
             columns: ["mentor_id"]
             isOneToOne: false
             referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      checkin_codes: {
+        Row: {
+          activity_id: string
+          code: string
+          expires_at: string
+        }
+        Insert: {
+          activity_id: string
+          code: string
+          expires_at: string
+        }
+        Update: {
+          activity_id?: string
+          code?: string
+          expires_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "checkin_codes_activity_id_fkey"
+            columns: ["activity_id"]
+            isOneToOne: true
+            referencedRelation: "activities"
             referencedColumns: ["id"]
           },
         ]
@@ -558,12 +750,40 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      xp_entries: {
+        Row: {
+          activity_id: string | null
+          earned_at: string | null
+          edition_id: string | null
+          mentee_id: string | null
+          xp: number | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
       adopt_mentee: { Args: { p_enrollment_id: string }; Returns: undefined }
+      bump_streak: { Args: { p_profile_id: string }; Returns: undefined }
+      can_read_material: { Args: { p_activity_id: string }; Returns: boolean }
       check_access_code: { Args: { p_access_code: string }; Returns: string }
+      check_answer: {
+        Args: { p_answer: Json; p_attempt_id: string; p_item_id: string }
+        Returns: {
+          explanation: string
+          is_correct: boolean
+          solution: Json
+        }[]
+      }
+      check_in: { Args: { p_code: string }; Returns: string }
       choose_mentor: { Args: { p_mentor_id: string }; Returns: undefined }
+      finish_attempt: {
+        Args: { p_attempt_id: string }
+        Returns: {
+          correct: number
+          total: number
+          xp: number
+        }[]
+      }
       get_my_role: { Args: never; Returns: string }
       is_enrolled_in_activity: {
         Args: { p_activity_id: string }
@@ -611,10 +831,36 @@ export type Database = {
           id: string
         }[]
       }
+      open_checkin: {
+        Args: { p_activity_id: string; p_minutes?: number }
+        Returns: {
+          code: string
+          expires_at: string
+        }[]
+      }
       release_mentee: { Args: { p_enrollment_id: string }; Returns: undefined }
+      reorder_activities: {
+        Args: { p_activity_ids: string[]; p_edition_id: string }
+        Returns: undefined
+      }
+      reorder_activity_items: {
+        Args: { p_activity_id: string; p_item_ids: string[] }
+        Returns: undefined
+      }
       respond_friend_request: {
         Args: { p_accept: boolean; p_friendship_id: string }
         Returns: undefined
+      }
+      save_activity_item: {
+        Args: {
+          p_activity_id: string
+          p_content: Json
+          p_explanation: string
+          p_item_id: string
+          p_solution: Json
+          p_type: string
+        }
+        Returns: string
       }
       search_profiles: {
         Args: { p_username: string }
@@ -624,6 +870,7 @@ export type Database = {
           username: string
         }[]
       }
+      start_attempt: { Args: { p_activity_id: string }; Returns: string }
     }
     Enums: {
       [_ in never]: never

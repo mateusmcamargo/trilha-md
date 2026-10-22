@@ -581,6 +581,7 @@ export type Database = {
           avatar_url: string | null
           created_at: string
           deleted_at: string | null
+          deletion_reason: string | null
           full_name: string
           id: string
           role: string
@@ -590,6 +591,7 @@ export type Database = {
           avatar_url?: string | null
           created_at?: string
           deleted_at?: string | null
+          deletion_reason?: string | null
           full_name: string
           id: string
           role?: string
@@ -599,6 +601,7 @@ export type Database = {
           avatar_url?: string | null
           created_at?: string
           deleted_at?: string | null
+          deletion_reason?: string | null
           full_name?: string
           id?: string
           role?: string
@@ -776,6 +779,7 @@ export type Database = {
       }
       check_in: { Args: { p_code: string }; Returns: string }
       choose_mentor: { Args: { p_mentor_id: string }; Returns: undefined }
+      deactivate_account: { Args: { p_reason?: string }; Returns: undefined }
       finish_attempt: {
         Args: { p_attempt_id: string }
         Returns: {

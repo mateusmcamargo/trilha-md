@@ -13,23 +13,25 @@ const editionId = 'mock-edition-dandelion';
 const createdAt = '2026-10-01T12:00:00Z';
 
 const profile: Tables<'profiles'> = {
-    id:         profileId,
-    role:       'mentee',
-    full_name:  'Anne Franco',
-    username:   'anne.franco26',
-    avatar_url: null,
-    deleted_at: null,
-    created_at: createdAt,
+    id:              profileId,
+    role:            'mentee',
+    full_name:       'Anne Franco',
+    username:        'anne.franco26',
+    avatar_url:      null,
+    deleted_at:      null,
+    deletion_reason: null,
+    created_at:      createdAt,
 };
 
 export const mentorProfile: Tables<'profiles'> = {
-    id:         mentorId,
-    role:       'mentor',
-    full_name:  'Maria da Silva',
-    username:   'maria',
-    avatar_url: null,
-    deleted_at: null,
-    created_at: createdAt,
+    id:              mentorId,
+    role:            'mentor',
+    full_name:       'Maria da Silva',
+    username:        'maria',
+    avatar_url:      null,
+    deleted_at:      null,
+    deletion_reason: null,
+    created_at:      createdAt,
 };
 
 const edition: Tables<'editions'> = {

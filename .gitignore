@@ -48,15 +48,12 @@ src/**/*.module.css
 # zip
 *.zip
 
-# playwright mcp
-.playwright-mcp/
-
 # powershell scripts
 *.ps1
 
-# claude code
+# claude code and local markdowns
+.playwright-mcp/
 .claude/
 examples/*
-
-# local commit notes
 COMMITS.md
+ROADMAP.md

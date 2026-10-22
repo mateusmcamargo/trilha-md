@@ -52,9 +52,16 @@ export function LoginForm() {
 
         const { data: profile } = await supabase
             .from('profiles')
-            .select('role')
+            .select('role, deleted_at')
             .eq('id', data.user.id)
             .single();
+
+        if (profile?.deleted_at) {
+            await supabase.auth.signOut();
+            setLoading(false);
+            setError('Esta conta foi desativada.');
+            return;
+        }
 
         // ?next= comes from the proxy; only paths inside the app
         const next = new URLSearchParams(window.location.search).get('next');

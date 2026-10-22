@@ -32,6 +32,8 @@ export const getTeamData = cache(async () => {
         .from('profiles').select('*').eq('id', user.id).single();
 
     if (error) throw new Error(error.message);
+    // deactivated account: the session may still be open on another device
+    if (profile.deleted_at) redirect('/auth/signout');
 
     return { user: buildTeamUser(profile, user.email ?? '', !!user.email_confirmed_at) };
 });

@@ -19,10 +19,10 @@ import { Button } from '../Button/Button'
 type Field = 'name' | 'username' | 'email' | 'password' | 'confirmPassword' | 'accessCode';
 
 // same format as the CHECK profiles_username_format in the database
-const USERNAME_FORMAT  = /^[a-z0-9._]{3,30}$/;
-const EMAIL_FORMAT     = /^\S+@\S+\.\S+$/;
-const MIN_PASSWORD     = 8;
-const CONNECTION_ERROR = 'Não foi possível conectar. Tente novamente.';
+export const USERNAME_FORMAT  = /^[a-z0-9._]{3,30}$/;
+export const EMAIL_FORMAT     = /^\S+@\S+\.\S+$/;
+export const MIN_PASSWORD     = 8;
+export const CONNECTION_ERROR = 'Não foi possível conectar. Tente novamente.';
 
 export function RegisterForm() {
     const router   = useRouter();

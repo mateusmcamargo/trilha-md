@@ -221,6 +221,8 @@ export const getMenteeData = cache(async () => {
 
     if (failed?.error) throw new Error(failed.error.message);
     if (!profile.data || !userStats.data) throw new Error('Perfil não encontrado.');
+    // deactivated account: the session may still be open on another device
+    if (profile.data.deleted_at) redirect('/auth/signout');
 
     const currentEnrollment = enrollments.data?.find((enrollment) => enrollment.status === 'active');
 

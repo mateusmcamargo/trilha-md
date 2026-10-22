@@ -214,7 +214,7 @@ const loadDashboardInput = cache(async (menteeId: string): Promise<DashboardInpu
     const [
         profile, activities, attendance, reflections, attempts, answers, stats, certificate, xpEntries,
     ] = await Promise.all([
-        supabase.from('profiles').select('id, full_name, username, avatar_url').eq('id', menteeId).single(),
+        supabase.from('profiles').select('id, full_name, username, avatar_url').eq('id', menteeId).is('deleted_at', null).maybeSingle(),
         supabase.from('activities')
             .select('id, title, kind, position, parent_id, starts_at, ends_at, activity_items(count)')
             .eq('edition_id', editionId),
@@ -239,15 +239,18 @@ const loadDashboardInput = cache(async (menteeId: string): Promise<DashboardInpu
         if (result.error) throw new Error(result.error.message);
     }
 
+    // deactivated mentee: the page behaves as if she didn't exist
+    if (!profile.data) notFound();
+
     let avatarUrl: string | null = null;
-    if (profile.data!.avatar_url) {
+    if (profile.data.avatar_url) {
         const { data: signed } = await supabase.storage
-            .from('avatars').createSignedUrl(profile.data!.avatar_url, 3600);
+            .from('avatars').createSignedUrl(profile.data.avatar_url, 3600);
         avatarUrl = signed?.signedUrl ?? null;
     }
 
     return {
-        mentee: profile.data!,
+        mentee: profile.data,
         avatarUrl,
         trailName: enrollment.editions?.name ?? null,
         trailSubtitle: enrollment.editions?.subtitle ?? null,

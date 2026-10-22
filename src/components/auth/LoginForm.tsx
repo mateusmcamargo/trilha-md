@@ -56,7 +56,11 @@ export function LoginForm() {
             .eq('id', data.user.id)
             .single();
 
-        router.push(profile?.role === 'mentor' ? '/team' : '/trail');
+        // ?next= comes from the proxy; only paths inside the app
+        const next = new URLSearchParams(window.location.search).get('next');
+        const safeNext = next && /^\/(?![/\\])/.test(next) ? next : null;
+
+        router.push(safeNext ?? (profile?.role === 'mentor' ? '/team' : '/trail'));
         router.refresh();
     }
 

@@ -32,6 +32,9 @@ export async function updateSession(request: NextRequest) {
     if (!user && !isPublicPath) {
         const url = request.nextUrl.clone()
         url.pathname = '/login'
+        // after login she goes back where she was (e.g. the QR Code check-in link)
+        url.search = ''
+        url.searchParams.set('next', path + request.nextUrl.search)
         return NextResponse.redirect(url)
     }
 

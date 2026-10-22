@@ -27,6 +27,16 @@ div.inputWrapper {
         }
     }
 
+    /* hover on the label counts too, like the native textarea and select */
+    &:has(label:hover, div.inputContainer:hover):not(:focus-within) div.inputContainer {
+        input.input:not(:disabled, [aria-invalid='true']) {
+            border-color: var(--color-input-border-hover);
+        }
+        span.iconLeft {
+            color: var(--color-input-border-hover);
+        }
+    }
+
     div.inputContainer {
         position: relative;
         width: 100%;
@@ -58,14 +68,22 @@ div.inputWrapper {
             &::-ms-clear {
                 display: none;
             }
-        }
 
-        &:hover:not(:focus-within) {
-            input.input:not(:disabled) {
-                border-color: var(--color-input-border-hover);
-            }
-            span.iconLeft {
-                color: var(--color-input-border-hover);
+            /* only with the custom button in place; otherwise the browser's own icon and arrows stay */
+            &.customControl {
+                &::-webkit-calendar-picker-indicator {
+                    display: none;
+                }
+
+                &::-webkit-inner-spin-button,
+                &::-webkit-outer-spin-button {
+                    margin: 0;
+                    -webkit-appearance: none;
+                }
+
+                &[type='number'] {
+                    appearance: textfield;
+                }
             }
         }
 
@@ -76,6 +94,10 @@ div.inputWrapper {
             span.iconLeft {
                 color: var(--color-input-border-focus);
             }
+        }
+
+        input.input[aria-invalid='true'] {
+            border-color: var(--color-danger);
         }
 
         svg {
@@ -115,6 +137,62 @@ div.inputWrapper {
             &:disabled {
                 cursor: not-allowed;
                 opacity: 0.6;
+            }
+
+            /* Firefox can't hide its own icon, so this button covers it (solid background, over the icon's spot) */
+            &.pickerButton {
+                right: .6rem;
+                justify-content: center;
+                width: 3rem;
+                height: 3rem;
+                background-color: var(--color-input-bg);
+
+                &:disabled {
+                    opacity: 1;
+                    color: var(--color-input-placeholder);
+                }
+            }
+        }
+
+        div.stepper {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 1;
+
+            display: flex;
+            flex-direction: column;
+
+            button {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                width: 2.4rem;
+                height: 1.6rem;
+                padding: 0;
+
+                color: var(--color-input-icon);
+                background: none;
+                border-radius: .4rem;
+                cursor: pointer;
+                transition: .2s ease;
+
+                svg {
+                    stroke-width: 4;
+                    width: 1.6rem;
+                    height: 1.6rem;
+                }
+
+                &:hover:not(:disabled) {
+                    color: var(--color-input-icon-hover);
+                }
+
+                &:disabled {
+                    cursor: not-allowed;
+                    opacity: 0.6;
+                }
             }
         }
     }

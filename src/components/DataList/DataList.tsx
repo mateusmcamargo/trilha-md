@@ -18,6 +18,8 @@ export interface Column<T> {
     width?: string;
     // takes the space left by the other columns and lets its content be cut ('...') instead of widening the table
     shrink?: boolean;
+    // less horizontal padding, for columns with short content
+    compact?: boolean;
     render: (row: T) => ReactNode;
     // without sortValue the column doesn't sort (e.g. Ações)
     sortValue?: (row: T) => SortValue;
@@ -33,6 +35,9 @@ interface DataListProps<T> {
     // all text of a row that the search should match (e.g. name, trail, mentor)
     searchText: (row: T) => string;
 }
+
+const cellClass = (column: Column<never>) =>
+    [column.shrink && styles.shrink, column.compact && styles.compact].filter(Boolean).join(' ') || undefined;
 
 // ignores case and accents
 const normalize = (text: string) =>
@@ -111,7 +116,7 @@ export default function DataList<T>({
                                 <th
                                     key={column.key}
                                     scope='col'
-                                    className={column.shrink ? styles.shrink : undefined}
+                                    className={cellClass(column)}
                                     style={{ width: column.width }}
                                     aria-sort={!column.sortValue ? undefined : !active ? 'none'
                                         : sort.direction === 'asc' ? 'ascending' : 'descending'}
@@ -140,7 +145,7 @@ export default function DataList<T>({
                     {sorted.map((row) => (
                         <tr key={getKey(row)}>
                             {columns.map((column) => (
-                                <td key={column.key} className={column.shrink ? styles.shrink : undefined}>{column.render(row)}</td>
+                                <td key={column.key} className={cellClass(column)}>{column.render(row)}</td>
                             ))}
                         </tr>
                     ))}

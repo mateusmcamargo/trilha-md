@@ -47,6 +47,10 @@ label.switch {
         transition: color .2s ease;
     }
 
+    &:hover input:not(:checked) + span.track {
+        background-color: var(--color-input-border-hover);
+    }
+
     input:checked + span.track {
         background-color: var(--color-brand);
 

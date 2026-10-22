@@ -80,6 +80,10 @@ div.container {
         max-width: 0;
     }
 
+    th.compact, td.compact {
+        padding-inline: .8rem;
+    }
+
     tbody td.noResults {
         font-weight: 700;
         text-align: center;

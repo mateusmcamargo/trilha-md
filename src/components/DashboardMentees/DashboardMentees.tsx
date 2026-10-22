@@ -49,6 +49,7 @@ const columns: Column<DashboardMentee>[] = [
     {
         key: 'rate',
         label: 'Presença',
+        compact: true,
         sortValue: (mentee) => mentee.rate ?? -1,
         render: (mentee) => mentee.rate === null ? (
             <span className={styles.muted}>Sem registros</span>

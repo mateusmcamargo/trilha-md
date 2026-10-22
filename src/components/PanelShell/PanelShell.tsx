@@ -21,7 +21,12 @@ export default function PanelShell({ role, initials, children }: PanelShellProps
 
     // sets pages without navbar (may be changed in the future)
     const settingsPath = role === 'mentor' ? '/team/settings' : '/settings';
-    const hideNavbar = pathname === settingsPath || pathname.startsWith(`${settingsPath}/`);
+    const hideNavbar = pathname === settingsPath || pathname.startsWith(`${settingsPath}/`)
+        // inside an activity: only the header
+        || pathname.startsWith('/trail/')
+        || pathname.startsWith('/checkin/')
+        // editing an activity
+        || pathname.startsWith('/team/create/');
 
     const [showMockAlert, setShowMockAlert] = useState<boolean>(isMockMode);
 

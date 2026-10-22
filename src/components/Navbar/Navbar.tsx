@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
-import { Dumbbell, FileText, LayoutDashboard, Route, TerminalSquare, TrendingUp, UserRoundGroup } from 'lucide-react';
+import { Dumbbell, FileText, LayoutDashboard, Route, SquarePen, TerminalSquare, TrendingUp, UserRoundGroup } from 'lucide-react';
 
 import styles from './Navbar.module.scss';
 
@@ -18,6 +18,7 @@ const navItems = {
     mentor: [
         { href: '/team/dashboard', icon: LayoutDashboard, label: 'Painel' },
         { href: '/team/mentees',   icon: UserRoundGroup,  label: 'Meninas' },
+        { href: '/team/create',    icon: SquarePen,       label: 'Criar' },
     ],
 } as const;
 

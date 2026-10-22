@@ -1,0 +1,138 @@
+form.editor {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+
+    width: 100%;
+}
+
+fieldset.group {
+    display: flex;
+    flex-direction: column;
+    gap: 1.6rem;
+
+    width: 100%;
+    min-width: 0;
+
+    legend {
+        margin-bottom: 1.6rem;
+
+        color: var(--color-text-primary);
+        font-size: 2rem;
+        font-weight: 800;
+    }
+}
+
+div.field {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    label {
+        color: var(--color-input-label);
+        font-size: 1.6rem;
+        font-weight: 800;
+    }
+
+    span.required {
+        padding-left: 4px;
+        color: var(--color-input-required);
+        font-size: 1.8rem;
+        font-weight: 500;
+    }
+}
+
+p.help {
+    color: var(--color-text-secondary);
+    font-size: 1.4rem;
+    font-weight: 600;
+    line-height: 1.4;
+}
+
+p.fieldError {
+    color: var(--color-danger);
+    font-size: 1.4rem;
+    font-weight: 800;
+}
+
+/* same look as Input */
+textarea.code, textarea.text {
+    width: 100%;
+    padding: 1rem 1.2rem;
+
+    border: 3px solid var(--color-input-border);
+    border-radius: 1rem;
+    background-color: var(--color-input-bg);
+
+    color: var(--color-input-text);
+    font-size: 1.4rem;
+    font-weight: 700;
+    line-height: 1.5;
+
+    transition: border-color .2s ease;
+
+    &:hover:not(:focus) {
+        border-color: var(--color-input-border-hover);
+    }
+
+    &:focus {
+        border-color: var(--color-input-border-focus);
+    }
+
+    &[aria-invalid='true'] {
+        border-color: var(--color-danger);
+    }
+}
+
+textarea.code, .mono {
+    font-family: var(--font-jetbrains-mono);
+    font-variant-ligatures: none; /* shows >= as typed, not ≥ */
+}
+
+textarea.code, textarea.text {
+    height: calc((3.6rem + 8px) * 3); /* 3x the Input height */
+}
+
+ul.options {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+
+    li {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+}
+
+section.preview {
+    display: flex;
+    flex-direction: column;
+    gap: 1.6rem;
+
+    padding: 2rem;
+
+    border: 3px dashed var(--color-border-subtle);
+    border-radius: 1.2rem;
+
+    h3 {
+        color: var(--color-text-secondary);
+        font-size: 1.4rem;
+        font-weight: 800;
+        text-transform: uppercase;
+    }
+}
+
+div.actions {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+
+    width: 100%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    textarea.code, textarea.text {
+        transition: none;
+    }
+}

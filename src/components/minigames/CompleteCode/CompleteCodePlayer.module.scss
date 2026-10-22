@@ -1,0 +1,123 @@
+div.player {
+    display: flex;
+    flex-direction: column;
+    gap: 2.4rem;
+
+    width: 100%;
+}
+
+h2.instruction {
+    color: var(--color-text-strong);
+    font-size: 2rem;
+    font-weight: 800;
+    line-height: 1.3;
+}
+
+pre.code {
+    overflow-x: auto;
+
+    color: var(--color-game-code-text);
+    font-family: var(--font-jetbrains-mono);
+    font-variant-ligatures: none; /* shows >= as typed, not ≥ */
+    font-size: 1.8rem;
+    font-weight: 600;
+    line-height: 2.2;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}
+
+.blank {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-width: 9rem;
+    min-height: 4rem;
+    padding: 0 1rem;
+    vertical-align: middle;
+
+    border: 3px dashed var(--color-game-blank-border);
+    border-radius: 1rem;
+
+    color: var(--color-game-blank-text);
+    font-family: var(--font-jetbrains-mono);
+    font-variant-ligatures: none; /* shows >= as typed, not ≥ */
+    font-size: 1.6rem;
+    line-height: 1.2;
+
+    &.over {
+        background-color: var(--color-brand-soft);
+    }
+
+    &.filled {
+        border-style: solid;
+        background-color: var(--color-game-block-bg);
+        color: var(--color-game-block-text);
+        cursor: pointer;
+    }
+
+    &:focus-visible {
+        outline: 3px solid var(--color-focus-ring);
+        outline-offset: 3px;
+    }
+}
+
+div.bank {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1.2rem;
+}
+
+.block {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 4.8rem;
+    padding: 1rem 1.6rem;
+
+    border: 3px solid var(--color-game-block-base);
+    border-radius: 1.2rem;
+    background-color: var(--color-game-block-bg);
+
+    color: var(--color-game-block-text);
+    font-family: var(--font-jetbrains-mono);
+    font-variant-ligatures: none; /* shows >= as typed, not ≥ */
+    font-size: 1.6rem;
+    font-weight: 600;
+    line-height: 1.2;
+    white-space: pre;
+
+    cursor: grab;
+    touch-action: none; /* lets the finger drag the block instead of scrolling */
+    user-select: none;
+
+    &:disabled {
+        cursor: default;
+    }
+
+    &:focus-visible {
+        outline: 3px solid var(--color-focus-ring);
+        outline-offset: 3px;
+    }
+
+    &.dragging {
+        opacity: .4;
+    }
+
+    /* the copy under the finger while dragging */
+    &.overlay {
+        cursor: grabbing;
+        transform: rotate(4deg);
+    }
+
+    /* empty slot left in the bank: same size, no text */
+    &.used {
+        margin-bottom: 6px;
+        border-color: var(--color-game-block-bg-used);
+        background-color: var(--color-game-block-bg-used);
+        color: transparent;
+        cursor: default;
+    }
+}

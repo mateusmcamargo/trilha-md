@@ -102,6 +102,21 @@
     /* trail card progress bar */
     --color-trail-track:            var(--color-slate-200);
 
+    /* minigame: code, blocks and blanks */
+    --color-game-code-text:             var(--color-purple-900);
+    --color-game-block-bg:              var(--color-purple-500);
+    --color-game-block-text:            var(--color-purple-50);
+    --color-game-block-base:            var(--color-purple-900);
+    --color-game-block-bg-used:         var(--color-purple-900);
+    --color-game-blank-border:          var(--color-purple-900);
+    --color-game-blank-text:            var(--color-purple-300);
+
+    /* minigame: feedback after checking */
+    --color-game-feedback-bg-correct:   var(--color-green-100);
+    --color-game-feedback-text-correct: var(--color-green-900);
+    --color-game-feedback-bg-wrong:     var(--color-salmon-100);
+    --color-game-feedback-text-wrong:   var(--color-red-900);
+
     /* skeleton loader */
     --color-skeleton-bg:            var(--color-slate-300);
     --color-skeleton-shine:         var(--color-slate-100);

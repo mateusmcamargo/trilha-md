@@ -1,10 +1,11 @@
 import './styles/globals.css';
 
 import type { Metadata } from 'next';
-import { Chakra_Petch, IBM_Plex_Mono, IBM_Plex_Serif, Nunito } from 'next/font/google';
+import { Chakra_Petch, IBM_Plex_Serif, JetBrains_Mono, Nunito } from 'next/font/google';
 
-const ibmPlexMono = IBM_Plex_Mono({
-    variable: '--font-ibm-plex-mono',
+const jetbrainsMono = JetBrains_Mono({
+    variable: '--font-jetbrains-mono',
+    subsets: ['latin'],
     weight: ['100', '200', '300', '400', '500' ,'600', '700'],
 });
 
@@ -38,7 +39,7 @@ export default function RootLayout({ children }: LayoutProps<'/'>) {
             lang='pt-BR'
             className={`
                 ${nunito.variable}
-                ${ibmPlexMono.variable}
+                ${jetbrainsMono.variable}
                 ${ibmPlexSerif.variable}
                 ${chakraPetch.variable}
             `}

@@ -1,5 +1,10 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
+
+import type { TrailBranch } from '#/utils/menteeData';
+
+import TrailBranches from './TrailBranches';
 import TrailNode, { TrailNodeStatus } from './TrailNode';
 
 import styles from './Trail.module.scss';
@@ -9,6 +14,8 @@ interface TrailItem {
     title: string;
     status: TrailNodeStatus;
     progress: number;
+    // in-person events drawn beside the node
+    branches?: TrailBranch[];
 }
 
 interface TrailProps {
@@ -29,6 +36,9 @@ const AMPLITUDE = 64;      // max displacement per wave
 const NODES_PER_WAVE = 6;  // how many nodes form a wave
 
 export default function Trail({ items, readOnly, onSelect }: TrailProps) {
+    const router = useRouter();
+    // default: opens the activity
+    const select = onSelect ?? ((id: string) => router.push(`/trail/${id}`));
 
     const positions: Position[] = items.map((_, index) => {
         const angle = (index / NODES_PER_WAVE) * Math.PI * 2;
@@ -83,7 +93,14 @@ export default function Trail({ items, readOnly, onSelect }: TrailProps) {
                             status={item.status}
                             progress={item.progress}
                             readOnly={readOnly}
-                            onClick={onSelect && (() => onSelect(item.id))}
+                            onClick={readOnly ? undefined : () => select(item.id)}
+                        />
+                        <TrailBranches
+                            parentTitle={item.title}
+                            branches={item.branches ?? []}
+                            side={position.x > 0 ? -1 : 1}
+                            readOnly={readOnly}
+                            onSelect={select}
                         />
                     </div>
                 );

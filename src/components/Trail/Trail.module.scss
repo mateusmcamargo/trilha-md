@@ -6,3 +6,7 @@ div.nodePosition {
     position: absolute;
     transform: translateX(-50%);
 }
+/* the node with an open "+N" list of events stays over the next nodes */
+div.nodePosition:has(details[open]) {
+    z-index: 10;
+}

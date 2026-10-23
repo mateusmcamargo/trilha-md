@@ -62,6 +62,13 @@ button:focus-visible,
     outline-offset: 2px;
 }
 
+/* touch devices: no keyboard, so the focus ring only gets in the way */
+@media (hover: none) and (pointer: coarse) {
+    :focus-visible {
+        outline: none !important;
+    }
+}
+
 /* text visible only to screen readers */
 .sr-only {
     position: absolute;

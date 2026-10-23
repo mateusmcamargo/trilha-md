@@ -1,6 +1,6 @@
 import './styles/globals.css';
 
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { Chakra_Petch, IBM_Plex_Serif, JetBrains_Mono, Nunito } from 'next/font/google';
 
 const jetbrainsMono = JetBrains_Mono({
@@ -31,6 +31,16 @@ export const metadata: Metadata = {
         template: '%s | Áster',
     },
     description: 'Tecnologia gameficada para todas.',
+    appleWebApp: {
+        capable: true,
+        title: 'Áster',
+        statusBarStyle: 'default',
+    },
+};
+
+// status bar color on mobile; same as --color-brand (purple-500)
+export const viewport: Viewport = {
+    themeColor: '#6E1DE1',
 };
 
 export default function RootLayout({ children }: LayoutProps<'/'>) {

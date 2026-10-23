@@ -6,6 +6,7 @@ import type { TrailBranch } from '#/utils/menteeData';
 
 import TrailBranches from './TrailBranches';
 import TrailNode, { TrailNodeStatus } from './TrailNode';
+import { trailLayout } from './trailLayout';
 
 import styles from './Trail.module.scss';
 
@@ -25,43 +26,12 @@ interface TrailProps {
     onSelect?: (id: string) => void;
 }
 
-interface Position {
-    x: number;
-    y: number;
-}
-
-const NODE_SIZE = 80;
-const VERTICAL_DISTANCE = 90;
-const AMPLITUDE = 64;      // max displacement per wave
-const NODES_PER_WAVE = 6;  // how many nodes form a wave
-
 export default function Trail({ items, readOnly, onSelect }: TrailProps) {
     const router = useRouter();
     // default: opens the activity
     const select = onSelect ?? ((id: string) => router.push(`/trail/${id}`));
 
-    const positions: Position[] = items.map((_, index) => {
-        const angle = (index / NODES_PER_WAVE) * Math.PI * 2;
-
-        return {
-            x: Math.round(Math.sin(angle) * AMPLITUDE),
-            y: index * VERTICAL_DISTANCE,
-        };
-    });
-
-    const minX = positions.length
-        ? Math.min(...positions.map((p) => p.x))
-        : 0;
-
-    const maxX = positions.length
-        ? Math.max(...positions.map((p) => p.x))
-        : 0;
-
-    const width = maxX - minX + NODE_SIZE + 200;
-
-    const height = positions.length
-        ? positions[positions.length - 1].y + NODE_SIZE
-        : 0;
+    const { positions, width, height } = trailLayout(items.length);
 
     return (
         <div

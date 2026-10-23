@@ -7,15 +7,18 @@ import Navbar, { type NavRole } from '#/components/Navbar/Navbar';
 
 import styles from './PanelShell.module.scss';
 import { MockAlert } from '#/components/MockAlert/MockAlert';
+import { SkeletonAlert } from '#/components/SkeletonAlert/SkeletonAlert';
 import { isMockMode } from '#/utils/mockMode';
 
 interface PanelShellProps {
     role: NavRole;
     initials: string;
+    // demo mode: only areas with skeletons pass it (shows the SkeletonAlert switch)
+    skeletonPreview?: boolean;
     children: ReactNode;
 }
 
-export default function PanelShell({ role, initials, children }: PanelShellProps) {
+export default function PanelShell({ role, initials, skeletonPreview, children }: PanelShellProps) {
 
     const pathname = usePathname();
 
@@ -35,9 +38,14 @@ export default function PanelShell({ role, initials, children }: PanelShellProps
             {children}
             {!hideNavbar && <Navbar role={role} initials={initials}/>}
             
-            {isMockMode && showMockAlert &&
-                <MockAlert onClose={() => setShowMockAlert(false)}/>
-            }
+            {isMockMode && showMockAlert && (
+                <>
+                    {skeletonPreview !== undefined &&
+                        <SkeletonAlert skeletonPreview={skeletonPreview}/>
+                    }
+                    <MockAlert onClose={() => setShowMockAlert(false)}/>
+                </>
+            )}
         </div>
     );
 }

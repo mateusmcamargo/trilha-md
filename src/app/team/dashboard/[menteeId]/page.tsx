@@ -15,6 +15,9 @@ import XpChart from '#/components/XpChart/XpChart';
 import XpDailyChart from '#/components/XpDailyChart/XpDailyChart';
 import { getMenteeDashboard } from '#/utils/dashboardData';
 import { todayInSaoPaulo } from '#/utils/dates';
+import { isSkeletonPreview } from '#/utils/skeletonPreview';
+
+import MenteeDashboardLoading from './loading';
 
 import styles from './page.module.scss';
 
@@ -39,6 +42,9 @@ const formatDate = (date: string) =>
     new Date(`${date}T12:00:00`).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' });
 
 export default async function MenteeDashboardPage({ params }: { params: Promise<{ menteeId: string }> }) {
+    // demo mode with the data turned off
+    if (await isSkeletonPreview()) return <MenteeDashboardLoading/>;
+
     const { menteeId } = await params;
     const data = await getMenteeDashboard(menteeId);
 

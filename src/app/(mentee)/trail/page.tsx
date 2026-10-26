@@ -1,15 +1,15 @@
 import type { Metadata } from 'next';
 
 import StatsHeader from '#/components/Header/StatsHeader';
+import { JoinEditionForm } from '#/components/JoinEditionForm/JoinEditionForm';
 import Trail from '#/components/Trail/Trail';
 import TrailCard from '#/components/Trail/TrailCard';
-
-import styles from './page.module.scss';
 import { getMenteeData } from '#/utils/menteeData';
-import { JoinEditionForm } from '#/components/JoinEditionForm/JoinEditionForm';
 import { isSkeletonPreview } from '#/utils/skeletonPreview';
 
 import TrailLoading from './loading';
+
+import styles from './page.module.scss';
 
 export const metadata: Metadata = {
     title: 'Trilha',
@@ -19,7 +19,7 @@ export default async function TrailPage() {
     // demo mode with the data turned off
     if (await isSkeletonPreview()) return <TrailLoading/>;
 
-    const { stats, trail, trailItems, trailProgress } = await getMenteeData();
+    const { trail, trailItems, trailProgress } = await getMenteeData();
 
         if (!trail) {
             return (

@@ -1,16 +1,6 @@
 import { Bell, CodeXml, Flag, GraduationCap, Info, Route, ShieldCheck, ShieldQuestion, SlidersHorizontal, UserCog, Users, Venus } from 'lucide-react';
-import type { LucideIcon } from 'lucide-react';
 
-interface SettingsLink {
-    slug: string;
-    label: string;
-    icon: LucideIcon;
-}
-
-interface SettingsSection {
-    title: string;
-    links: SettingsLink[];
-}
+import type { SettingsSection } from '#/components/Settings/SettingsMenu';
 
 export const settingsSections: SettingsSection[] = [
     {
@@ -29,7 +19,7 @@ export const settingsSections: SettingsSection[] = [
             { slug: 'contact-mentor',     label: 'Contactar sua mentora',      icon: GraduationCap },
             { slug: 'contact-project',   label: 'Contactar o projeto',       icon: Users         },
             { slug: 'contact-developer', label: 'Contactar o desenvolvedor', icon: CodeXml       },
-            { slug: 'report-abuse',      label: 'Reportar Abuso',            icon: Flag          },
+            { slug: 'report-abuse',      label: 'Reportar abuso',            icon: Flag          },
         ],
     },
     {

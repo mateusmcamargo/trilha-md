@@ -6,6 +6,9 @@ import DashboardMentees from '#/components/DashboardMentees/DashboardMentees';
 import PageHeader from '#/components/Header/PageHeader';
 import StatCard from '#/components/StatCard/StatCard';
 import { getDashboardOverview } from '#/utils/dashboardData';
+import { isSkeletonPreview } from '#/utils/skeletonPreview';
+
+import DashboardLoading from './loading';
 
 import styles from './page.module.scss';
 
@@ -14,6 +17,9 @@ export const metadata: Metadata = {
 };
 
 export default async function DashboardPage() {
+    // demo mode with the data turned off
+    if (await isSkeletonPreview()) return <DashboardLoading/>;
+
     const { mentees, xpTotal, averageRate, withoutStreak } = await getDashboardOverview();
 
     return (

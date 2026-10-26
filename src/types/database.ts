@@ -39,6 +39,44 @@ export type Database = {
   }
   public: {
     Tables: {
+      abuse_reports: {
+        Row: {
+          category: string
+          created_at: string
+          description: string
+          id: string
+          reported_username: string | null
+          reporter_id: string
+          status: string
+        }
+        Insert: {
+          category: string
+          created_at?: string
+          description: string
+          id?: string
+          reported_username?: string | null
+          reporter_id?: string
+          status?: string
+        }
+        Update: {
+          category?: string
+          created_at?: string
+          description?: string
+          id?: string
+          reported_username?: string | null
+          reporter_id?: string
+          status?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "abuse_reports_reporter_id_fkey"
+            columns: ["reporter_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       activities: {
         Row: {
           created_at: string
@@ -694,21 +732,36 @@ export type Database = {
         Row: {
           animations_enabled: boolean
           funny_messages_enabled: boolean
+          notify_events: boolean
+          notify_streak: boolean
+          notify_trail_updates: boolean
           profile_id: string
+          show_in_search: boolean
+          show_xp_to_friends: boolean
           sounds_enabled: boolean
           theme: string
         }
         Insert: {
           animations_enabled?: boolean
           funny_messages_enabled?: boolean
+          notify_events?: boolean
+          notify_streak?: boolean
+          notify_trail_updates?: boolean
           profile_id: string
+          show_in_search?: boolean
+          show_xp_to_friends?: boolean
           sounds_enabled?: boolean
           theme?: string
         }
         Update: {
           animations_enabled?: boolean
           funny_messages_enabled?: boolean
+          notify_events?: boolean
+          notify_streak?: boolean
+          notify_trail_updates?: boolean
           profile_id?: string
+          show_in_search?: boolean
+          show_xp_to_friends?: boolean
           sounds_enabled?: boolean
           theme?: string
         }
@@ -786,6 +839,14 @@ export type Database = {
           correct: number
           total: number
           xp: number
+        }[]
+      }
+      get_my_mentor_contact: {
+        Args: never
+        Returns: {
+          email: string
+          full_name: string
+          id: string
         }[]
       }
       get_my_role: { Args: never; Returns: string }

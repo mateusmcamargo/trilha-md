@@ -6,6 +6,9 @@ import PageHeader from '#/components/Header/PageHeader';
 import Trail from '#/components/Trail/Trail';
 import TrailCard from '#/components/Trail/TrailCard';
 import { getMenteeTrail } from '#/utils/dashboardData';
+import { isSkeletonPreview } from '#/utils/skeletonPreview';
+
+import MenteeTrailLoading from './loading';
 
 import styles from './page.module.scss';
 
@@ -14,6 +17,9 @@ export const metadata: Metadata = {
 };
 
 export default async function MenteeTrailPage({ params }: { params: Promise<{ menteeId: string }> }) {
+    // demo mode with the data turned off
+    if (await isSkeletonPreview()) return <MenteeTrailLoading/>;
+
     const { menteeId } = await params;
     const { mentee, trail, trailItems, trailProgress } = await getMenteeTrail(menteeId);
 

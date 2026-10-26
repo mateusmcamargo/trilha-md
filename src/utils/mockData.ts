@@ -407,3 +407,41 @@ export const mockMaterials: Tables<'activity_materials'>[] = mockEvents.flatMap(
         body: 'Hoje conhecemos a turma, combinamos os horários e exploramos a trilha juntas.\n\nNo próximo encontro, traga suas dúvidas!',
     },
 ]);
+
+// settings in demo mode: database defaults
+export const mockPreferences: Tables<'user_preferences'> = {
+    profile_id:             profileId,
+    theme:                  'light',
+    sounds_enabled:         true,
+    animations_enabled:     true,
+    funny_messages_enabled: true,
+    notify_events:          true,
+    notify_streak:          true,
+    notify_trail_updates:   true,
+    show_in_search:         true,
+    show_xp_to_friends:     true,
+};
+
+export const mockMentorContact = {
+    id:        mentorId,
+    full_name: mentorProfile.full_name,
+    email:     'maria.silva@exemplo.com',
+};
+
+// abuse reports as seen by the mentor in demo mode
+export const mockAbuseReports: (Tables<'abuse_reports'> & {
+    reporter: Pick<Tables<'profiles'>, 'full_name' | 'username'> | null;
+})[] = [
+    {
+        id: 'mock-report-1', reporter_id: profileId, reported_username: 'perfil.estranho',
+        category: 'perfil_falso', status: 'aberta', created_at: '2026-10-20T14:30:00Z',
+        description: 'Esse perfil diz ser de uma mentora, mas eu não conheço e está pedindo meu telefone.',
+        reporter: { full_name: profile.full_name, username: profile.username },
+    },
+    {
+        id: 'mock-report-2', reporter_id: 'mock-profile-5', reported_username: null,
+        category: 'outro', status: 'resolvida', created_at: '2026-10-12T09:10:00Z',
+        description: 'Recebi uma mensagem com um link estranho depois do encontro.',
+        reporter: { full_name: 'Beatriz Lima', username: 'bia.lima' },
+    },
+];

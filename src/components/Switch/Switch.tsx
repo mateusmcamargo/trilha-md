@@ -5,9 +5,10 @@ interface SwitchProps {
     label: string;
     defaultChecked?: boolean;
     onChange?: (checked: boolean) => void;
+    disabled?: boolean;
 }
 
-export default function Switch({ name, label, defaultChecked, onChange }: SwitchProps) {
+export default function Switch({ name, label, defaultChecked, onChange, disabled }: SwitchProps) {
     return (
         <label className={styles.switch}>
             <input
@@ -15,6 +16,7 @@ export default function Switch({ name, label, defaultChecked, onChange }: Switch
                 role='switch'
                 name={name}
                 defaultChecked={defaultChecked}
+                disabled={disabled}
                 onChange={onChange && ((event) => onChange(event.target.checked))}
             />
             <span className={styles.track} aria-hidden='true'/>

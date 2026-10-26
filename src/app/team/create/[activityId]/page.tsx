@@ -10,6 +10,9 @@ import EventForm from '#/components/Creator/EventForm';
 import MaterialsEditor from '#/components/Creator/MaterialsEditor';
 import PageHeader from '#/components/Header/PageHeader';
 import { getActivityKind, getEditableActivity, getEditableEvent } from '#/utils/creatorData';
+import { isSkeletonPreview } from '#/utils/skeletonPreview';
+
+import EditActivityLoading from './loading';
 
 import styles from './page.module.scss';
 
@@ -67,6 +70,9 @@ async function EventEditorPage({ activityId }: { activityId: string }) {
 }
 
 export default async function EditActivityPage({ params }: { params: Promise<{ activityId: string }> }) {
+    // demo mode with the data turned off
+    if (await isSkeletonPreview()) return <EditActivityLoading/>;
+
     const { activityId } = await params;
     const kind = await getActivityKind(activityId);
 

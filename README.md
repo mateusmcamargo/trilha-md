@@ -20,10 +20,25 @@ O software agiliza o processo com uma aplicação única com foco em acessibilid
 - Cadastro em `/register`, com matrícula na trilha pelo código de acesso
 - Entrada em uma trilha pelo código de acesso, para quem ainda não tem matrícula
 - Painel da mentorada: trilha, terminal, perfil e configurações
+- Trilha com o minigame "Complete o código" e encontros presenciais com materiais e data
+- Presença nos encontros confirmada pela leitura do QR Code
 - Escolha da mentora pela mentorada, no perfil, quando a matrícula ainda não tem mentora
-- Área da mentora em `/team` (em construção): lista de mentoradas em `/team/mentees`, com adoção e cancelamento de adoção
-- Preferências: sons, animações e tema
-- Modo demonstração com dados mockados
+- Configurações da mentorada:
+    - edição do perfil, exportação dos dados (JSON) e desativação da conta
+    - notificações e privacidade (aparecer na busca, mostrar o XP para amigas)
+    - lista das trilhas em que entrou
+    - contato com a mentora, o projeto e o desenvolvedor
+    - denúncia de abuso, lida por todas as mentoras
+    - páginas sobre o projeto, o app e os dados guardados
+- Área da mentora em `/team`:
+    - lista de mentoradas em `/team/mentees`, com adoção e cancelamento de adoção
+    - dashboard com o acompanhamento individual de cada mentorada
+    - criador de atividades: minigames, encontros presenciais, materiais e QR Code de presença
+    - configurações em `/team/settings`: perfil, preferências, denúncias de abuso, contatos e páginas sobre
+- Preferências: sons, animações e tema claro, escuro ou do sistema, aplicados antes da página aparecer
+- App instalável no celular (PWA)
+- Skeletons de carregamento em todas as telas que buscam dados
+- Modo demonstração com dados mockados, com uma chave para visualizar os skeletons
 - Banco PostgreSQL com Row Level Security
 - Tela de erro com botão "Tentar de novo" e página 404 personalizada.
 

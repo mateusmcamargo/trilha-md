@@ -5,9 +5,11 @@ interface ToggleProps {
     label: string;
     options: { value: string; label: string }[];
     defaultValue?: string;
+    onChange?: (value: string) => void;
+    disabled?: boolean;
 }
 
-export default function Toggle({ name, label, options, defaultValue }: ToggleProps) {
+export default function Toggle({ name, label, options, defaultValue, onChange, disabled }: ToggleProps) {
     return (
         <div
             className={styles.toggle}
@@ -21,6 +23,8 @@ export default function Toggle({ name, label, options, defaultValue }: TogglePro
                         name={name}
                         value={value}
                         defaultChecked={value === defaultValue}
+                        disabled={disabled}
+                        onChange={onChange && (() => onChange(value))}
                     />
                     <span>{optionLabel}</span>
                 </label>

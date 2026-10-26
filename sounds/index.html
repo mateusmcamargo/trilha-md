@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Sons do Áster</title>
+    <style>
+        :root {
+            --bg: #FFFFFF;
+            --text: #333333;
+            --muted: #6B6B6B;
+            --border: #E5E7EB;
+            --brand: #6E1DE1;
+            --brand-contrast: #F5EEFC;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #111827;
+                --text: #F1F2F5;
+                --muted: #959CA6;
+                --border: #364252;
+                --brand: #8140DC;
+            }
+        }
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            padding: 24px 16px 48px;
+            font-family: system-ui, sans-serif;
+            color: var(--text);
+            background: var(--bg);
+        }
+        main { max-width: 720px; margin: 0 auto; }
+        h1 { margin: 0 0 8px; font-size: 24px; }
+        p { margin: 0 0 24px; color: var(--muted); line-height: 1.4; }
+        h2 { margin: 24px 0 4px; font-size: 18px; }
+        h2 + p { margin-bottom: 12px; font-size: 14px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 8px; }
+        button {
+            padding: 12px;
+            font: inherit;
+            font-weight: 700;
+            text-align: left;
+            color: var(--text);
+            background: transparent;
+            border: 2px solid var(--border);
+            border-radius: 10px;
+            cursor: pointer;
+        }
+        button:hover { border-color: var(--brand); }
+        button:focus-visible { outline: 3px solid #2563EB; outline-offset: 2px; }
+        button.playing { color: var(--brand-contrast); background: var(--brand); border-color: var(--brand); }
+        button small { display: block; margin-top: 4px; font-weight: 400; color: inherit; opacity: .75; }
+    </style>
+</head>
+<body>
+<main>
+    <h1>Sons do Áster</h1>
+    <p>Clique para ouvir. Estilo minimalista: marimba suave, sinos e sopros de ar, sem ondas 8-bit. Gerados por síntese em <code>generate.py</code> (MP3 mono, 96 kbps).</p>
+    <div id="groups"></div>
+</main>
+
+<script>
+    // name: [file, what it's for]
+    const groups = [
+        ['Clique', 'Botões e links.', [
+            ['click/click-1', 'Tique seco'], ['click/click-2', 'Marimba abafada'], ['click/click-3', 'Suave'],
+        ]],
+        ['Toque', 'Cards, nós da trilha e itens de lista. Mais suave que o clique.', [
+            ['tap/tap-1', 'Pop'], ['tap/tap-2', 'Marimba grave'], ['tap/tap-3', 'Vidro'],
+        ]],
+        ['Toggle', 'Switches e seletores (liga / desliga).', [
+            ['toggle/toggle-on-1', 'Liga (marimba)'], ['toggle/toggle-off-1', 'Desliga (marimba)'],
+            ['toggle/toggle-on-2', 'Liga (pop)'], ['toggle/toggle-off-2', 'Desliga (pop)'],
+        ]],
+        ['Sucesso', 'Salvo, enviado, deu certo.', [
+            ['success/success-1', 'Sino curto'], ['success/success-2', 'Arpejo'], ['success/success-3', 'Marimba'],
+        ]],
+        ['Perigo', 'Erro, aviso e ações destrutivas.', [
+            ['danger/danger-1', 'Erro suave'], ['danger/danger-2', 'Batida grave'],
+            ['danger/danger-3', 'Toque duplo'], ['danger/danger-4', 'Deletar'],
+        ]],
+        ['Zoom', 'Aproximar e afastar a trilha, abrir imagens.', [
+            ['zoom/zoom-in-1', 'Aproximar (vento)'], ['zoom/zoom-out-1', 'Afastar (vento)'],
+            ['zoom/zoom-in-2', 'Aproximar (rápido)'], ['zoom/zoom-out-2', 'Afastar (rápido)'],
+        ]],
+        ['Interface', 'Outros momentos da interface.', [
+            ['ui/notification', 'Notificação'], ['ui/modal-open', 'Abrir modal'], ['ui/modal-close', 'Fechar modal'],
+            ['ui/send', 'Enviar'], ['ui/delete', 'Apagar item'],
+            ['ui/key-1', 'Tecla 1 (terminal)'], ['ui/key-2', 'Tecla 2 (terminal)'], ['ui/key-3', 'Tecla 3 (terminal)'],
+        ]],
+        ['Jogo', 'Trilha, minigames e recompensas.', [
+            ['game/correct', 'Resposta certa'], ['game/wrong', 'Resposta errada'], ['game/xp', 'Ganhou XP'],
+            ['game/streak', 'Ofensiva'], ['game/unlock', 'Atividade liberada'], ['game/life-lost', 'Perdeu vida'],
+            ['game/checkin', 'Presença (QR)'], ['game/badge', 'Certificado'], ['game/level-up', 'Trilha concluída'],
+        ]],
+    ];
+
+    const root = document.getElementById('groups');
+    for (const [title, description, sounds] of groups) {
+        const h2 = document.createElement('h2');
+        h2.textContent = title;
+        const p = document.createElement('p');
+        p.textContent = description;
+        const grid = document.createElement('div');
+        grid.className = 'grid';
+
+        for (const [file, label] of sounds) {
+            const button = document.createElement('button');
+            button.type = 'button';
+            button.innerHTML = `${label}<small>${file}.mp3</small>`;
+            button.addEventListener('click', () => {
+                const audio = new Audio(`${file}.mp3`);
+                button.classList.add('playing');
+                audio.addEventListener('ended', () => button.classList.remove('playing'));
+                audio.play();
+            });
+            grid.append(button);
+        }
+        root.append(h2, p, grid);
+    }
+</script>
+</body>
+</html>

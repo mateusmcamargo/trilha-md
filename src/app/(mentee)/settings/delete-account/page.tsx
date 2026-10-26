@@ -6,6 +6,9 @@ import { DeleteAccountForm } from '#/components/DeleteAccountForm/DeleteAccountF
 import PageHeader from '#/components/Header/PageHeader';
 
 import { getMenteeData } from '#/utils/menteeData';
+import { isSkeletonPreview } from '#/utils/skeletonPreview';
+
+import DeleteAccountLoading from './loading';
 
 import styles from './page.module.scss';
 
@@ -14,6 +17,9 @@ export const metadata: Metadata = {
 };
 
 export default async function DeleteAccountPage() {
+    // demo mode with the data turned off
+    if (await isSkeletonPreview()) return <DeleteAccountLoading/>;
+
     const { user } = await getMenteeData();
 
     return (

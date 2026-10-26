@@ -37,3 +37,8 @@ export function formatEventTime(startsAt: string, endsAt: string | null) {
     const start = toSaoPauloInputs(startsAt).time;
     return endsAt ? `${day} · ${start}–${toSaoPauloInputs(endsAt).time}` : `${day} · ${start}`;
 }
+
+// "12/10/2026", in São Paulo
+export function formatDate(timestamp: string) {
+    return new Date(timestamp).toLocaleDateString('pt-BR', { timeZone: TIME_ZONE });
+}

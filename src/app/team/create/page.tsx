@@ -5,6 +5,9 @@ import { Settings } from 'lucide-react';
 import ActivityOutline from '#/components/Creator/ActivityOutline';
 import PageHeader from '#/components/Header/PageHeader';
 import { getCreatorEditions, getEditionOutline } from '#/utils/creatorData';
+import { isSkeletonPreview } from '#/utils/skeletonPreview';
+
+import CreateLoading from './loading';
 
 import styles from './page.module.scss';
 
@@ -13,6 +16,9 @@ export const metadata: Metadata = {
 };
 
 export default async function CreatePage({ searchParams }: { searchParams: Promise<{ edicao?: string }> }) {
+    // demo mode with the data turned off
+    if (await isSkeletonPreview()) return <CreateLoading/>;
+
     const { edicao } = await searchParams;
     const editions = await getCreatorEditions();
     const edition = editions.find((item) => item.id === edicao) ?? editions[0];

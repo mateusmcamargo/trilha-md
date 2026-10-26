@@ -1,23 +1,26 @@
 'use client'
 
-import { useState, type ReactNode } from 'react';
+import { useEffect, useState, type ReactNode } from 'react';
 import { usePathname } from 'next/navigation';
 
+import { MockAlert } from '#/components/MockAlert/MockAlert';
 import Navbar, { type NavRole } from '#/components/Navbar/Navbar';
+import { applyAppearance, appearanceChanged, type Theme } from '#/utils/appearance';
+import { isMockMode } from '#/utils/mockMode';
 
 import styles from './PanelShell.module.scss';
-import { MockAlert } from '#/components/MockAlert/MockAlert';
-import { isMockMode } from '#/utils/mockMode';
 
 interface PanelShellProps {
     role: NavRole;
     initials: string;
     // demo mode: only areas with skeletons pass it (shows the SkeletonAlert switch)
     skeletonPreview?: boolean;
+    // saved preferences; without it (demo mode) the device cookies are kept
+    appearance?: { theme: Theme; animations: boolean };
     children: ReactNode;
 }
 
-export default function PanelShell({ role, initials, skeletonPreview, children }: PanelShellProps) {
+export default function PanelShell({ role, initials, skeletonPreview, appearance, children }: PanelShellProps) {
 
     const pathname = usePathname();
 
@@ -31,6 +34,14 @@ export default function PanelShell({ role, initials, skeletonPreview, children }
         || pathname.startsWith('/team/create/');
 
     const [showMockAlert, setShowMockAlert] = useState<boolean>(isMockMode);
+
+    // another device may have changed the theme: brings this one up to date
+    const theme = appearance?.theme;
+    const animations = appearance?.animations;
+    useEffect(() => {
+        if (theme === undefined || animations === undefined) return;
+        if (appearanceChanged(theme, animations)) applyAppearance(theme, animations);
+    }, [theme, animations]);
 
     return (
         <div className={styles.tabs}>

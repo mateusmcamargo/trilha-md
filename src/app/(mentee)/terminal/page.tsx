@@ -2,12 +2,17 @@ import type { Metadata } from 'next';
 
 import CodeSandbox from '#/components/CodeSandbox/CodeSandbox';
 import StatsHeader from '#/components/Header/StatsHeader';
+import { isSkeletonPreview } from '#/utils/skeletonPreview';
+
+import TerminalLoading from './loading';
 
 export const metadata: Metadata = {
     title: 'Terminal',
 };
 
-export default function TerminalPage() {
+export default async function TerminalPage() {
+    // demo mode with the data turned off
+    if (await isSkeletonPreview()) return <TerminalLoading/>;
 
     return (
         <>

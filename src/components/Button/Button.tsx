@@ -25,7 +25,7 @@ type ButtonAsButton = ButtonBaseProps & ButtonContent
     & Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'children'> & { href?: undefined };
 
 type ButtonAsLink = ButtonBaseProps & ButtonContent
-    & Omit<AnchorHTMLAttributes<HTMLAnchorElement>, 'children' | 'href'> & { href: string };
+    & Omit<AnchorHTMLAttributes<HTMLAnchorElement>, 'children' | 'href'> & { href: string; prefetch?: boolean };
 
 export type ButtonProps = ButtonAsButton | ButtonAsLink;
 

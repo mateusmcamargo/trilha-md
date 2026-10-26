@@ -8,6 +8,9 @@ import PageHeader from '#/components/Header/PageHeader';
 import PressableBase from '#/components/PressableBase/PressableBase';
 
 import { getMenteeData } from '#/utils/menteeData';
+import { isSkeletonPreview } from '#/utils/skeletonPreview';
+
+import ProfileLoading from './loading';
 
 import styles from './page.module.scss';
 
@@ -16,6 +19,9 @@ export const metadata: Metadata = {
 };
 
 export default async function ProfilePage() {
+    // demo mode with the data turned off
+    if (await isSkeletonPreview()) return <ProfileLoading/>;
+
     const { user, stats, trail, people, journeyStart, completedTrails, certificates } = await getMenteeData();
     const firstName = user.name.split(' ')[0];
 

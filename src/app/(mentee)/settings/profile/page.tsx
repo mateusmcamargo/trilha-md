@@ -7,16 +7,22 @@ import { DeleteAccountButton } from '#/components/Button/DeleteAccountButton';
 import PageHeader from '#/components/Header/PageHeader';
 import { ProfileForm } from '#/components/ProfileForm/ProfileForm';
 
+import { getInitials } from '#/utils/getInitials';
 import { getMenteeData } from '#/utils/menteeData';
+import { isSkeletonPreview } from '#/utils/skeletonPreview';
+
+import ProfileSettingsLoading from './loading';
 
 import styles from './page.module.scss';
-import { getInitials } from '#/utils/getInitials';
 
 export const metadata: Metadata = {
     title: 'Perfil',
 };
 
 export default async function ProfileSettingsPage() {
+    // demo mode with the data turned off
+    if (await isSkeletonPreview()) return <ProfileSettingsLoading/>;
+
     const { user } = await getMenteeData();
     const initials = getInitials(user.name);
 
@@ -51,7 +57,10 @@ export default async function ProfileSettingsPage() {
                 <ProfileForm user={user}/>
 
                 <section className={styles.account} aria-label='Dados e conta'>
-                    <Button icon={Download} fullWidth>Exportar meus dados</Button>
+                    {/* route handler: download skips the client navigation, no prefetch of the file */}
+                    <Button icon={Download} fullWidth href='/settings/export' download prefetch={false}>
+                        Exportar meus dados
+                    </Button>
                     <DeleteAccountButton/>
                 </section>
             </main>

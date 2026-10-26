@@ -6,12 +6,18 @@ import { ArrowLeft } from 'lucide-react';
 import EventForm from '#/components/Creator/EventForm';
 import PageHeader from '#/components/Header/PageHeader';
 import { getCreatorEditions, getParentOptions } from '#/utils/creatorData';
+import { isSkeletonPreview } from '#/utils/skeletonPreview';
+
+import NewEventLoading from './loading';
 
 export const metadata: Metadata = {
     title: 'Nova atividade presencial',
 };
 
 export default async function NewEventPage({ searchParams }: { searchParams: Promise<{ edicao?: string }> }) {
+    // demo mode with the data turned off
+    if (await isSkeletonPreview()) return <NewEventLoading/>;
+
     const { edicao } = await searchParams;
     const edition = (await getCreatorEditions()).find((item) => item.id === edicao);
     if (!edition) notFound();

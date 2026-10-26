@@ -11,7 +11,10 @@ import { isUuid } from '#/utils/creatorData';
 import { getMenteeData } from '#/utils/menteeData';
 import { mockActivities, mockActivityItems, mockEvents, mockMaterials } from '#/utils/mockData';
 import { isMockMode } from '#/utils/mockMode';
+import { isSkeletonPreview } from '#/utils/skeletonPreview';
 import { createClient } from '#/utils/supabase/server';
+
+import ActivityLoading from './loading';
 
 export const metadata: Metadata = {
     title: 'Atividade',
@@ -71,6 +74,9 @@ async function loadActivity(activityId: string) {
 }
 
 export default async function ActivityPage({ params }: { params: Promise<{ activityId: string }> }) {
+    // demo mode with the data turned off
+    if (await isSkeletonPreview()) return <ActivityLoading/>;
+
     const { activityId } = await params;
     const [{ trailItems }, data] = await Promise.all([getMenteeData(), loadActivity(activityId)]);
 

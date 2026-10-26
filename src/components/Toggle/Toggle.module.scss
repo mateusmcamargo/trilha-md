@@ -55,3 +55,7 @@ div.toggle {
         transition: none;
     }
 }
+div.toggle:has(input:disabled) label.option {
+    cursor: progress;
+    opacity: .6;
+}

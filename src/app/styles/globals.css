@@ -50,6 +50,8 @@ html, body {
 
 body {
     font-size: 1rem;
+    color: var(--color-text-primary);
+    background-color: var(--color-surface);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
@@ -130,4 +132,13 @@ main.main-subpage {
         animation-iteration-count: 1 !important;
         transition-duration: .01ms !important;
     }
+}
+
+/* "Animações" turned off in the preferences (cookie "motion", set in app/layout.tsx) */
+html[data-motion='reduced'] *,
+html[data-motion='reduced'] *::before,
+html[data-motion='reduced'] *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
 }

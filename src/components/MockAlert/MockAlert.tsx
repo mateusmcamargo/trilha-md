@@ -4,9 +4,9 @@ import { useState } from 'react';
 
 import { FlaskConical, SearchX, TriangleAlert, X } from 'lucide-react';
 
-import { Button } from '../Button/Button';
-import { Modal } from '../Modal/Modal';
-import { SkeletonAlert } from '../SkeletonAlert/SkeletonAlert';
+import { Button } from '#/components/Button/Button';
+import { Modal } from '#/components/Modal/Modal';
+import { SkeletonAlert } from '#/components/SkeletonAlert/SkeletonAlert';
 
 import styles from './MockAlert.module.scss';
 

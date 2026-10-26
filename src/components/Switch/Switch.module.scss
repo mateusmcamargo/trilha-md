@@ -76,3 +76,7 @@ label.switch {
         transition: none;
     }
 }
+label.switch:has(input:disabled) {
+    cursor: progress;
+    opacity: .6;
+}

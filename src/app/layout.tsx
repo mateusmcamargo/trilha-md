@@ -3,6 +3,8 @@ import './styles/globals.css';
 import type { Metadata, Viewport } from 'next';
 import { Chakra_Petch, IBM_Plex_Serif, JetBrains_Mono, Nunito } from 'next/font/google';
 
+import { appearanceScript } from '#/utils/appearance';
+
 const jetbrainsMono = JetBrains_Mono({
     variable: '--font-jetbrains-mono',
     subsets: ['latin'],
@@ -53,7 +55,12 @@ export default function RootLayout({ children }: LayoutProps<'/'>) {
                 ${ibmPlexSerif.variable}
                 ${chakraPetch.variable}
             `}
+            // the inline script sets data-theme/data-motion before hydration
+            suppressHydrationWarning
         >
+            <head>
+                <script dangerouslySetInnerHTML={{ __html: appearanceScript }}/>
+            </head>
             <body>{children}</body>
         </html>
     );

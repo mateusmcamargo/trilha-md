@@ -15,12 +15,13 @@ Web app mobile first de aprendizado gamificado para o projeto de extensão Menin
 
 - `src/app/(mentee)/`: área da mentorada (`/trail`, `/trail/[activityId]` (minigame ou encontro presencial), `/checkin/[code]` (destino do QR Code), `/terminal`, `/profile`, `/settings/*`)
 - `src/app/team/`: área da mentora (`/team/dashboard`, `/team/mentees`, `/team/create` (criador: `[activityId]`, `[activityId]/checkin` com o QR, `novo` para presencial), `/team/profile`, `/team/settings`)
+- Configurações das duas áreas: páginas finas que usam os componentes de `src/components/Settings/` (`SettingsPage`, `SettingsMenu`, `PreferencesForm`, `PreferenceSwitches` etc.). Links em `settings/links.ts` de cada área. Exportação de dados: `(mentee)/settings/export/route.ts`
 - Cada área tem layout, `PanelShell`, navbar e verificação de papel próprios. Componentes de formulário são compartilhados
 - `src/app/error.tsx` e `global-error.tsx`: telas de erro com "Tentar de novo". Neste Next a prop é `retry`, não `reset`. O `error.tsx` fica na raiz porque `getMenteeData`/`getTeamData` rodam nos layouts, e um `error.tsx` não captura erro do layout do próprio segmento
 - `USERS.md`: contas de teste (senha e edição de teste); consultar antes de logar para testar
 - `src/components/<Nome>/<Nome>.tsx` + `<Nome>.module.scss`
 - `src/components/minigames/`: `types.ts` (tipos e registro dos modelos de item), `ActivityPlayer` (fluxo Checar/Continuar/resultado) e uma pasta por modelo com `Player` e `Editor` (hoje só `CompleteCode`). Modelo novo = pasta nova + entrada em `itemTypes` + valor no check de `activity_items.type`
-- `src/utils/`: `menteeData.ts` (`getMenteeData`, `buildTrail`), `teamData.ts` (`getTeamData`), `dashboardData.ts`, `creatorData.ts`, `mockData.ts`, `mockMode.ts`, `dates.ts`, `getInitials.ts`
+- `src/utils/`: `menteeData.ts` (`getMenteeData`, `buildTrail`), `teamData.ts` (`getTeamData`), `preferences.ts` (`getPreferences`), `appearance.ts` (tema e animações: cookies + script inline do `layout.tsx`), `dashboardData.ts`, `creatorData.ts`, `mockData.ts`, `mockMode.ts`, `dates.ts`, `getInitials.ts`
 - `src/utils/supabase/`: `client.ts`, `server.ts`, `middleware.ts`, `getSupabase.ts`
 - `src/types/database.ts`: tipos gerados pelo Supabase. Não editar à mão
 
@@ -28,6 +29,7 @@ Web app mobile first de aprendizado gamificado para o projeto de extensão Menin
 
 - Imports pelo alias `#/` (aponta para `src`)
 - Cores: só `src/app/styles/tokens/semantics.css` referencia primitivas (`primitives.css`). Componentes usam apenas as variáveis semânticas (`--color-<escopo>-<propriedade>[-<variante>][-<estado>]`)
+- Tema escuro: bloco `:root[data-theme='dark']` em `semantics.css`, que redefine as mesmas variáveis. Cor nova precisa do valor claro e do escuro
 - Variáveis de layout (como `--bar-height`) ficam em `globals.css`, não em `semantics.css`
 - `<main>` usa as classes globais: `.main-fullscreen` (login, register, not-found), `.main-tabs` (header + navbar), `.main-subpage` (só header)
 - Reutilizar antes de criar: `Button` (variantes `brand`, `danger`, `neutral`, `outline`; só ícone, texto ou ambos; `fullWidth`), `SubmitButton`, `SaveButton`, `Input` (com `help`), `FormTitle`, `FormError`, `PressableBase`, `Modal`/`ConfirmDialog`, `Skeleton`, `Avatar`, `DataList`, `Tooltip`

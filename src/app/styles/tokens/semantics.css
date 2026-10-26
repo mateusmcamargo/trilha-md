@@ -14,6 +14,7 @@
     --color-text-strong:        var(--color-slate-900);
     --color-text-primary:       var(--color-gray-800);
     --color-text-secondary:     var(--color-gray-700);
+    --color-text-brand:         var(--color-brand-darker); /* brand headings on the page background */
 
     /* brand */
     --color-brand:              var(--color-purple-500);
@@ -123,4 +124,81 @@
 
     --input-height:         3rem;
     --input-border-radius:  1rem;
+}
+/*
+    dark theme: same semantic names, darker surfaces and lighter text
+    set by the inline script in app/layout.tsx (cookie "theme")
+*/
+:root[data-theme='dark'] {
+    color-scheme: dark;
+
+    /* surfaces, borders and text */
+    --color-surface:            var(--color-slate-900);
+    --color-overlay:            color-mix(in srgb, var(--color-black) 70%, transparent);
+    --color-border-subtle:      var(--color-slate-700);
+    --color-border-strong:      var(--color-slate-400);
+    --color-text-strong:        var(--color-white);
+    --color-text-primary:       var(--color-slate-100);
+    --color-text-secondary:     var(--color-slate-400);
+
+    /* brand: lighter tones, so text in brand colors stays readable;
+       brand-darker stays dark (3d bases, text on light bubbles) */
+    --color-brand:              var(--color-purple-400);
+    --color-brand-light:        var(--color-purple-300);
+    --color-brand-soft:         var(--color-purple-900);
+    --color-brand-dark:         var(--color-purple-300);
+    --color-brand-darker:       var(--color-purple-900);
+    --color-text-brand:         var(--color-purple-100);
+    --color-brand-contrast:     var(--color-purple-50);
+
+    /* feedback */
+    --color-focus-ring:         var(--color-blue-300);
+    --color-warning:            var(--color-yellow-600);
+
+    /* game stats */
+    --color-streak:             var(--color-orange-300);
+
+    /* input */
+    --color-input-bg:               var(--color-slate-800);
+    --color-input-text:             var(--color-slate-100);
+    --color-input-label:            var(--color-slate-400);
+    --color-input-required:         var(--color-purple-300);
+    --color-input-placeholder:      var(--color-slate-400);
+    --color-input-border:           var(--color-slate-700);
+    --color-input-border-hover:     var(--color-purple-400);
+    --color-input-border-focus:     var(--color-purple-300);
+    --color-input-icon:             var(--color-purple-300);
+    --color-input-icon-hover:       var(--color-purple-100);
+
+    /* button */
+    --color-button-border:          var(--color-slate-600);
+    --color-button-bg-hover:        var(--color-slate-800);
+
+    /* scrollbar */
+    --color-scrollbar-thumb:        var(--color-slate-600);
+    --color-scrollbar-thumb-hover:  var(--color-slate-400);
+
+    /* badge */
+    --color-badge-border:           var(--color-slate-600);
+
+    /* trail node */
+    --color-node-bg-locked:         var(--color-slate-700);
+    --color-node-icon-locked:       var(--color-slate-400);
+    --color-node-base-locked:       var(--color-slate-800);
+
+    /* trail node progress ring */
+    --color-node-ring-track:        var(--color-slate-700);
+    --color-node-ring-progress:     var(--color-purple-300);
+    --color-node-ring-text:         var(--color-purple-100);
+
+    /* trail card progress bar */
+    --color-trail-track:            var(--color-slate-700);
+
+    /* minigame: code and blanks */
+    --color-game-code-text:             var(--color-purple-100);
+    --color-game-blank-border:          var(--color-purple-300);
+
+    /* skeleton loader */
+    --color-skeleton-bg:            var(--color-slate-800);
+    --color-skeleton-shine:         var(--color-slate-700);
 }

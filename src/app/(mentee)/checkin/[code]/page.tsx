@@ -6,7 +6,10 @@ import { Button } from '#/components/Button/Button';
 import PageHeader from '#/components/Header/PageHeader';
 import { mockEvents } from '#/utils/mockData';
 import { isMockMode } from '#/utils/mockMode';
+import { isSkeletonPreview } from '#/utils/skeletonPreview';
 import { createClient } from '#/utils/supabase/server';
+
+import CheckinLoading from './loading';
 
 import styles from './page.module.scss';
 
@@ -42,6 +45,9 @@ async function checkIn(code: string): Promise<Result> {
 }
 
 export default async function CheckinPage({ params }: { params: Promise<{ code: string }> }) {
+    // demo mode with the data turned off
+    if (await isSkeletonPreview()) return <CheckinLoading/>;
+
     const { code } = await params;
     const result = await checkIn(decodeURIComponent(code));
 

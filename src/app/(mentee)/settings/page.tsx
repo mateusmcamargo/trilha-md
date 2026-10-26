@@ -1,10 +1,10 @@
 import type { Metadata } from 'next';
-import Link from 'next/link';
 
-import { ArrowLeft, ChevronRight } from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
 
 import { LogoutButton } from '#/components/Button/LogoutButton';
 import PageHeader from '#/components/Header/PageHeader';
+import { SettingsMenu } from '#/components/Settings/SettingsMenu';
 
 import { settingsSections } from './links';
 
@@ -26,26 +26,7 @@ export default function SettingsPage() {
                 className={`main-subpage ${styles.settings}`}
                 aria-label='Configurações'
             >
-                {settingsSections.map(({ title, links }) => (
-                    <section key={title} className={styles.section}>
-                        <h2>{title}</h2>
-
-                        <ul>
-                            {links.map(({ slug, label, icon: Icon }) => (
-                                <li key={slug}>
-                                    <Link
-                                        href={`/settings/${slug}`}
-                                        className={styles.link}
-                                    >
-                                        <Icon aria-hidden='true'/>
-                                        <span>{label}</span>
-                                        <ChevronRight aria-hidden='true'/>
-                                    </Link>
-                                </li>
-                            ))}
-                        </ul>
-                    </section>
-                ))}
+                <SettingsMenu sections={settingsSections} basePath='/settings'/>
 
                 <section className={styles.logout}>
                     <LogoutButton/>

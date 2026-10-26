@@ -169,7 +169,8 @@ export function buildMenteeData(rows: MenteeRows) {
             friends: rows.friends.map((friend) => ({
                 id: friend.id,
                 name: friend.full_name,
-                xp: friend.total_xp,
+                // null when the friend hid her XP (privacy settings)
+                xp: friend.total_xp ?? undefined,
             })),
         },
         journeyStart: firstEnrolledAt
@@ -179,6 +180,16 @@ export function buildMenteeData(rows: MenteeRows) {
                 timeZone: 'America/Sao_Paulo',
             })
             : null,
+        // every trail she joined, newest first (settings > trails)
+        enrollments: enrollments.map((enrollment) => ({
+            id: enrollment.id,
+            name: enrollment.editions.name,
+            subtitle: enrollment.editions.subtitle,
+            status: enrollment.status,
+            enrolledAt: enrollment.enrolled_at,
+            xp: sumXp(xpEntries.filter((row) => row.edition_id === enrollment.edition_id)),
+            mentorName: rows.mentors.find((mentor) => mentor.id === enrollment.mentor_id)?.full_name ?? null,
+        })),
         completedTrails: enrollments.filter((enrollment) => enrollment.status === 'completed').length,
         certificates: rows.signedCertificates,
     };

@@ -1,13 +1,9 @@
-/* right above the MockAlert button (4.2rem tall) */
+/* the HelpTip bubble anchors to this row */
 div.skeletonAlert {
-    position: fixed;
-    right: 2rem;
-    bottom: calc(var(--bar-height) + 2rem + 4.2rem + 1.2rem);
-    z-index: 999;
+    position: relative;
 
-    padding: .8rem 1.2rem;
-
-    border-radius: 1.2rem;
-    border: 3px solid var(--color-border-subtle);
-    background-color: var(--color-surface);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.2rem;
 }

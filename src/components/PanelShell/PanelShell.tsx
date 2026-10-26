@@ -7,7 +7,6 @@ import Navbar, { type NavRole } from '#/components/Navbar/Navbar';
 
 import styles from './PanelShell.module.scss';
 import { MockAlert } from '#/components/MockAlert/MockAlert';
-import { SkeletonAlert } from '#/components/SkeletonAlert/SkeletonAlert';
 import { isMockMode } from '#/utils/mockMode';
 
 interface PanelShellProps {
@@ -39,12 +38,10 @@ export default function PanelShell({ role, initials, skeletonPreview, children }
             {!hideNavbar && <Navbar role={role} initials={initials}/>}
             
             {isMockMode && showMockAlert && (
-                <>
-                    {skeletonPreview !== undefined &&
-                        <SkeletonAlert skeletonPreview={skeletonPreview}/>
-                    }
-                    <MockAlert onClose={() => setShowMockAlert(false)}/>
-                </>
+                <MockAlert
+                    skeletonPreview={skeletonPreview}
+                    onClose={() => setShowMockAlert(false)}
+                />
             )}
         </div>
     );

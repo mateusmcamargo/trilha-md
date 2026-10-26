@@ -29,37 +29,11 @@ span.helpTip {
             height: 2rem;
             stroke-width: 2.4;
         }
-
-        /* bubble arrow: a rotated square, with only the two top borders */
-        &::after {
-            content: '';
-            position: absolute;
-            top: calc(100% + .45rem);
-            left: calc(50% - .5rem);
-            z-index: 11; /* above the tooltip (10), to cover its border under the arrow */
-
-            box-sizing: border-box;
-            width: 1rem;
-            height: 1rem;
-            border-top: 3px solid var(--color-brand-darker);
-            border-left: 3px solid var(--color-brand-darker);
-            background-color: var(--color-brand-contrast);
-            transform: rotate(45deg);
-
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity .15s ease, visibility .15s ease;
-        }
-
-        &[aria-expanded='true']::after {
-            opacity: 1;
-            visibility: visible;
-        }
     }
 
     span.tooltip {
         position: absolute;
-        top: calc(100% + 1.2rem); /* room for the arrow */
+        top: calc(100% + 1.2rem); /* placed by HelpTip.tsx once it opens */
         left: 0;
         right: 0;
         z-index: 10;
@@ -80,6 +54,33 @@ span.helpTip {
         &.open {
             opacity: .95;
             visibility: visible;
+        }
+
+        /* bubble arrow: a rotated square; --arrow-x is the button center, measured in HelpTip.tsx */
+        &::after {
+            content: '';
+            position: absolute;
+            left: calc(var(--arrow-x, 50%) - .5rem);
+
+            box-sizing: border-box;
+            width: 1rem;
+            height: 1rem;
+            background-color: var(--color-brand-contrast);
+            transform: rotate(45deg);
+        }
+
+        &[data-side='below']::after {
+            top: -.7rem;
+            border-top: 3px solid var(--color-brand-darker);
+            border-left: 3px solid var(--color-brand-darker);
+            border-top-left-radius: .4rem; /* the tip, after the rotation */
+        }
+
+        &[data-side='above']::after {
+            bottom: -.7rem;
+            border-bottom: 3px solid var(--color-brand-darker);
+            border-right: 3px solid var(--color-brand-darker);
+            border-bottom-right-radius: .4rem; /* the tip, after the rotation */
         }
     }
 }

@@ -15,8 +15,8 @@ ul.branches {
         content: '';
         position: absolute;
         top: 50%;
-        left: calc(50% + (1 + var(--side, 1)) / 2 * #{$node-edge} - (1 - var(--side, 1)) / 2 * #{$first - $size / 2});
-        width: $first - $size / 2 - $node-edge;
+        left: calc(50% + (1 + var(--side, 1)) / 2 * #{$node-edge} - (1 - var(--side, 1)) / 2 * #{$first - $size * .5});
+        width: $first - $size * .5 - $node-edge;
         border-top: 3px dashed var(--color-border-subtle);
     }
 }

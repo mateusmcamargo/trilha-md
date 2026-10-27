@@ -90,6 +90,7 @@ export default function TrailNode({
                         type='button'
                         onClick={isLocked ? undefined : onClick}
                         aria-disabled={isLocked}
+                        data-sound='tap'
                         aria-label={label}
                         className={`${styles.trailNode} ${styles[status]}`}
                     >

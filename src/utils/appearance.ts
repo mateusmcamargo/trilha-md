@@ -5,6 +5,8 @@ export type Theme = 'light' | 'dark' | 'system';
 
 export const THEME_COOKIE  = 'theme';
 export const MOTION_COOKIE = 'motion';
+// sounds: only read in demo mode, where nothing is saved (getPreferences)
+export const SOUNDS_COOKIE = 'sounds';
 
 const ONE_YEAR = 60 * 60 * 24 * 365;
 

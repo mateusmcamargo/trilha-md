@@ -20,6 +20,7 @@ export default async function PanelLayout({ children }: { children: ReactNode })
             role='mentee'
             initials={getInitials(user.name)}
             skeletonPreview={await isSkeletonPreview()}
+            sounds={preferences.sounds_enabled}
             appearance={isMockMode ? undefined : {
                 theme: preferences.theme as Theme,
                 animations: preferences.animations_enabled,

@@ -5,6 +5,7 @@ import { usePathname } from 'next/navigation';
 
 import { MockAlert } from '#/components/MockAlert/MockAlert';
 import Navbar, { type NavRole } from '#/components/Navbar/Navbar';
+import { SoundProvider } from '#/components/SoundProvider/SoundProvider';
 import { applyAppearance, appearanceChanged, type Theme } from '#/utils/appearance';
 import { isMockMode } from '#/utils/mockMode';
 
@@ -17,10 +18,12 @@ interface PanelShellProps {
     skeletonPreview?: boolean;
     // saved preferences; without it (demo mode) the device cookies are kept
     appearance?: { theme: Theme; animations: boolean };
+    // "Efeitos sonoros" in the preferences
+    sounds: boolean;
     children: ReactNode;
 }
 
-export default function PanelShell({ role, initials, skeletonPreview, appearance, children }: PanelShellProps) {
+export default function PanelShell({ role, initials, skeletonPreview, appearance, sounds, children }: PanelShellProps) {
 
     const pathname = usePathname();
 
@@ -45,8 +48,10 @@ export default function PanelShell({ role, initials, skeletonPreview, appearance
 
     return (
         <div className={styles.tabs}>
-            {children}
-            {!hideNavbar && <Navbar role={role} initials={initials}/>}
+            <SoundProvider initialEnabled={sounds}>
+                {children}
+                {!hideNavbar && <Navbar role={role} initials={initials}/>}
+            </SoundProvider>
             
             {isMockMode && showMockAlert && (
                 <MockAlert

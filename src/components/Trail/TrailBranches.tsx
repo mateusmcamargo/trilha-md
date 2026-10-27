@@ -65,6 +65,7 @@ export default function TrailBranches({ parentTitle, branches, side, readOnly, o
                                     type='button'
                                     aria-label={labelOf(branch)}
                                     className={`${styles.branch} ${styles[branch.status]}`}
+                                    data-sound='tap'
                                     onClick={() => onSelect(branch.id)}
                                 >
                                     <Icon aria-hidden='true'/>
@@ -90,7 +91,7 @@ export default function TrailBranches({ parentTitle, branches, side, readOnly, o
                                             {formatDay(branch.startsAt)} · {branch.title}
                                         </span>
                                     ) : (
-                                        <button type='button' aria-label={labelOf(branch)} onClick={() => onSelect(branch.id)}>
+                                        <button type='button' aria-label={labelOf(branch)} data-sound='tap' onClick={() => onSelect(branch.id)}>
                                             {formatDay(branch.startsAt)} · {branch.title}
                                         </button>
                                     )}

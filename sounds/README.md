@@ -8,10 +8,14 @@ Estilo minimalista e moderno, na linha do Duolingo: marimba suave, sinos e sopro
 - **Gerar de novo:** `python3 sounds/generate.py` (precisa do `lame`). As receitas de cada som estão no script.
 - **Formato:** MP3 mono, 44,1 kHz, 96 kbps. É o único formato que toca em todos os navegadores, inclusive Safari antigo no iPhone. Total: cerca de 360 KB.
 
-## Para usar no app
+## No app
 
-1. Mover os arquivos escolhidos para `public/sounds/` (o Next serve tudo de `public/`).
-2. Tocar pela Web Audio API (`AudioContext` + `decodeAudioData`), não por `new Audio()`:
+Os sons em uso foram copiados para `public/sounds/` com nomes curtos (`click.mp3`, `tap.mp3`, `toggle-on.mp3`, `toggle-off.mp3`, `correct.mp3`, `wrong.mp3`, `xp.mp3`, `level-up.mp3`) e tocam pelo `src/components/SoundProvider/SoundProvider.tsx`. Para trocar um som, copie outra variante por cima do arquivo em `public/sounds/`.
+
+Como funciona:
+
+1. Os arquivos ficam em `public/sounds/` (o Next serve tudo de `public/`).
+2. Tocam pela Web Audio API (`AudioContext` + `decodeAudioData`), não por `new Audio()`:
     - a Web Audio lê o cabeçalho do MP3 e remove o silêncio que o codificador põe no início, então o som sai na hora do toque;
     - no iPhone, `new Audio()` atrasa e interrompe a música de fundo de outros apps.
 3. Respeitar a preferência "Efeitos sonoros" (`user_preferences.sounds_enabled`).

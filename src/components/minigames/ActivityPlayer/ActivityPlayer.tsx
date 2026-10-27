@@ -7,6 +7,7 @@ import { CircleCheck, CircleX, Pencil, RotateCcw, Route, Sparkles } from 'lucide
 
 import { Button } from '#/components/Button/Button';
 import FormError from '#/components/FormError/FormError';
+import { useSound } from '#/components/SoundProvider/SoundProvider';
 import { getSupabase } from '#/utils/supabase/getSupabase';
 
 import CompleteCodePlayer from '../CompleteCode/CompleteCodePlayer';
@@ -44,6 +45,7 @@ interface Result {
 export default function ActivityPlayer({ activityId, points, items, solutions, backHref, onExit }: ActivityPlayerProps) {
     const router = useRouter();
     const supabase = solutions ? null : getSupabase();
+    const play = useSound();
 
     const [attemptId, setAttemptId] = useState<string | null>(null);
     const [index,     setIndex]     = useState<number>(0);
@@ -106,6 +108,7 @@ export default function ActivityPlayer({ activityId, points, items, solutions, b
             const key = solutions[item.id];
             const isCorrect = !!key && isAnswerCorrect(answer, key.solution);
             setChecked({ isCorrect, solution: key?.solution ?? { blanks: [] }, explanation: key?.explanation ?? null });
+            play(isCorrect ? 'correct' : 'wrong');
             if (isCorrect) setCorrect((count) => count + 1);
             return;
         }
@@ -128,7 +131,14 @@ export default function ActivityPlayer({ activityId, points, items, solutions, b
             solution: row.solution as unknown as CompleteCodeAnswer,
             explanation: row.explanation,
         });
+        play(row.is_correct ? 'correct' : 'wrong');
         if (row.is_correct) setCorrect((count) => count + 1);
+    }
+
+    // all right: the big one; otherwise the XP sound
+    function finish(final: Result) {
+        setResult(final);
+        play(final.total > 0 && final.correct === final.total ? 'level-up' : 'xp');
     }
 
     async function handleContinue() {
@@ -142,7 +152,7 @@ export default function ActivityPlayer({ activityId, points, items, solutions, b
         }
 
         if (solutions) {
-            return setResult({ correct, total: items.length, xp: Math.round((points * correct) / items.length) });
+            return finish({ correct, total: items.length, xp: Math.round((points * correct) / items.length) });
         }
 
         if (!supabase || !attemptId) return;
@@ -154,7 +164,7 @@ export default function ActivityPlayer({ activityId, points, items, solutions, b
         const row = data?.[0];
         if (finishError || !row) return setError('Não foi possível terminar a atividade. Tente novamente.');
 
-        setResult(row);
+        finish(row);
         // the trail and the header stats change
         router.refresh();
     }
@@ -278,6 +288,8 @@ export default function ActivityPlayer({ activityId, points, items, solutions, b
                         fullWidth
                         disabled={loading || !isAnswerComplete(answer)}
                         aria-busy={loading}
+                        // the answer plays correct or wrong instead of the click
+                        data-sound='none'
                         onClick={handleCheck}
                     >
                         Checar

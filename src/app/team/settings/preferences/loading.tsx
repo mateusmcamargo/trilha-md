@@ -6,7 +6,7 @@ export default function TeamPreferencesLoading() {
     return (
         <SettingsPage title='Preferências' backHref='/team/settings' loading>
             <SettingsSkeleton sections={[
-                { title: 'Movimento', kind: 'switch', rows: 1 },
+                { title: 'Sons e movimento', kind: 'switch', rows: 2 },
                 { title: 'Aparência', kind: 'toggle' },
             ]}/>
         </SettingsPage>

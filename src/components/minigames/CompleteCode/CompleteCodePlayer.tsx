@@ -46,6 +46,7 @@ function Blank({ index, option, disabled, onClear }: {
             className={`${styles.blank} ${styles.filled}`}
             onClick={onClear}
             disabled={disabled}
+            data-sound='tap'
             aria-label={`Lacuna ${index + 1}: ${option.text}. Toque para tirar o bloco`}
         >
             {option.text}
@@ -76,6 +77,7 @@ function Block({ option, used, disabled, onPlace }: {
                 className={`${styles.block} ${isDragging ? styles.dragging : ''}`}
                 onClick={onPlace}
                 disabled={disabled}
+                data-sound='tap'
                 aria-label={`Colocar ${option.text} na próxima lacuna`}
                 {...listeners}
             >

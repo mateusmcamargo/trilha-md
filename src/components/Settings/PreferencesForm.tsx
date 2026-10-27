@@ -2,9 +2,10 @@
 
 import { useState } from 'react';
 
+import { useSoundPreference } from '#/components/SoundProvider/SoundProvider';
 import Switch from '#/components/Switch/Switch';
 import Toggle from '#/components/Toggle/Toggle';
-import { applyAppearance, type Theme } from '#/utils/appearance';
+import { applyAppearance, SOUNDS_COOKIE, type Theme } from '#/utils/appearance';
 import type { Preferences } from '#/utils/preferences';
 
 import { usePreferenceSave } from './usePreferenceSave';
@@ -19,7 +20,7 @@ const THEMES = [
 
 interface PreferencesFormProps {
     preferences: Preferences;
-    // mentors have no trail: only the animations switch
+    // mentors have no trail: no "Mensagens engraçadinhas"
     trailOptions?: boolean;
 }
 
@@ -28,6 +29,7 @@ export function PreferencesForm({ preferences, trailOptions = true }: Preference
 
     const [theme, setTheme] = useState(preferences.theme as Theme);
     const [animations, setAnimations] = useState(preferences.animations_enabled);
+    const [, setSoundsEnabled] = useSoundPreference();
 
     // the theme and the animations change on the screen at once, even in demo mode
     function changeTheme(value: string) {
@@ -35,6 +37,13 @@ export function PreferencesForm({ preferences, trailOptions = true }: Preference
         setTheme(next);
         applyAppearance(next, animations);
         save({ theme: next });
+    }
+
+    // sounds stop or start at once; the cookie keeps the choice in demo mode
+    function changeSounds(checked: boolean) {
+        setSoundsEnabled(checked);
+        document.cookie = `${SOUNDS_COOKIE}=${checked ? 'on' : 'off'}; path=/; max-age=31536000; samesite=lax`;
+        save({ sounds_enabled: checked });
     }
 
     function changeAnimations(checked: boolean) {
@@ -46,18 +55,16 @@ export function PreferencesForm({ preferences, trailOptions = true }: Preference
     return (
         <>
             <section className={styles.section}>
-                <h2>{trailOptions ? 'Sua trilha' : 'Movimento'}</h2>
+                <h2>{trailOptions ? 'Sua trilha' : 'Sons e movimento'}</h2>
 
                 <div className={styles.options}>
-                    {trailOptions && (
-                        <Switch
-                            name='sounds'
-                            label='Efeitos sonoros'
-                            defaultChecked={preferences.sounds_enabled}
-                            disabled={saving}
-                            onChange={(checked) => save({ sounds_enabled: checked })}
-                        />
-                    )}
+                    <Switch
+                        name='sounds'
+                        label='Efeitos sonoros'
+                        defaultChecked={preferences.sounds_enabled}
+                        disabled={saving}
+                        onChange={changeSounds}
+                    />
                     <Switch
                         name='animations'
                         label='Animações'

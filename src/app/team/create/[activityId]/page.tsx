@@ -43,7 +43,7 @@ async function EventEditorPage({ activityId }: { activityId: string }) {
                 <section className={styles.section} aria-labelledby='checkin-title'>
                     <h2 id='checkin-title'>Presença</h2>
                     <p className={styles.help}>
-                        No dia, mostre o QR Code na tela. Cada mentorada aponta a câmera do celular e confirma a presença.
+                        O QR Code já foi criado com o encontro e só funciona do início ao fim dele. Mostre-o na tela: cada mentorada toca em Ler QR Code no app e confirma a presença.
                     </p>
                     <Button href={`/team/create/${event.id}/checkin`} variant='brand' icon={QrCode} fullWidth>
                         Abrir QR Code de presença

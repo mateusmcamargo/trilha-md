@@ -2,6 +2,7 @@ import {
     CalendarCheck, CalendarClock, CalendarDays, CalendarX, ExternalLink, FileText, Link2, Lock, MapPin, Sparkles, Type,
 } from 'lucide-react';
 
+import QrScanner from '#/components/QrScanner/QrScanner';
 import type { EventStatus } from '#/utils/menteeData';
 import type { Tables } from '#/types/database';
 import { formatEventTime } from '#/utils/dates';
@@ -19,12 +20,12 @@ const statusInfo: Record<EventStatus, { icon: typeof CalendarDays; label: string
     upcoming: {
         icon: CalendarClock,
         label: 'Em breve',
-        text: 'No dia, valide sua presença pelo QR Code que a mentora vai mostrar.',
+        text: 'Durante o encontro, valide sua presença lendo o QR Code que a mentora vai mostrar.',
     },
     today: {
         icon: CalendarDays,
         label: 'É hoje!',
-        text: 'Valide sua presença pelo QR Code que a mentora vai mostrar: aponte a câmera do celular para ele.',
+        text: 'Durante o encontro, toque em Ler QR Code e aponte a câmera para o QR que a mentora mostrar.',
     },
     attended: {
         icon: CalendarCheck,
@@ -71,6 +72,8 @@ export default function EventDetail({ event, status, materials }: EventDetailPro
                 <h3 id='status-title'><StatusIcon aria-hidden='true'/>{info.label}</h3>
                 <p>{info.text}</p>
             </section>
+
+            {status === 'today' && <QrScanner/>}
 
             <section className={styles.materials} aria-labelledby='materials-title'>
                 <h3 id='materials-title'>Materiais</h3>

@@ -4,6 +4,7 @@ import { ArrowLeft, CircleCheck, CircleX, FolderOpen, Route, Sparkles } from 'lu
 
 import { Button } from '#/components/Button/Button';
 import PageHeader from '#/components/Header/PageHeader';
+import { checkinErrorMessage } from '#/utils/checkin';
 import { mockEvents } from '#/utils/mockData';
 import { isMockMode } from '#/utils/mockMode';
 import { isSkeletonPreview } from '#/utils/skeletonPreview';
@@ -32,12 +33,7 @@ async function checkIn(code: string): Promise<Result> {
     const { data: activityId, error } = await supabase.rpc('check_in', { p_code: code });
 
     if (error || !activityId) {
-        return {
-            ok: false,
-            message: error?.code === '42501'
-                ? 'Você não está matriculada na edição deste encontro.'
-                : 'Este código não vale mais. Peça para a mentora mostrar o QR Code de novo.',
-        };
+        return { ok: false, message: checkinErrorMessage(error?.code) };
     }
 
     const { data } = await supabase.from('activities').select('id, title, points').eq('id', activityId).single();

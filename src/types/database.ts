@@ -450,17 +450,14 @@ export type Database = {
         Row: {
           activity_id: string
           code: string
-          expires_at: string
         }
         Insert: {
           activity_id: string
           code: string
-          expires_at: string
         }
         Update: {
           activity_id?: string
           code?: string
-          expires_at?: string
         }
         Relationships: [
           {
@@ -896,14 +893,9 @@ export type Database = {
           id: string
         }[]
       }
-      open_checkin: {
-        Args: { p_activity_id: string; p_minutes?: number }
-        Returns: {
-          code: string
-          expires_at: string
-        }[]
-      }
+      new_checkin_code: { Args: never; Returns: string }
       release_mentee: { Args: { p_enrollment_id: string }; Returns: undefined }
+      renew_checkin: { Args: { p_activity_id: string }; Returns: string }
       reorder_activities: {
         Args: { p_activity_ids: string[]; p_edition_id: string }
         Returns: undefined

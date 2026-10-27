@@ -5,7 +5,7 @@ import { ArrowLeft } from 'lucide-react';
 
 import CheckinScreen from '#/components/Creator/CheckinScreen';
 import PageHeader from '#/components/Header/PageHeader';
-import { getActivityKind, getEditableEvent } from '#/utils/creatorData';
+import { getActivityKind, getCheckinCode, getEditableEvent } from '#/utils/creatorData';
 import { isSkeletonPreview } from '#/utils/skeletonPreview';
 
 import CheckinLoading from './loading';
@@ -21,6 +21,7 @@ export default async function CheckinPage({ params }: { params: Promise<{ activi
     const { activityId } = await params;
     const data = (await getActivityKind(activityId)) === 'presencial' ? await getEditableEvent(activityId) : null;
     if (!data) notFound();
+    const code = await getCheckinCode(activityId);
 
     return (
         <>
@@ -30,7 +31,13 @@ export default async function CheckinPage({ params }: { params: Promise<{ activi
             />
 
             <main className='main-subpage' aria-label={`QR Code de presença de ${data.event.title}`}>
-                <CheckinScreen activityId={activityId} title={data.event.title}/>
+                <CheckinScreen
+                    activityId={activityId}
+                    title={data.event.title}
+                    initialCode={code}
+                    startsAt={data.event.starts_at}
+                    endsAt={data.event.ends_at}
+                />
             </main>
         </>
     );

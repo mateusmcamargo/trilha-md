@@ -179,6 +179,16 @@ export const getEditableEvent = cache(async (activityId: string): Promise<Editab
     };
 });
 
+// code of the event QR, created with the event (demo mode: an example code)
+export const getCheckinCode = cache(async (activityId: string) => {
+    if (isMockMode) return 'demo2026';
+
+    const supabase = await createClient();
+    const { data, error } = await supabase.from('checkin_codes').select('code').eq('activity_id', activityId).maybeSingle();
+    if (error) throw new Error(error.message);
+    return data?.code ?? null;
+});
+
 // kind of a creator url: remote editor or in-person form
 export const getActivityKind = cache(async (activityId: string) => {
     if (isMockMode) {

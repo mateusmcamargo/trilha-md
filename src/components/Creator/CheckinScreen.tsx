@@ -1,12 +1,14 @@
 'use client';
 
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import QRCode from 'qrcode';
 
 import { RefreshCw, UserRoundCheck } from 'lucide-react';
 
 import { Button } from '#/components/Button/Button';
 import FormError from '#/components/FormError/FormError';
+import { ConfirmDialog } from '#/components/Modal/ConfirmDialog';
+import { dayInSaoPaulo, formatEventTime } from '#/utils/dates';
 import { getSupabase } from '#/utils/supabase/getSupabase';
 
 import styles from './CheckinScreen.module.scss';
@@ -14,6 +16,10 @@ import styles from './CheckinScreen.module.scss';
 interface CheckinScreenProps {
     activityId: string;
     title: string;
+    // created with the event
+    initialCode: string | null;
+    startsAt: string | null;
+    endsAt: string | null;
 }
 
 interface Checkin {
@@ -21,79 +27,76 @@ interface Checkin {
     at: string;
 }
 
-// how long each code works; a new one can be made at any time
-const CODE_MINUTES = 15;
+type Period = 'none' | 'before' | 'during' | 'after';
+
 const POLL_MS = 10_000;
 
 const formatTime = (timestamp: string) => new Date(timestamp).toLocaleTimeString('pt-BR', {
     timeZone: 'America/Sao_Paulo', hour: '2-digit', minute: '2-digit',
 });
 
-export default function CheckinScreen({ activityId, title }: CheckinScreenProps) {
+// same rule as check_in: from the start to the end (no end: until midnight of the event day)
+function periodAt(startsAt: string | null, endsAt: string | null, now: number): Period {
+    if (!startsAt) return 'none';
+    const end = endsAt ? Date.parse(endsAt) : Date.parse(`${dayInSaoPaulo(startsAt)}T00:00:00-03:00`) + 86_400_000;
+    return now < Date.parse(startsAt) ? 'before' : now > end ? 'after' : 'during';
+}
+
+const periodNotice: Record<Exclude<Period, 'during'>, string> = {
+    none: 'Defina a data do encontro: sem ela o QR Code não funciona.',
+    before: 'O encontro ainda não começou: o QR Code passa a funcionar no horário dele.',
+    after: 'O encontro já terminou: o QR Code não funciona mais.',
+};
+
+export default function CheckinScreen({ activityId, title, initialCode, startsAt, endsAt }: CheckinScreenProps) {
     const supabase = getSupabase();
 
-    const [code,      setCode]      = useState<string | null>(null);
-    const [expiresAt, setExpiresAt] = useState<string | null>(null);
-    const [qr,        setQr]        = useState<string | null>(null);
-    const [link,      setLink]      = useState<string | null>(null);
-    const [expired,   setExpired]   = useState<boolean>(false);
+    const [code,     setCode]     = useState<string | null>(initialCode);
+    const [qr,       setQr]       = useState<string | null>(null);
+    const [link,     setLink]     = useState<string | null>(null);
+    const [period,   setPeriod]   = useState<Period>(() => periodAt(startsAt, endsAt, Date.now()));
     // demo mode shows an example
-    const [checkins,  setCheckins]  = useState<Checkin[]>(() =>
+    const [checkins, setCheckins] = useState<Checkin[]>(() =>
         supabase ? [] : [{ name: 'Anne Franco', at: new Date().toISOString() }]);
-    const [error,     setError]     = useState<string | null>(null);
-    const [loading,   setLoading]   = useState<boolean>(true);
+    const [error,    setError]    = useState<string | null>(null);
+    const [loading,  setLoading]  = useState<boolean>(false);
+    const [confirm,  setConfirm]  = useState<boolean>(false);
 
-    // asks the database for a new code and draws its QR (demo mode: an example code)
-    const generateCode = useCallback(async () => {
-        let next: { code: string; expires_at: string } | null = null;
-
-        if (supabase) {
-            const { data, error: openError } = await supabase.rpc('open_checkin', {
-                p_activity_id: activityId,
-                p_minutes: CODE_MINUTES,
-            });
-            next = openError ? null : data?.[0] ?? null;
-        } else {
-            next = { code: 'demo2026', expires_at: new Date(Date.now() + CODE_MINUTES * 60_000).toISOString() };
-        }
-
-        if (!next) return null;
-
-        const url = `${window.location.origin}/checkin/${next.code}`;
-        return { ...next, url, qr: await QRCode.toDataURL(url, { margin: 1, width: 640 }) };
-    }, [supabase, activityId]);
-
-    const apply = useCallback((result: Awaited<ReturnType<typeof generateCode>>) => {
-        setLoading(false);
-        if (!result) return setError('Não foi possível gerar o código. Tente novamente.');
-        setQr(result.qr);
-        setLink(result.url);
-        setCode(result.code);
-        setExpiresAt(result.expires_at);
-        setExpired(false);
-    }, []);
-
-    function handleNewCode() {
-        setError(null);
-        setLoading(true);
-        generateCode().then(apply);
-    }
-
-    // first code as soon as the screen opens
+    // draws the QR of the current code
     useEffect(() => {
+        if (!code) return;
+
         let ignore = false;
-        generateCode().then((result) => {
-            if (!ignore) apply(result);
+        const url = `${window.location.origin}/checkin/${code}`;
+        QRCode.toDataURL(url, { margin: 1, width: 640 }).then((dataUrl) => {
+            if (ignore) return;
+            setQr(dataUrl);
+            setLink(url);
         });
         return () => { ignore = true; };
-    }, [generateCode, apply]);
+    }, [code]);
 
-    // marks the code as expired when its time is up
+    // keeps the "starts / is over" notice up to date while the screen is open
     useEffect(() => {
-        if (!expiresAt) return;
-        const timer = setTimeout(() => setExpired(true), Date.parse(expiresAt) - Date.now());
-        return () => clearTimeout(timer);
-    }, [expiresAt]);
+        const timer = setInterval(() => setPeriod(periodAt(startsAt, endsAt, Date.now())), 30_000);
+        return () => clearInterval(timer);
+    }, [startsAt, endsAt]);
+
+    // a new code invalidates the old QR (e.g. a photo of it was shared)
+    async function handleRenew() {
+        setError(null);
+        if (!supabase) {
+            setConfirm(false);
+            return setError('Indisponível no modo demonstração.');
+        }
+
+        setLoading(true);
+        const { data, error: renewError } = await supabase.rpc('renew_checkin', { p_activity_id: activityId });
+        setLoading(false);
+        setConfirm(false);
+        if (renewError || !data) return setError('Não foi possível gerar o código. Tente novamente.');
+        setCode(data);
+    }
 
     // who already confirmed (RLS: only the mentor's own mentees)
     useEffect(() => {
@@ -127,29 +130,44 @@ export default function CheckinScreen({ activityId, title }: CheckinScreenProps)
             <h2 className={styles.title}>{title}</h2>
 
             <div className={styles.qr}>
-                {qr && !expired ? (
+                {qr ? (
                     // eslint-disable-next-line @next/next/no-img-element -- generated data url
                     <img src={qr} alt={`QR Code para confirmar presença em ${title}`}/>
                 ) : (
-                    <p className={styles.placeholder}>
-                        {loading ? 'Gerando código...' : expired ? 'Este código venceu. Gere um novo.' : 'Sem código'}
-                    </p>
+                    <p className={styles.placeholder}>{code ? 'Gerando QR Code...' : 'Sem código. Gere um novo.'}</p>
                 )}
             </div>
 
-            {code && !expired && (
-                <div className={styles.code}>
-                    <p>Sem câmera? Acesse o link:</p>
-                    <p className={styles.link}>{link}</p>
-                    {expiresAt && <p className={styles.expires}>Vale até {formatTime(expiresAt)}</p>}
-                </div>
-            )}
+            <div className={styles.code}>
+                {link && (
+                    <>
+                        <p>Sem câmera? Acesse o link:</p>
+                        <p className={styles.link}>{link}</p>
+                    </>
+                )}
+                <p className={styles.expires}>
+                    {startsAt ? `Vale durante o encontro: ${formatEventTime(startsAt, endsAt)}` : 'Sem data definida'}
+                </p>
+            </div>
 
+            {period !== 'during' && <FormError>{periodNotice[period]}</FormError>}
             {error && <FormError>{error}</FormError>}
 
-            <Button icon={RefreshCw} fullWidth disabled={loading} aria-busy={loading} onClick={handleNewCode}>
+            <Button icon={RefreshCw} fullWidth disabled={loading} onClick={() => setConfirm(true)}>
                 Gerar novo código
             </Button>
+
+            <ConfirmDialog
+                open={confirm}
+                onClose={() => setConfirm(false)}
+                onConfirm={handleRenew}
+                title='Gerar novo código?'
+                description='O QR Code atual para de funcionar. Use se uma foto dele foi compartilhada com quem não está no encontro.'
+                confirmLabel='Gerar novo código'
+                loadingLabel='Gerando...'
+                icon={RefreshCw}
+                loading={loading}
+            />
 
             <section className={styles.checkins} aria-labelledby='checkins-title' aria-live='polite'>
                 <h3 id='checkins-title'>

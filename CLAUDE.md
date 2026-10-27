@@ -17,6 +17,7 @@ Web app mobile first de aprendizado gamificado para o projeto de extensão Menin
 - `src/app/team/`: área da mentora (`/team/dashboard`, `/team/mentees`, `/team/create` (criador: `[activityId]`, `[activityId]/checkin` com o QR, `novo` para presencial), `/team/profile`, `/team/settings`)
 - Configurações das duas áreas: páginas finas que usam os componentes de `src/components/Settings/` (`SettingsPage`, `SettingsMenu`, `PreferencesForm`, `PreferenceSwitches` etc.). Links em `settings/links.ts` de cada área. Exportação de dados: `(mentee)/settings/export/route.ts`
 - Cada área tem layout, `PanelShell`, navbar e verificação de papel próprios. Componentes de formulário são compartilhados
+- Sons: `SoundProvider` (dentro do `PanelShell`) toca os arquivos de `public/sounds/` pela Web Audio, só com "Efeitos sonoros" ligado. Botões e links tocam `click` e switches tocam `toggle` sozinhos (um listener global). `data-sound='tap'` troca o som de um elemento, `data-sound='none'` silencia. Som de evento: `const play = useSound(); play('correct')`. Os originais e o gerador ficam em `sounds/`
 - `src/app/error.tsx` e `global-error.tsx`: telas de erro com "Tentar de novo". Neste Next a prop é `retry`, não `reset`. O `error.tsx` fica na raiz porque `getMenteeData`/`getTeamData` rodam nos layouts, e um `error.tsx` não captura erro do layout do próprio segmento
 - `USERS.md`: contas de teste (senha e edição de teste); consultar antes de logar para testar
 - `src/components/<Nome>/<Nome>.tsx` + `<Nome>.module.scss`
@@ -46,7 +47,7 @@ Web app mobile first de aprendizado gamificado para o projeto de extensão Menin
 - No cliente, usar `getSupabase()` (retorna `null` no modo demonstração)
 - Nunca expor a service role key no frontend
 - Listagem de mentoradas (nome, foto, trilha, mentora, XP, ofensiva) é aberta a todas as mentoras. Presenças, reflexões, certificados e andamento são só da mentora responsável, garantido por RLS (`is_mentor_of`); consultas desses dados devem filtrar por `enrollments.mentor_id = auth.uid()`
-- Atividades têm `kind`: `remota` (minigame; caminho principal da trilha, ordenado por `position`) ou `presencial` (evento com data; fica ao lado de uma remota via `parent_id` e não bloqueia a trilha). Presença só entra pela RPC `check_in` (QR Code); a mentorada nunca lê `activity_item_solutions`: a correção é a RPC `check_answer`
+- Atividades têm `kind`: `remota` (minigame; caminho principal da trilha, ordenado por `position`) ou `presencial` (evento com data; fica ao lado de uma remota via `parent_id` e não bloqueia a trilha). Presença só entra pela RPC `check_in` (QR Code). O código de `checkin_codes` é criado por trigger junto com a presencial e só vale do `starts_at` ao `ends_at` (sem fim: até a meia-noite do dia); `renew_checkin` troca o código. A mentorada lê o QR pelo `QrScanner` na página do encontro ou pela câmera nativa (`/checkin/[code]`); mensagens de erro em `utils/checkin.ts`; a mentorada nunca lê `activity_item_solutions`: a correção é a RPC `check_answer`
 - XP não é guardado: é a soma da view `xp_entries` (presenças nas presenciais + melhor tentativa de cada remota). Existe o XP da trilha (edição da matrícula ativa) e o total (todas as trilhas); deixar claro qual está na tela. A mentora lê o XP de todas pela RPC `list_mentee_xp`, não por `attendance`
 
 ## Banco (Supabase)
@@ -71,3 +72,11 @@ Web app mobile first de aprendizado gamificado para o projeto de extensão Menin
 - Ao depurar: identificar a causa provável e propor a menor mudança que resolve
 - Rotas ainda não construídas caem de propósito na página `not-found.tsx`; não criar páginas "Em breve"
 - O `height` inline em `(mentee)/terminal/page.tsx` é intencional
+
+## Commits
+
+- Conventional Commits em inglês: `tipo(escopo): descrição` (`feat`, `fix`, `refactor`, `style`, `docs`, `chore`). Escopo opcional, curto (`checkin`, `sound`, `db`, `ui`)
+- Descrição no imperativo, minúscula, sem ponto final, até 72 caracteres
+- Corpo só quando o título não basta: explica o quê e por quê em poucas linhas
+- Poucos commits: agrupar por funcionalidade, não por arquivo
+- Nunca mencionar Claude nem IA, e não adicionar `Co-Authored-By`

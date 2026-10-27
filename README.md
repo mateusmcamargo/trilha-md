@@ -35,7 +35,8 @@ O software agiliza o processo com uma aplicação única com foco em acessibilid
     - dashboard com o acompanhamento individual de cada mentorada
     - criador de atividades: minigames, encontros presenciais, materiais e QR Code de presença
     - configurações em `/team/settings`: perfil, preferências, denúncias de abuso, contatos e páginas sobre
-- Preferências: sons, animações e tema claro, escuro ou do sistema, aplicados antes da página aparecer
+- Preferências: tema claro, escuro ou do sistema (aplicado antes da página aparecer), animações e efeitos sonoros
+- Efeitos sonoros próprios, gerados por síntese (`sounds/`): cliques, toques, switches, resposta certa e errada e fim de atividade
 - App instalável no celular (PWA)
 - Skeletons de carregamento em todas as telas que buscam dados
 - Modo demonstração com dados mockados, com uma chave para visualizar os skeletons
